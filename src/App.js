@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App container">
+    <div className="container">
       <MenuSite/>
         <Route path="/login" component={Login} />
         <Route path="/menu-site" component={MenuSite} />
