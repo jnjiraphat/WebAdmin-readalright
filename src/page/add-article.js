@@ -3,98 +3,95 @@ import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
-import axios from 'axios';
-
+import axios from "axios";
 
 const AddArticle = () => {
   const [person, setPerson] = useState([]);
 
   async function fetch() {
-
-
-    const result = await axios(
-      'https://jsonplaceholder.typicode.com/users',
-    );
+    const result = await axios("https://jsonplaceholder.typicode.com/users");
 
     setPerson(result.data);
     // console.log(person)
-
   }
   useEffect(() => {
-    fetch()
+    fetch();
   });
 
-
-  async function postReading(title,
+  async function postReading(
+    title,
     content,
     image,
     category_id,
-    level_reading) {
-    const response = await axios.post(
-      'http://localhost:3000/reading', {
-
+    level_reading
+  ) {
+    const response = await axios.post("http://localhost:3000/reading", {
       title: title,
       content: content,
       image: image,
       category_id: category_id,
-      level_reading: level_reading
-    }
-    );
-    console.log("reading", response.data)
+      level_reading: level_reading,
+    });
+    console.log("reading", response.data);
   }
-  async function postQuiz(question,
+  async function postQuiz(
+    question,
     typeOfSuggestion_id,
     reading_id,
     typeOfQuestion,
-    level) {
-    const response = await axios.post(
-      'http://localhost:3000/quizs', {
+    level
+  ) {
+    const response = await axios.post("http://localhost:3000/quizs", {
       question: question,
       typeOfSuggestion_id: typeOfSuggestion_id,
       reading_id: reading_id,
       typeOfQuestion: typeOfQuestion,
-      level: level
-    }
-    );
-    console.log("quiz", response.data)
+      level: level,
+    });
+    console.log("quiz", response.data);
   }
-  async function postChoice(isRightChoice,
+  async function postChoice(
+    isRightChoice,
     choice,
     optionText,
     value,
-    question_pretest_id, question_id) {
-    const response = await axios.post(
-      'http://localhost:3000/choice', {
+    question_pretest_id,
+    question_id
+  ) {
+    const response = await axios.post("http://localhost:3000/choice", {
       isRightChoice: isRightChoice,
       choice: choice,
       optionText: optionText,
       value: value,
       question_pretest_id: question_pretest_id,
-      question_id: question_id
-    }
-    );
-    console.log("choice", response.data)
+      question_id: question_id,
+    });
+    console.log("choice", response.data);
   }
-
 
   return (
     <div>
       <h1>Article</h1>
       <div>
-        <h1>Social Profiles</h1>
+        <h1>Article</h1>
         <Formik
           initialValues={{
             content: {
               title: "",
               content: "",
               image: "",
-              category_id: 1,
-              level_reading: ""
+              category_id: "",
+              level_reading: "",
             },
           }}
           onSubmit={(values) => {
-
-            postReading(values.content.title, values.content.content, "image test", values.content.category_id, values.content.level_reading)
+            postReading(
+              values.content.title,
+              values.content.content,
+              "image test",
+              values.content.category_id,
+              values.content.level_reading
+            );
 
             // same shape as initial values
           }}
@@ -139,7 +136,16 @@ const AddArticle = () => {
                   <span>category_id:</span>
                 </Col>
                 <Col span="16">
-                  <Field name="content.category_id" />
+                  <Field as="select" name="content.category_id">
+                    <option value="1">Song</option>
+                    <option value="2">Movie</option>
+                    <option value="3">Sport</option>
+                    <option value="4">Entertainment</option>
+                    <option value="5">Health</option>
+                    <option value="6">Information Technology</option>
+                    <option value="7">Travel</option>
+                    <option value="8">Story</option>
+                  </Field>
                 </Col>
               </Row>
               <Row>
@@ -147,7 +153,11 @@ const AddArticle = () => {
                   <span>level_reading:</span>
                 </Col>
                 <Col span="16">
-                  <Field name="content.level_reading" />
+                  <Field as="select" name="content.level_reading">
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="B1">B1</option>
+                  </Field>
                 </Col>
               </Row>
 
@@ -157,12 +167,11 @@ const AddArticle = () => {
         </Formik>
       </div>
 
-      <h1>Question & Choice</h1>
       <div>
-        <h1>Social Profiles</h1>
+        <h1>Post Test</h1>
+        <h4>Question no.1</h4>
         <Formik
-          initialValues=
-          {{
+          initialValues={{
             content: {
               question: "",
               typeOfSuggestion_id: 1,
@@ -174,12 +183,25 @@ const AddArticle = () => {
               optionText: "",
               value: "",
               question_pretest_id: 1,
-              question_id: 1
+              question_id: 1,
             },
           }}
           onSubmit={(values) => {
-            postQuiz(values.content.question, values.content.typeOfSuggestion_id, values.content.reading_id, values.content.typeOfQuestion, values.content.level)
-            postChoice(values.content.isRightChoice, values.content.choice, values.content.optionText, values.content.value, values.content.question_pretest_id, values.content.question_id)
+            postQuiz(
+              values.content.question,
+              values.content.typeOfSuggestion_id,
+              values.content.reading_id,
+              values.content.typeOfQuestion,
+              values.content.level
+            );
+            postChoice(
+              values.content.isRightChoice,
+              values.content.choice,
+              values.content.optionText,
+              values.content.value,
+              values.content.question_pretest_id,
+              values.content.question_id
+            );
           }}
         >
           {(formProps) => (
@@ -197,39 +219,44 @@ const AddArticle = () => {
                   <span>typeOfSuggestion_id:</span>
                 </Col>
                 <Col span="16">
-                  <Field name="content.typeOfSuggestion_id" />
+                  <Field as="select" name="content.typeOfSuggestion_id">
+                    <option value="1">Verb</option>
+                    <option value="2">Noun</option>
+                  </Field>
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col span="8">
                   <span>reading_id:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.reading_id" />
                 </Col>
-              </Row>
-              <Row>
+              </Row> */}
+              {/* <Row>
                 <Col span="8">
                   <span>typeOfQuestion:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.typeOfQuestion" />
                 </Col>
-              </Row>
-              <Row>
+              </Row> */}
+              {/* <Row>
                 <Col span="8">
                   <span>level:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.level" />
                 </Col>
-              </Row>
+              </Row> */}
               <Row>
                 <Col span="8">
                   <span>isRightChoice:</span>
                 </Col>
                 <Col span="16">
-                  <Field name="content.isRightChoice" />
+                  <Field type="radio" name="content.isRightChoice" value="1T" /> True
+                  <Field type="radio" name="content.isRightChoice" value="1F" /> False
+                  {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
                 </Col>
               </Row>
               <Row>
@@ -240,49 +267,44 @@ const AddArticle = () => {
                   <Field name="content.choice" />
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col span="8">
                   <span>optionText:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.optionText" />
                 </Col>
-              </Row>              <Row>
+              </Row>{" "} */}
+              {/* <Row>
                 <Col span="8">
                   <span>value:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.value" />
                 </Col>
-              </Row>
-              <Row>
+              </Row> */}
+              {/* <Row>
                 <Col span="8">
                   <span>question_pretest_id:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.question_pretest_id" />
                 </Col>
-              </Row>
-              <Row>
+              </Row> */}
+              {/* <Row>
                 <Col span="8">
                   <span>question_id:</span>
                 </Col>
                 <Col span="16">
                   <Field name="content.question_id" />
                 </Col>
-              </Row>
-
+              </Row> */}
               <button type="submit">Submit</button>
             </Form>
           )}
         </Formik>
       </div>
-
-
     </div>
-
-
-
   );
 };
 
