@@ -4,9 +4,10 @@ import { Formik, Form, Field } from "formik";
 import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
-
+// const readingId = "";
 const AddArticle = () => {
   const [person, setPerson] = useState([]);
+  const [readingIdD, setReadingIdD] = useState("");
 
   async function fetch() {
     const result = await axios("https://jsonplaceholder.typicode.com/users");
@@ -33,37 +34,44 @@ const AddArticle = () => {
       level_reading: level_reading,
     });
     console.log("reading", response.data);
+    var readingId = response.data.quiz;
+    console.log(readingId);
+    setReadingIdD(readingId)
+    // console.log("reading", response.data.quiz);
+    // readingId = response.data.quiz;
+    // setReadingId(response.data.quiz)
+    // if (readingId != "") {
+    //   console.log(readingId)
+    // }
+
   }
+
   async function postQuiz(
     question,
     typeOfSuggestion_id,
-    reading_id,
-    typeOfQuestion,
-    level
+    isRightChoice,
+    choice,
   ) {
     const response = await axios.post("http://localhost:3000/quizs", {
       question: question,
       typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: reading_id,
-      typeOfQuestion: typeOfQuestion,
-      level: level,
+      reading_id: readingIdD,
     });
     console.log("quiz", response.data);
+    console.log("quizId", response.data.quiz);
+    await postChoice(isRightChoice, choice, response.data.quiz)
+
   }
   async function postChoice(
     isRightChoice,
     choice,
-    optionText,
-    value,
-    question_pretest_id,
     question_id
   ) {
     const response = await axios.post("http://localhost:3000/choice", {
       isRightChoice: isRightChoice,
       choice: choice,
-      optionText: optionText,
-      value: value,
-      question_pretest_id: question_pretest_id,
+      optionText: choice,
+      value: choice,
       question_id: question_id,
     });
     console.log("choice", response.data);
@@ -80,11 +88,12 @@ const AddArticle = () => {
               title: "",
               content: "",
               image: "",
-              category_id: "",
-              level_reading: "",
+              category_id: "1",
+              level_reading: "A1",
             },
           }}
           onSubmit={(values) => {
+            console.log(values)
             postReading(
               values.content.title,
               values.content.content,
@@ -174,34 +183,20 @@ const AddArticle = () => {
           initialValues={{
             content: {
               question: "",
-              typeOfSuggestion_id: 1,
-              reading_id: 1,
-              typeOfQuestion: "",
-              level: "",
-              isRightChoice: "0",
+              typeOfSuggestion_id: "1",
+              isRightChoice: "1",
               choice: "",
-              optionText: "",
-              value: "",
-              question_pretest_id: 1,
-              question_id: 1,
             },
           }}
           onSubmit={(values) => {
+            console.log(values)
             postQuiz(
               values.content.question,
               values.content.typeOfSuggestion_id,
-              values.content.reading_id,
-              values.content.typeOfQuestion,
-              values.content.level
-            );
-            postChoice(
               values.content.isRightChoice,
-              values.content.choice,
-              values.content.optionText,
-              values.content.value,
-              values.content.question_pretest_id,
-              values.content.question_id
+              values.content.choice
             );
+
           }}
         >
           {(formProps) => (
@@ -225,37 +220,13 @@ const AddArticle = () => {
                   </Field>
                 </Col>
               </Row>
-              {/* <Row>
-                <Col span="8">
-                  <span>reading_id:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.reading_id" />
-                </Col>
-              </Row> */}
-              {/* <Row>
-                <Col span="8">
-                  <span>typeOfQuestion:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.typeOfQuestion" />
-                </Col>
-              </Row> */}
-              {/* <Row>
-                <Col span="8">
-                  <span>level:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.level" />
-                </Col>
-              </Row> */}
               <Row>
                 <Col span="8">
                   <span>isRightChoice:</span>
                 </Col>
                 <Col span="16">
-                  <Field type="radio" name="content.isRightChoice" value="1T" /> True
-                  <Field type="radio" name="content.isRightChoice" value="1F" /> False
+                  <Field type="radio" name="content.isRightChoice" value="1" /> True
+                  <Field type="radio" name="content.isRightChoice" value="0" /> False
                   {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
                 </Col>
               </Row>
@@ -267,38 +238,6 @@ const AddArticle = () => {
                   <Field name="content.choice" />
                 </Col>
               </Row>
-              {/* <Row>
-                <Col span="8">
-                  <span>optionText:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.optionText" />
-                </Col>
-              </Row>{" "} */}
-              {/* <Row>
-                <Col span="8">
-                  <span>value:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.value" />
-                </Col>
-              </Row> */}
-              {/* <Row>
-                <Col span="8">
-                  <span>question_pretest_id:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.question_pretest_id" />
-                </Col>
-              </Row> */}
-              {/* <Row>
-                <Col span="8">
-                  <span>question_id:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.question_id" />
-                </Col>
-              </Row> */}
               <button type="submit">Submit</button>
             </Form>
           )}
