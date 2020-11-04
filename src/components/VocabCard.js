@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { Card, Row, Tabs, Button, Col } from "antd";
+import axios from "axios";
+
 
 const VocabCard = (props) => {
+  const [vocabBox, setVocabBox] = useState([]);
+
+  async function fetch() {
+    const result = await axios("http://localhost:3000/vocabBoxAndCate");
+
+    setVocabBox(result.data);
+    console.log("this is all vocabBox")
+    console.log(vocabBox[0])
+  }
+
+  useEffect(() => {
+    fetch();
+  });
+
   const {boxEngName, boxThaiName ,editButton,removeButton} = props
   return (
     <CardStyled>
       <Row>
         <ColStyled span="8">
-        {boxEngName}
+        <ui>
+            {vocabBox.map((items) =>
+              <li>{items.boxEngName}</li>
+            )}
+          </ui>
           </ColStyled>
-        <SubCol span="6">{boxThaiName}</SubCol>
+        <SubCol span="6">
+        <ui>
+            {vocabBox.map((items) =>
+              <li>{items.categoryName}</li>
+            )}
+          </ui>
+        </SubCol>
         <TailCol span="10">
           <EditButton type="primary" danger onClick={editButton}>
             Edit
