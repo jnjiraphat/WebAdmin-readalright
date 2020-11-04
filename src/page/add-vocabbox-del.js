@@ -23,18 +23,16 @@ const AddVocabBox = () => {
     });
     setVocabForm(newVocabForm)
   }
-  async function postVocab(
-    title,
-    category_id,
-    image,
-    vocabulary,
-    meaning
+
+
+  async function postVocabCard(
+    engWord,
+    thaiWord,
   ) {
-    const response = await axios.post("http://localhost:3000/reading", {
-      engWord: vocabulary,
-      thaiWord: meaning,
-      sampleSentence: null,
-      vocabBox_id: category_id
+    const response = await axios.post("http://localhost:3000/vocabCard", {
+      engWord: engWord,
+      thaiWord: thaiWord,
+      // vocabBox_id: category_id
     });
     console.log("reading", response.data);
   }
@@ -47,7 +45,7 @@ const AddVocabBox = () => {
             content: {
               title: "",
               image: "",
-              category_id: "",
+              // category_id: "",
             },
             vocabForm,
           }}
@@ -78,7 +76,7 @@ const AddVocabBox = () => {
                   <span>Category</span>
                 </Col>
                 <Col span="16">
-                  <Field as="select" name="content.category_id">
+                  {/* <Field as="select" name="content.category_id">
                     <option value="9">Action</option>
                     <option value="10">Sport</option>
                     <option value="11">Conjunction</option>
@@ -89,7 +87,7 @@ const AddVocabBox = () => {
                     <option value="16">Natural</option>
                     <option value="17">Animal</option>
                     <option value="18">Symptoms&illness</option>
-                  </Field>
+                  </Field> */}
                 </Col>
               </Row>
               <Row>
