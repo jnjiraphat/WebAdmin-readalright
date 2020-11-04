@@ -14,12 +14,29 @@ const AddVocabBox = () => {
       },
     ],
   });
-  const addVocabForm =()=> {
-    let newVocabForm = {...vocabForm};
-    console.log('...',newVocabForm);
-    newVocabForm.data.push({ vocabulary: "",
-    meaning: "",});
+  const addVocabForm = () => {
+    let newVocabForm = { ...vocabForm };
+    console.log('...', newVocabForm);
+    newVocabForm.data.push({
+      vocabulary: "",
+      meaning: "",
+    });
     setVocabForm(newVocabForm)
+  }
+  async function postVocab(
+    title,
+    category_id,
+    image,
+    vocabulary,
+    meaning
+  ) {
+    const response = await axios.post("http://localhost:3000/reading", {
+      engWord: vocabulary,
+      thaiWord: meaning,
+      sampleSentence: null,
+      vocabBox_id: category_id
+    });
+    console.log("reading", response.data);
   }
   return (
     <div>
@@ -35,14 +52,14 @@ const AddVocabBox = () => {
             vocabForm,
           }}
           onSubmit={(values) => {
-            // postReading(
-            //   values.content.title,
-            //   "image test",
-            //   values.content.category_id,
-            //   values.content.vocabulary,
-            //   values.content.meaning,
-            // );
-            // same shape as initial values
+            postVocab(
+              values.content.title,
+              values.content.category_id,
+              "image test",
+              values.item.vocabulary,
+              values.item.meaning,
+            );
+
           }}
         >
           {(formProps) => (
@@ -107,14 +124,14 @@ const AddVocabBox = () => {
                         <span>Meaning</span>
                       </Col>
                       <Col span="16">
-                      <Field id={`item[${i}].meaning`} name={`item[${i}].meaning`} />
+                        <Field id={`item[${i}].meaning`} name={`item[${i}].meaning`} />
                       </Col>
                     </Row>
                   </>
                 );
               })}
               <button type="submit">Submit</button>
-              <button onClick={()=> addVocabForm()}>Add Words</button>
+              <button onClick={() => addVocabForm()}>Add Words</button>
             </Form>
           )}
         </Formik>
