@@ -1,18 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { Card, Row, Tabs, Button, Col } from "antd";
+import axios from "axios";
+
 
 const ArticleCard = (props) => {
-  const {title, catergory, level ,editButton,removeButton} = props
+  const { title, catergory, level, editButton, removeButton } = props
+  const [article, setArticle] = useState([]);
+
+  async function fetch() {
+    const result = await axios("http://localhost:3000/reading");
+
+    setArticle(result.data);
+    console.log("this is all article")
+    console.log(article[0])
+  }
+
+  useEffect(() => {
+    fetch();
+  });
+
+
+
   return (
     <CardStyled>
+
       <Row>
         <ColStyled span="8">
-        {title}
-          </ColStyled>
-        <SubCol span="4">{catergory}</SubCol>
-        <SubCol span="4">{level}</SubCol>
+          <ui>
+            {article.map((items) =>
+              <li>{items.title}</li>
+            )}
+          </ui>
+        </ColStyled>
+        <SubCol span="4">
+          <ui>
+            {article.map((items) =>
+              <li>{items.categoryName}</li>
+            )}
+          </ui>
+        </SubCol>
+        <SubCol span="4">
+        <ui>
+            {article.map((items) =>
+              <li>{items.level_reading}</li>
+            )}
+          </ui>
+        </SubCol>
         <TailCol span="8">
           <EditButton type="primary" danger onClick={editButton}>
             Edit

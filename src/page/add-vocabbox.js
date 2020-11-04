@@ -23,9 +23,7 @@ const InviteFriends = () => {
     boxEngName,
     boxThaiName,
     category_id,
-    image,
-    engWord,
-    thaiWord
+    image, friends
   ) {
     const response = await axios.post("http://localhost:3000/vocabBox", {
       boxEngName: boxEngName,
@@ -38,24 +36,25 @@ const InviteFriends = () => {
     console.log("this is vocabBox")
     console.log(vocabBoxId);
     setvocabBoxIdD(vocabBoxId)
-    await postVocabCard(engWord,thaiWord,response.data.quiz)
+    await postVocabCard(response.data.quiz, friends)
   }
-  console.log("this is vocabBox 2")
-  console.log(vocabBoxIdD)
+
+  // console.log("this is vocabBox 2")
+  // console.log(vocabBoxIdD)
 
   async function postVocabCard(
-    engWord,
-    thaiWord,
-    vocabBox_id
+    vocabBox_id, friends
   ) {
-    
-    const response = await axios.post("http://localhost:3000/vocabCard", {  
-      engWord: engWord,
-      thaiWord: thaiWord,
-      vocabBox_id : vocabBox_id
-      // vocabBox_id: category_id
-    });
-    console.log("reading", response.data);
+    console.log("eiei");
+
+    console.log(friends);
+    for (let index = 0; index < friends.length; index++) {
+      const response = await axios.post("http://localhost:3000/vocabCard", {
+        engWord: friends[index]['engWord'],
+        thaiWord: friends[index]['thaiWord'],
+        vocabBox_id: vocabBox_id
+      });
+    }
   }
 
   return (
@@ -70,16 +69,18 @@ const InviteFriends = () => {
             values.content.title,
             values.content.title_meaning,
             values.content.category_id,
-            "image test"
+            "image test", values.friends
           );
+          console.log(values.friends)
 
-          for (let index = 0; index < values.friends.length; index++) {
-            postVocabCard(
-              values.friends[index].engWord,
-              values.friends[index].thaiWord       
-            )
-            
-          }         
+          console.log(values.friends.length)
+          // for (let index = 0; index < values.friends.length; index++) {
+          //   postVocabCard(
+          //     values.friends[index].engWord,
+          //     values.friends[index].thaiWord       
+          //   )
+
+          // }         
         }}
       >
         {({ values }) => (
