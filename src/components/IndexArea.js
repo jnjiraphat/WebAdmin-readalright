@@ -2,25 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import Icon from "../asset/image/icon.png";
-import { Row, Col, Button } from "antd";
-import { Tabs } from "antd";
+import { Row, Tabs, Button } from "antd";
+import Article from "./IndexArticle";
+import VocabBox from './IndexVocabBox'
 
 const IndexArea = () => {
   const { TabPane } = Tabs;
   return (
     <RowArea>
       <WhiteArea>
-        <Tabs defaultActiveKey="1" centered>
-          <TabPane tab="Tab 1" key="1">
-            Content of Tab Pane 1
+        <TabsStyled defaultActiveKey="1" centered>
+          <TabPane tab="Article" key="1">
+            <Article />
           </TabPane>
-          <TabPane tab="Tab 2" key="2">
-            Content of Tab Pane 2
+          <TabPane tab="Vocab Box" key="2">
+            <VocabBox/>
           </TabPane>
-          <TabPane tab="Tab 3" key="3">
-            Content of Tab Pane 3
-          </TabPane>
-        </Tabs>
+        </TabsStyled>
       </WhiteArea>
     </RowArea>
   );
@@ -31,6 +29,10 @@ export default IndexArea;
 const WhiteArea = styled.div`
   width: 1100px;
   background: #fff;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 40px;
   min-height: 500px;
   margin-top: 22px;
   display: flex;
@@ -40,4 +42,28 @@ const WhiteArea = styled.div`
 const RowArea = styled(Row)`
   display: flex;
   justify-content: center;
+`;
+
+const TabsStyled = styled(Tabs)`
+  .ant-tabs-tab-btn {
+    width: 500px;
+    text-align: center;
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #8a63e5 !important;
+  }
+  .ant-tabs-ink-bar {
+    background: transparent;
+  }
+
+  .ant-tabs-ink-bar::after {
+    content: " ";
+    position: absolute;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #8a63e5;
+    transform: translateX(-50%);
+  }
 `;
