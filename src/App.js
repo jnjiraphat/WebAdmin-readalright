@@ -6,6 +6,7 @@ import Index from './page/index'
 import AddArticle from './page/add-article'
 import { Route, Switch } from 'react-router-dom'
 import AddVocabBox from './page/add-vocabbox'
+import EditVocabBox from './page/edit-vocabbox'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/menu-site" component={MenuSite} />
         <Route path="/add-article" component={AddArticle} />
         <Route path="/add-vocabBox" component={AddVocabBox} />
+        <Route path="/edit-vocabBox" component={EditVocabBox} />
     </div>
   );
 }

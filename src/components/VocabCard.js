@@ -22,20 +22,22 @@ const VocabCard = (props) => {
 
   const {boxEngName, boxThaiName ,editButton,removeButton} = props
   return (
+    <>
+   {vocabBox.map((items) =>
     <CardStyled>
       <Row>
         <ColStyled span="8">
         <ui>
-            {vocabBox.map((items) =>
+            
               <li>{items.boxEngName}</li>
-            )}
+            
           </ui>
           </ColStyled>
         <SubCol span="6">
         <ui>
-            {vocabBox.map((items) =>
+            
               <li>{items.categoryName}</li>
-            )}
+            
           </ui>
         </SubCol>
         <TailCol span="10">
@@ -48,6 +50,8 @@ const VocabCard = (props) => {
         </TailCol>
       </Row>
     </CardStyled>
+  )}
+  </>
   );
 };
 

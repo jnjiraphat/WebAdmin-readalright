@@ -60,7 +60,7 @@ const InviteFriends = () => {
     <Background>
       <Container>
         <AreaTopic>
-          <TopicAdd>Add Vocab Box</TopicAdd>
+          <TopicAdd>Edit Vocab Box</TopicAdd>
         </AreaTopic>
         <RowArea>
           <WhiteArea>

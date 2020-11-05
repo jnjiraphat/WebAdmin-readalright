@@ -36,21 +36,20 @@ const AddArticle = () => {
     console.log("reading", response.data);
     var readingId = response.data.quiz;
     console.log(readingId);
-    setReadingIdD(readingId)
+    setReadingIdD(readingId);
     // console.log("reading", response.data.quiz);
     // readingId = response.data.quiz;
     // setReadingId(response.data.quiz)
     // if (readingId != "") {
     //   console.log(readingId)
     // }
-
   }
 
   async function postQuiz(
     question,
     typeOfSuggestion_id,
     isRightChoice,
-    choice,
+    choice
   ) {
     const response = await axios.post("http://localhost:3000/quizs", {
       question: question,
@@ -59,14 +58,9 @@ const AddArticle = () => {
     });
     console.log("quiz", response.data);
     console.log("quizId", response.data.quiz);
-    await postChoice(isRightChoice, choice, response.data.quiz)
-
+    await postChoice(isRightChoice, choice, response.data.quiz);
   }
-  async function postChoice(
-    isRightChoice,
-    choice,
-    question_id
-  ) {
+  async function postChoice(isRightChoice, choice, question_id) {
     const response = await axios.post("http://localhost:3000/choice", {
       isRightChoice: isRightChoice,
       choice: choice,
@@ -78,173 +72,279 @@ const AddArticle = () => {
   }
 
   return (
-    <div>
-      <h1>Article</h1>
-      <div>
-        <h1>Article</h1>
-        <Formik
-          initialValues={{
-            content: {
-              title: "",
-              content: "",
-              image: "",
-              category_id: "1",
-              level_reading: "A1",
-            },
-          }}
-          onSubmit={(values) => {
-            console.log(values)
-            postReading(
-              values.content.title,
-              values.content.content,
-              "image test",
-              values.content.category_id,
-              values.content.level_reading
-            );
+    <Background>
+      <Container>
+        <AreaTopic>
+          <TopicAdd>Add Article</TopicAdd>
+        </AreaTopic>
+        <RowArea>
+          <WhiteArea>
+            <div>
+              <h1>Article</h1>
+              <Formik
+                initialValues={{
+                  content: {
+                    title: "",
+                    content: "",
+                    image: "",
+                    category_id: "1",
+                    level_reading: "A1",
+                  },
+                }}
+                onSubmit={(values) => {
+                  console.log(values);
+                  postReading(
+                    values.content.title,
+                    values.content.content,
+                    "image test",
+                    values.content.category_id,
+                    values.content.level_reading
+                  );
 
-            // same shape as initial values
-          }}
-        >
-          {(formProps) => (
-            <Form>
-              <Row>
-                <Col span="8">
-                  <span>Title:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.title" />
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>content:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.content" />
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>photo:</span>
-                </Col>
-                <Col span="16">
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={(event) => {
-                      formProps.setFieldValue(
-                        "photo1",
-                        event.currentTarget.files[0]
-                      );
-                    }}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>category_id:</span>
-                </Col>
-                <Col span="16">
-                  <Field as="select" name="content.category_id">
-                    <option value="1">Song</option>
-                    <option value="2">Movie</option>
-                    <option value="3">Sport</option>
-                    <option value="4">Entertainment</option>
-                    <option value="5">Health</option>
-                    <option value="6">Information Technology</option>
-                    <option value="7">Travel</option>
-                    <option value="8">Story</option>
-                  </Field>
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>level_reading:</span>
-                </Col>
-                <Col span="16">
-                  <Field as="select" name="content.level_reading">
-                    <option value="A1">A1</option>
-                    <option value="A2">A2</option>
-                    <option value="B1">B1</option>
-                  </Field>
-                </Col>
-              </Row>
+                  // same shape as initial values
+                }}
+              >
+                {(formProps) => (
+                  <Form>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>Title:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldStyled name="content.title" />
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>content:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldContent name="content.content" />
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>photo:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <input
+                          type="file"
+                          name="file"
+                          onChange={(event) => {
+                            formProps.setFieldValue(
+                              "photo1",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                        />
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>category_id:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldStyled as="select" name="content.category_id">
+                          <option value="1">Song</option>
+                          <option value="2">Movie</option>
+                          <option value="3">Sport</option>
+                          <option value="4">Entertainment</option>
+                          <option value="5">Health</option>
+                          <option value="6">Information Technology</option>
+                          <option value="7">Travel</option>
+                          <option value="8">Story</option>
+                        </FieldStyled>
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>level_reading:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldStyled as="select" name="content.level_reading">
+                          <option value="A1">A1</option>
+                          <option value="A2">A2</option>
+                          <option value="B1">B1</option>
+                        </FieldStyled>
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6"></Col>
+                      <Col span="12"></Col>
+                      <ColSubmit span="6">
+                        <button type="submit">Submit</button>
+                      </ColSubmit>
+                    </RowStyled>
+                  </Form>
+                )}
+              </Formik>
 
-              <button type="submit">Submit</button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-
-      <div>
-        <h1>Post Test</h1>
-        <h4>Question no.1</h4>
-        <Formik
-          initialValues={{
-            content: {
-              question: "",
-              typeOfSuggestion_id: "1",
-              isRightChoice: "1",
-              choice: "",
-            },
-          }}
-          onSubmit={(values) => {
-            console.log(values)
-            postQuiz(
-              values.content.question,
-              values.content.typeOfSuggestion_id,
-              values.content.isRightChoice,
-              values.content.choice
-            );
-
-          }}
-        >
-          {(formProps) => (
-            <Form>
-              <Row>
-                <Col span="8">
-                  <span>question:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.question" />
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>typeOfSuggestion_id:</span>
-                </Col>
-                <Col span="16">
-                  <Field as="select" name="content.typeOfSuggestion_id">
-                    <option value="1">Verb</option>
-                    <option value="2">Noun</option>
-                  </Field>
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>isRightChoice:</span>
-                </Col>
-                <Col span="16">
-                  <Field type="radio" name="content.isRightChoice" value="1" /> True
-                  <Field type="radio" name="content.isRightChoice" value="0" /> False
-                  {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
-                </Col>
-              </Row>
-              <Row>
-                <Col span="8">
-                  <span>choice:</span>
-                </Col>
-                <Col span="16">
-                  <Field name="content.choice" />
-                </Col>
-              </Row>
-              <button type="submit">Submit</button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </div>
+              <h1>Post Test</h1>
+              <h4>Question no.1</h4>
+              <Formik
+                initialValues={{
+                  content: {
+                    question: "",
+                    typeOfSuggestion_id: "1",
+                    isRightChoice: "1",
+                    choice: "",
+                  },
+                }}
+                onSubmit={(values) => {
+                  console.log(values);
+                  postQuiz(
+                    values.content.question,
+                    values.content.typeOfSuggestion_id,
+                    values.content.isRightChoice,
+                    values.content.choice
+                  );
+                }}
+              >
+                {(formProps) => (
+                  <Form>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>question:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldContent name="content.question" />
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>typeOfSuggestion_id:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldStyled
+                          as="select"
+                          name="content.typeOfSuggestion_id"
+                        >
+                          <option value="1">Verb</option>
+                          <option value="2">Noun</option>
+                        </FieldStyled>
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>isRightChoice:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <Field
+                          type="radio"
+                          name="content.isRightChoice"
+                          value="1"
+                        />{" "}
+                        True
+                        <Field
+                          type="radio"
+                          name="content.isRightChoice"
+                          value="0"
+                        />{" "}
+                        False
+                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6">
+                        <TextForm>choice:</TextForm>
+                      </Col>
+                      <Col span="12">
+                        <FieldStyled name="content.choice" />
+                      </Col>
+                      <Col span="6"></Col>
+                    </RowStyled>
+                    <RowStyled>
+                      <Col span="6"></Col>
+                      <Col span="12"></Col>
+                      <ColSubmit span="6">
+                        <button type="submit">Submit</button>
+                      </ColSubmit>
+                    </RowStyled>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </WhiteArea>
+        </RowArea>
+      </Container>
+    </Background>
   );
 };
 
 export default AddArticle;
+
+const Container = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding-top: 3%;
+  align-items: center;
+`;
+
+const Background = styled.div`
+  background: linear-gradient(
+    180deg,
+    rgba(230, 139, 236, 1) 0%,
+    rgba(138, 99, 229, 1) 100%
+  );
+  min-height: 100vh;
+`;
+
+const WhiteArea = styled.div`
+  width: 1100px;
+  background: #fff;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  min-height: 500px;
+  margin-top: 22px;
+  /* display: flex; */
+  border-radius: 4px;
+`;
+
+const RowArea = styled(Row)`
+  /* display: flex; */
+  justify-content: center;
+`;
+
+const TopicAdd = styled.span`
+  font-size: 24px;
+  font-weight: bold;
+  align-self: center;
+`;
+
+const AreaTopic = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const TextForm = styled.span`
+  font-weight: bold;
+  font-size: 14px;
+  margin-left: 30%;
+`;
+
+const RowStyled = styled(Row)`
+  margin-bottom: 2%;
+`;
+
+const FieldStyled = styled(Field)`
+  width: 500px;
+`;
+const FieldContent = styled(FieldStyled)`
+  height: 150px;
+`;
+
+const ColSubmit = styled(Col)`
+  display: flex;
+  justify-content: center;
+`;
