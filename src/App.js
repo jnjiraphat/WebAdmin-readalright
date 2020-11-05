@@ -5,7 +5,7 @@ import Login from './page/login'
 import Index from './page/index'
 import AddArticle from './page/add-article'
 import { Route, Switch } from 'react-router-dom'
-import AddVocabBox from './page/add-vocabBox'
+import AddVocabBox from './page/add-vocabbox'
 
 function App() {
   return (

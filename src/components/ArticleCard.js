@@ -4,60 +4,54 @@ import { Link, NavLink } from "react-router-dom";
 import { Card, Row, Tabs, Button, Col } from "antd";
 import axios from "axios";
 
-
 const ArticleCard = (props) => {
-  const { title, catergory, level, editButton, removeButton } = props
+  const { title, catergory, level, editButton, removeButton } = props;
   const [article, setArticle] = useState([]);
 
   async function fetch() {
     const result = await axios("http://localhost:3000/reading");
 
     setArticle(result.data);
-    console.log("this is all article")
-    console.log(article[0])
+    console.log("this is all article");
+    console.log(article[0]);
   }
 
   useEffect(() => {
     fetch();
   });
 
-
-
   return (
-    <CardStyled>
-
-      <Row>
-        <ColStyled span="8">
-          <ui>
-            {article.map((items) =>
-              <li>{items.title}</li>
-            )}
-          </ui>
-        </ColStyled>
-        <SubCol span="4">
-          <ui>
-            {article.map((items) =>
-              <li>{items.categoryName}</li>
-            )}
-          </ui>
-        </SubCol>
-        <SubCol span="4">
-        <ui>
-            {article.map((items) =>
-              <li>{items.level_reading}</li>
-            )}
-          </ui>
-        </SubCol>
-        <TailCol span="8">
-          <EditButton type="primary" danger onClick={editButton}>
-            Edit
-          </EditButton>
-          <RemoveButton type="primary" danger onClick={removeButton}>
-            Remove
-          </RemoveButton>
-        </TailCol>
-      </Row>
-    </CardStyled>
+    <>
+      {article.map((items) => (
+        <CardStyled>
+          <Row>
+            <ColStyled span="8">
+              <ui>
+                <li>{items.title}</li>
+              </ui>
+            </ColStyled>
+            <SubCol span="4">
+              <ui>
+                <li>{items.categoryName}</li>
+              </ui>
+            </SubCol>
+            <SubCol span="4">
+              <ui>
+                <li>{items.level_reading}</li>
+              </ui>
+            </SubCol>
+            <TailCol span="8">
+              <EditButton type="primary" danger onClick={editButton}>
+                Edit
+              </EditButton>
+              <RemoveButton type="primary" danger onClick={removeButton}>
+                Remove
+              </RemoveButton>
+            </TailCol>
+          </Row>
+        </CardStyled>
+      ))}
+    </>
   );
 };
 
@@ -65,7 +59,7 @@ export default ArticleCard;
 
 const CardStyled = styled(Card)`
   margin-bottom: 15px;
-`
+`;
 
 const ButtonStyled = styled(Button)`
   border-radius: 5px;
@@ -79,27 +73,27 @@ const ButtonStyled = styled(Button)`
   align-items: center;
   justify-content: center;
   margin-left: 5px;
-`
+`;
 
 const EditButton = styled(ButtonStyled)`
-  background: linear-gradient(180deg, #FFD387 0%, #FFE43A 100%) !important;
-`
+  background: linear-gradient(180deg, #ffd387 0%, #ffe43a 100%) !important;
+`;
 const RemoveButton = styled(ButtonStyled)`
-  background: linear-gradient(180deg, #FFB382 0%, #F07590 100%) !important;
-`
+  background: linear-gradient(180deg, #ffb382 0%, #f07590 100%) !important;
+`;
 
 const ColStyled = styled(Col)`
   font-size: 14px;
   overflow: hidden;
   font-weight: 700;
-`
+`;
 
 const SubCol = styled(ColStyled)`
   display: flex;
   justify-content: center;
-`
+`;
 
 const TailCol = styled(ColStyled)`
   display: flex;
   justify-content: flex-end;
-`
+`;
