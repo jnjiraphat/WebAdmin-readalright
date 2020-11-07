@@ -7,7 +7,7 @@ import axios from "axios";
 import AddPostTest from './add-postTest'
 
 // const readingId = "";
-const AddArticle = () => {
+const EditArticle = () => {
   const [person, setPerson] = useState([]);
   const [readingIdD, setReadingIdD] = useState("");
 
@@ -77,7 +77,7 @@ const AddArticle = () => {
     <Background>
       <Container>
         <AreaTopic>
-          <TopicAdd>Add Article</TopicAdd>
+          <TopicAdd>Edit Content Article</TopicAdd>
         </AreaTopic>
         <RowArea>
           <WhiteArea>
@@ -197,7 +197,7 @@ const AddArticle = () => {
   );
 };
 
-export default AddArticle;
+export default EditArticle;
 
 const Container = styled.div`
   margin-left: auto;

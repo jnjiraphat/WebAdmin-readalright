@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { Row, Col, Button } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { formatTimeStr } from "antd/lib/statistic/utils";
 
-const initialValues = {
-  vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
-  friends: [
-    {
-      engWord: "",
-      thaiWord: "",
-    },
-  ],
-};
+// const initialValues = {
+//   vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
+//   friends: [
+//     {
+//       engWord: "",
+//       thaiWord: "",
+//     },
+//   ],
+// };
 
-const InviteFriends = () => {
+const AddVocabBox = () => {
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
-
+  
   async function postVocabBox(
     boxEngName,
     boxThaiName,
     category_id,
     image,
     friends
-  ) {
-    const response = await axios.post("http://localhost:3000/vocabBox", {
-      boxEngName: boxEngName,
-      boxThaiName: boxThaiName,
-      category_id: category_id,
-      image: image,
-    });
-    console.log("reading", response.data);
-    var vocabBoxId = response.data.quiz;
-    console.log("this is vocabBox");
+    ) {
+      const response = await axios.post("http://localhost:3000/vocabBox", {
+        boxEngName: boxEngName,
+        boxThaiName: boxThaiName,
+        category_id: category_id,
+        image: image,
+      });
+      console.log("reading", response.data);
+      var vocabBoxId = response.data.quiz;
+      console.log("this is vocabBox");
     console.log(vocabBoxId);
     setvocabBoxIdD(vocabBoxId);
     await postVocabCard(response.data.quiz, friends);
@@ -66,7 +65,15 @@ const InviteFriends = () => {
           <WhiteArea>
             <div>
               <Formik
-                initialValues={initialValues}
+                initialValues={{
+                  vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
+                  friends: [
+                    {
+                      engWord: "",
+                      thaiWord: "",
+                    },
+                  ],
+                }}
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
                   alert(JSON.stringify(values, null, 2));
@@ -96,7 +103,7 @@ const InviteFriends = () => {
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title" />
+                        <FieldStyled name="content.title"/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -215,9 +222,11 @@ const InviteFriends = () => {
                         </div>
                       )}
                     </FieldArray>
-                    <AreaMoreWord>
-                    <ButtonStyled type="submit">Submit</ButtonStyled>
-                    </AreaMoreWord>
+                    <AreaSubmit>
+                    <Link to="/">
+                      <ButtonStyled type="submit">Submit</ButtonStyled>
+                    </Link>
+                    </AreaSubmit>
                   </FormStyled>
                 )}
               </Formik>
@@ -229,7 +238,7 @@ const InviteFriends = () => {
   );
 };
 
-export default InviteFriends;
+export default AddVocabBox;
 
 const Container = styled.div`
   margin-left: auto;
@@ -311,12 +320,16 @@ const ColSubmit = styled(Col)`
 const ButtonStyled = styled(Button)`
   height: 27.6px;
 `
-const AreaMoreWord = styled.div`
+const AreaSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 2%;
   margin-bottom: 2%;
+  margin-right: 10%;
 `
+const AreaMoreWord = styled(AreaSubmit)`
+  margin-top: 5%;
+`
+
 
 const FormStyled = styled(Form)`
   margin-top: 22px;

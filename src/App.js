@@ -7,6 +7,9 @@ import AddArticle from './page/add-article'
 import { Route, Switch } from 'react-router-dom'
 import AddVocabBox from './page/add-vocabbox'
 import EditVocabBox from './page/edit-vocabbox'
+import AddPostTest from './page/add-postTest';
+import EditArticle from './page/edit-article'
+import EditPostTest from './page/edit-postTest'
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/add-article" component={AddArticle} />
         <Route path="/add-vocabBox" component={AddVocabBox} />
         <Route path="/edit-vocabBox" component={EditVocabBox} />
+        <Route path="/add-postTest" component={AddPostTest} />
+        <Route path="/edit-article" component={EditArticle} />
+        <Route path="/edit-postTest" component={EditPostTest} />
     </div>
   );
 }

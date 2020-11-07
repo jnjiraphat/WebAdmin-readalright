@@ -41,12 +41,19 @@ const ArticleCard = (props) => {
               </ui>
             </SubCol>
             <TailCol span="8">
-              <EditButton type="primary" danger onClick={editButton}>
-                Edit
-              </EditButton>
-              <RemoveButton type="primary" danger onClick={removeButton}>
-                Remove
-              </RemoveButton>
+              <Link to="/edit-article">
+                <EditButton type="primary" danger >
+                  Edit Content
+                </EditButton>
+              </Link>
+              <Link to="/edit-postTest">
+                <EditButton type="primary" danger >
+                  Edit Post Test
+                </EditButton>
+              </Link>
+                <RemoveButton type="primary" danger >
+                  Remove
+                </RemoveButton>
             </TailCol>
           </Row>
         </CardStyled>
@@ -76,6 +83,7 @@ const ButtonStyled = styled(Button)`
 `;
 
 const EditButton = styled(ButtonStyled)`
+  width: 90%;
   background: linear-gradient(180deg, #ffd387 0%, #ffe43a 100%) !important;
 `;
 const RemoveButton = styled(ButtonStyled)`

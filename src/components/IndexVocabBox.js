@@ -9,7 +9,7 @@ const IndexVocabBox = () => {
     return(
         <Div>
             <Link to="/add-vocabBox">
-                <ButtonStyled type="primary" danger>+ New</ButtonStyled>
+                <ButtonStyled type="primary" danger >+ New</ButtonStyled>
             </Link>
             <RowStyled>
                 <HeadCol span="8">Vocab Box English Name</HeadCol>
