@@ -5,21 +5,31 @@ import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import AddPostTest from './add-postTest'
+import {
+  BrowserRouter as Router,
+  useRouteMatch,
+} from 'react-router-dom';
 
 // const readingId = "";
 const EditArticle = () => {
-  const [person, setPerson] = useState([]);
+  const match = useRouteMatch('/edit-article/:readingId');
+  console.log("reading id in edit article")
+  console.log(match.params.readingId)
+
   const [readingIdD, setReadingIdD] = useState("");
 
-  async function fetch() {
-    const result = await axios("https://jsonplaceholder.typicode.com/users");
-
-    setPerson(result.data);
-    // console.log(person)
-  }
   useEffect(() => {
-    fetch();
+    editContent();
+    // fetch();
   });
+
+  async function editContent() {
+    console.log("reading ID in editContent")
+    console.log(match.params.readingId)
+    const result = await axios("http://localhost:3000/reading/readingId/" + match.params.readingId);
+    console.log("result")
+    console.log(result.data.reading[0])
+  }
 
   async function postReading(
     title,
@@ -56,7 +66,7 @@ const EditArticle = () => {
     const response = await axios.post("http://localhost:3000/quizs", {
       question: question,
       typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: readingIdD,
+      // reading_id: readingIdD,
     });
     console.log("quiz", response.data);
     console.log("quizId", response.data.quiz);

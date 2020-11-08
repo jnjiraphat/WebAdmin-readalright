@@ -43,7 +43,8 @@ const ArticleCard = (props) => {
             <TailCol span="8">
               <Link to="/edit-article">
                 <EditButton type="primary" danger >
-                  Edit Content
+                {/* <Route path="/post/"  component={Post} /> */}
+                <Link to={`/edit-article/${items.reading_id}`}>Edit Content</Link>
                 </EditButton>
               </Link>
               <Link to="/edit-postTest">
