@@ -36,13 +36,13 @@ const VocabCard = (props) => {
         <SubCol span="6">
         <ui>
             
-              <li>{items.categoryName}</li>
+              <li>{items.boxThaiName}</li>
             
           </ui>
         </SubCol>
         <TailCol span="10">
           <EditButton type="primary" danger onClick={editButton}>
-            Edit
+            <Link to={`/edit-vocabbox/${items.vocabBox_id}`}>Edit</Link>
           </EditButton>
           <RemoveButton type="primary" danger onClick={removeButton}>
             Remove

@@ -5,6 +5,10 @@ import { Row, Col, Button } from "antd";
 import axios from "axios";
 import styled from "styled-components";
 import { formatTimeStr } from "antd/lib/statistic/utils";
+import {
+  BrowserRouter as Router,
+  useRouteMatch,
+} from 'react-router-dom';
 
 const initialValues = {
   vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
@@ -16,8 +20,25 @@ const initialValues = {
   ],
 };
 
+
+
 const InviteFriends = () => {
+  const match = useRouteMatch('/edit-vocabbox/:vocabBox_id');
+  console.log("voccab box id in edit vocabbox")
+  console.log(match.params.vocabBox_id)
+
+
+  async function editVocabBox() {
+    console.log("vocab box ID in editVocabBox")
+    console.log(match.params.vocabBox_id)
+    const result = await axios("http://localhost:3000/vocabBox/" + match.params.vocabBox_id);
+    console.log("result")
+    console.log(result.data.reading[0])
+  }
+
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
+
+
 
   async function postVocabBox(
     boxEngName,
@@ -39,6 +60,11 @@ const InviteFriends = () => {
     setvocabBoxIdD(vocabBoxId);
     await postVocabCard(response.data.quiz, friends);
   }
+
+  useEffect(() => {
+    editVocabBox();
+    // fetch();
+  });
 
   // console.log("this is vocabBox 2")
   // console.log(vocabBoxIdD)
