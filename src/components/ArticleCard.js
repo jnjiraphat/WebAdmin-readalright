@@ -49,7 +49,7 @@ const ArticleCard = (props) => {
               </Link>
               <Link to="/edit-postTest">
                 <EditButton type="primary" danger >
-                  Edit Post Test
+                  <Link to={`/edit-postTest/${items.reading_id}`}>Edit Post Test</Link>
                 </EditButton>
               </Link>
                 <RemoveButton type="primary" danger >
