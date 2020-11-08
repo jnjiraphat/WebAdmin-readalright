@@ -13,6 +13,12 @@ import {
 // const readingId = "";
 const EditPostTest = () => {
 
+  const [oldQuestion, setOldQuestion] = useState("");
+  const [oldtypeOfSuggestionId, setOldtypeOfSuggestionId] = useState("");
+  const [oldIsRightChoice, setOldIsRightChoice] = useState("");
+  const [oldChoice, setOldChoice] = useState("");
+
+
   const [dataArrayQuizChallenge, setdataArrayQuizChallenge] = useState([]);
   const match = useRouteMatch(`/edit-postTest/:reading_id`);
   console.log("reading id in edit post test")

@@ -20,10 +20,10 @@ const EditArticle = () => {
 
   //content for edit
   const [oldTitle, setOldTitle] = useState("");
-  const [oldContent, setContent] = useState("");
-  const [oldImage, setImage] = useState("");
-  const [oldCate, setCate] = useState("");
-  const [oldLevel, setLevel] = useState("");
+  const [oldContent, setOldContent] = useState("");
+  const [oldImage, setOldImage] = useState("");
+  const [oldCate, setOldCate] = useState("");
+  const [oldLevel, setOldLevel] = useState("");
   
 
   useEffect(() => {
@@ -38,10 +38,10 @@ const EditArticle = () => {
     console.log("result")
     console.log(result.data.reading[0]) 
     setOldTitle(result.data.reading[0].title)
-    setContent(result.data.reading[0].content)
-    // setImage(result.data.reading[0].image)
-    setCate(result.data.reading[0].category_id)
-    setLevel(result.data.reading[0].level_reading)
+    setOldContent(result.data.reading[0].content)
+    // setOldImage(result.data.reading[0].image)
+    setOldCate(result.data.reading[0].category_id)
+    setOldLevel(result.data.reading[0].level_reading)
     console.log(result.data.reading[0].image)
   }
 
@@ -112,7 +112,7 @@ const EditArticle = () => {
                   content: {
                     title: {oldTitle},
                     content: {oldContent},
-                    image: {oldImage},
+                    // image: {oldImage},
                     category_id: {oldCate},
                     level_reading: {oldLevel},
                   }
