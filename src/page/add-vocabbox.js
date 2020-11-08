@@ -254,11 +254,11 @@ const AddVocabBox = () => {
                       )}
                     </FieldArray>
                     <AreaSubmit>
-                      {/* <Link to="/"> */}
+                      <Link to="/">
                       <button type="submit" onClick={handleUpload}>
                         Submit
                       </button>
-                      {/* </Link> */}
+                      </Link>
                     </AreaSubmit>
                   </FormStyled>
                 )}
