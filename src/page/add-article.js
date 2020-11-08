@@ -5,11 +5,36 @@ import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import AddPostTest from './add-postTest'
+import { storage } from '../firebase/index';
 
 // const readingId = "";
 const AddArticle = () => {
   const [person, setPerson] = useState([]);
   const [readingIdD, setReadingIdD] = useState("");
+  const [url, setUrl] = useState("");
+  const [image, setImage] = useState("")
+
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {
+            setUrl(url);
+            console.log(url)
+          });
+      }
+    );
+  };
 
   async function fetch() {
     const result = await axios("https://jsonplaceholder.typicode.com/users");
@@ -88,7 +113,6 @@ const AddArticle = () => {
                   content: {
                     title: "",
                     content: "",
-                    image: "",
                     category_id: "1",
                     level_reading: "A1",
                   }
@@ -102,7 +126,7 @@ const AddArticle = () => {
                     values.content.category_id,
                     values.content.level_reading,
                   );
-
+                    // setImage(values.content.image);
                   // same shape as initial values
                 }}
               >
@@ -122,7 +146,7 @@ const AddArticle = () => {
                         <TextForm>content:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldContent name="content.content" />
+                        <FieldContent name="content.content" component="textarea"/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -136,9 +160,10 @@ const AddArticle = () => {
                           name="file"
                           onChange={(event) => {
                             formProps.setFieldValue(
-                              "photo1",
+                              "image",
                               event.currentTarget.files[0]
                             );
+                            setImage(event.currentTarget.files[0]);
                           }}
                         />
                       </Col>
@@ -181,7 +206,7 @@ const AddArticle = () => {
                       <Col span="12"></Col>
                       <ColSubmit span="6">
                         <Link to="/add-postTest">
-                          <button type="submit">Next</button>
+                          <button type="submit" onClick={handleUpload}>Next</button>
                         </Link>
                       </ColSubmit>
                     </RowStyled>
