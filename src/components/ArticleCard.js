@@ -16,6 +16,20 @@ const ArticleCard = (props) => {
     console.log(article[0]);
   }
 
+  async function deleteArticle(reading_id) {
+    console.log("reading_id in delete article")
+    console.log(reading_id)
+    await axios.delete("http://localhost:3000/admin/deleteReading/" + reading_id)
+      .then(
+        (response) => {
+          console.log("delete article success!!!");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
   useEffect(() => {
     fetch();
   });
@@ -49,11 +63,11 @@ const ArticleCard = (props) => {
               </Link>
               <Link to="/edit-postTest">
                 <EditButton type="primary" danger >
-                  Edit Post Test
+                  <Link to={`/edit-postTest/${items.reading_id}`}>Edit Post Test</Link>
                 </EditButton>
               </Link>
-                <RemoveButton type="primary" danger >
-                  Remove
+                <RemoveButton type="primary" danger onClick={() => deleteArticle(items.reading_id)}>
+                  Remove 
                 </RemoveButton>
             </TailCol>
           </Row>

@@ -5,20 +5,70 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import { Button } from "antd";
+import {
+  BrowserRouter as Router,
+  useRouteMatch,
+} from 'react-router-dom';
 
 // const readingId = "";
 const EditPostTest = () => {
-  const [person, setPerson] = useState([]);
+
+  const [dataArrayQuizChallenge, setdataArrayQuizChallenge] = useState([]);
+  const match = useRouteMatch(`/edit-postTest/:reading_id`);
+  console.log("reading id in edit post test")
+  console.log(match.params.reading_id)
+
+  const [quiz,setQuiz] = useState([]);
+
+  const fetchAPI = async () => {
+    var dataArrayQuiz = [];
+    for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
+      await axios
+        .get(
+          "http://localhost:3000/quiz/" + dataArrayQuizChallenge[0][index].question_id)
+        .then(
+          (response) => {
+            console.log(response.data);
+            dataArrayQuiz.push(response.data);
+            console.log(dataArrayQuiz.length);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+    setQuiz(dataArrayQuiz);
+  };
+
+  console.log("quiz in edit post")
+  console.log(quiz)
+
+  const fetchApiChallenge = async () => {
+    var temp = [];
+
+    if (match.params.reading_id != null) {
+      await axios
+        .get("http://localhost:3000/quizInContent/" + match.params.reading_id)
+        .then(
+          (response) => {
+            console.log(response.data.quiz);
+            temp.push(response.data.quiz);
+            console.log(temp.length);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        setdataArrayQuizChallenge(temp)
+    } else {
+    }
+  };
+
   const [readingIdD, setReadingIdD] = useState("");
 
-  async function fetch() {
-    const result = await axios("https://jsonplaceholder.typicode.com/users");
-
-    setPerson(result.data);
-    // console.log(person)
-  }
   useEffect(() => {
-    fetch();
+    fetchApiChallenge();
+    fetchAPI();
   });
 
   async function postReading(

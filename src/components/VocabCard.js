@@ -16,42 +16,75 @@ const VocabCard = (props) => {
     console.log(vocabBox[0])
   }
 
+  async function deleteVocabCard(vocabBox_id) {
+    console.log("vocabBox_id eng")
+    console.log(vocabBox_id)
+    await axios.delete("http://localhost:3000/admin/deleteVocabCard/" + vocabBox_id)
+      .then(
+        (response) => {
+          console.log("delete vocab card success!!!");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      deleteVocabBox(vocabBox_id)
+
+
+  }
+
+  async function deleteVocabBox(vocabBox_id) {
+    console.log("vocabBox_id in delete vocabbox")
+    console.log(vocabBox_id)
+    await axios.delete("http://localhost:3000/admin/deleteVocabBox/" + vocabBox_id)
+      .then(
+        (response) => {
+          console.log("delete vocabBox success!!!");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+
+
   useEffect(() => {
     fetch();
   });
 
-  const {boxEngName, boxThaiName ,editButton,removeButton} = props
+  const { boxEngName, boxThaiName, editButton, removeButton } = props
   return (
     <>
-   {vocabBox.map((items) =>
-    <CardStyled>
-      <Row>
-        <ColStyled span="8">
-        <ui>
-            
-              <li>{items.boxEngName}</li>
-            
-          </ui>
-          </ColStyled>
-        <SubCol span="6">
-        <ui>
-            
-              <li>{items.boxThaiName}</li>
-            
-          </ui>
-        </SubCol>
-        <TailCol span="10">
-          <EditButton type="primary" danger onClick={editButton}>
-            <Link to={`/edit-vocabbox/${items.vocabBox_id}`}>Edit</Link>
-          </EditButton>
-          <RemoveButton type="primary" danger onClick={removeButton}>
-            Remove
+      {vocabBox.map((items) =>
+        <CardStyled>
+          <Row>
+            <ColStyled span="8">
+              <ui>
+
+                <li>{items.boxEngName}</li>
+
+              </ui>
+            </ColStyled>
+            <SubCol span="6">
+              <ui>
+
+                <li>{items.boxThaiName}</li>
+
+              </ui>
+            </SubCol>
+            <TailCol span="10">
+              <EditButton type="primary" danger onClick={editButton}>
+                <Link to={`/edit-vocabbox/${items.vocabBox_id}`}>Edit</Link>
+              </EditButton>
+              <RemoveButton type="primary" danger onClick={() => deleteVocabCard(items.vocabBox_id)}>
+                Remove
           </RemoveButton>
-        </TailCol>
-      </Row>
-    </CardStyled>
-  )}
-  </>
+            </TailCol>
+          </Row>
+        </CardStyled>
+      )}
+    </>
   );
 };
 
