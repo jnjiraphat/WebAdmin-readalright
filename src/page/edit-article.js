@@ -190,7 +190,7 @@ const EditArticle = () => {
                       <Col span="6"></Col>
                       <Col span="12"></Col>
                       <ColSubmit span="6">
-                        <Link to="/add-postTest">
+                        <Link to={`/add-postTest/${match.params.readingId}`}>
                           <button type="submit">Next</button>
                         </Link>
                       </ColSubmit>

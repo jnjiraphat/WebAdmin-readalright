@@ -5,20 +5,21 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import { Button } from "antd";
+import {
+  BrowserRouter as Router,
+  useRouteMatch,
+} from 'react-router-dom';
 
 // const readingId = "";
 const AddPostTest = () => {
-  const [person, setPerson] = useState([]);
+  const match = useRouteMatch(`/add-postTest/:readingId`);
+  console.log("reading id in add post test")
+  console.log(match.params.readingId)
+  
   const [readingIdD, setReadingIdD] = useState("");
 
-  async function fetch() {
-    const result = await axios("https://jsonplaceholder.typicode.com/users");
-
-    setPerson(result.data);
-    // console.log(person)
-  }
   useEffect(() => {
-    fetch();
+    // fetch();
   });
 
   async function postReading(
