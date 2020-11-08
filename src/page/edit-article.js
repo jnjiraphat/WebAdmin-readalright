@@ -18,6 +18,14 @@ const EditArticle = () => {
 
   const [readingIdD, setReadingIdD] = useState("");
 
+  //content for edit
+  const [oldTitle, setOldTitle] = useState("");
+  const [oldContent, setContent] = useState("");
+  const [oldImage, setImage] = useState("");
+  const [oldCate, setCate] = useState("");
+  const [oldLevel, setLevel] = useState("");
+  
+
   useEffect(() => {
     editContent();
     // fetch();
@@ -28,7 +36,13 @@ const EditArticle = () => {
     console.log(match.params.readingId)
     const result = await axios("http://localhost:3000/reading/readingId/" + match.params.readingId);
     console.log("result")
-    console.log(result.data.reading[0])
+    console.log(result.data.reading[0]) 
+    setOldTitle(result.data.reading[0].title)
+    setContent(result.data.reading[0].content)
+    // setImage(result.data.reading[0].image)
+    setCate(result.data.reading[0].category_id)
+    setLevel(result.data.reading[0].level_reading)
+    console.log(result.data.reading[0].image)
   }
 
   async function postReading(
@@ -57,31 +71,31 @@ const EditArticle = () => {
     // }
   }
 
-  async function postQuiz(
-    question,
-    typeOfSuggestion_id,
-    isRightChoice,
-    choice
-  ) {
-    const response = await axios.post("http://localhost:3000/quizs", {
-      question: question,
-      typeOfSuggestion_id: typeOfSuggestion_id,
-      // reading_id: readingIdD,
-    });
-    console.log("quiz", response.data);
-    console.log("quizId", response.data.quiz);
-    await postChoice(isRightChoice, choice, response.data.quiz);
-  }
-  async function postChoice(isRightChoice, choice, question_id) {
-    const response = await axios.post("http://localhost:3000/choice", {
-      isRightChoice: isRightChoice,
-      choice: choice,
-      optionText: choice,
-      value: choice,
-      question_id: question_id,
-    });
-    console.log("choice", response.data);
-  }
+  // async function postQuiz(
+  //   question,
+  //   typeOfSuggestion_id,
+  //   isRightChoice,
+  //   choice
+  // ) {
+  //   const response = await axios.post("http://localhost:3000/quizs", {
+  //     question: question,
+  //     typeOfSuggestion_id: typeOfSuggestion_id,
+  //     // reading_id: readingIdD,
+  //   });
+  //   console.log("quiz", response.data);
+  //   console.log("quizId", response.data.quiz);
+  //   await postChoice(isRightChoice, choice, response.data.quiz);
+  // }
+  // async function postChoice(isRightChoice, choice, question_id) {
+  //   const response = await axios.post("http://localhost:3000/choice", {
+  //     isRightChoice: isRightChoice,
+  //     choice: choice,
+  //     optionText: choice,
+  //     value: choice,
+  //     question_id: question_id,
+  //   });
+  //   console.log("choice", response.data);
+  // }
 
   return (
     <Background>
@@ -96,11 +110,11 @@ const EditArticle = () => {
               <Formik
                 initialValues={{
                   content: {
-                    title: "",
-                    content: "",
-                    image: "",
-                    category_id: "1",
-                    level_reading: "A1",
+                    title: {oldTitle},
+                    content: {oldContent},
+                    image: {oldImage},
+                    category_id: {oldCate},
+                    level_reading: {oldLevel},
                   }
                 }}
                 onSubmit={(values) => {
@@ -123,27 +137,28 @@ const EditArticle = () => {
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title" />
+                        <FieldStyled name="content.title" value={oldTitle}/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>content:</TextForm>
+                        <TextForm>Content:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldContent name="content.content" />
+                        <FieldContent name="content.content" value={oldContent} component="textarea"/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>photo:</TextForm>
+                        <TextForm>Image:</TextForm>
                       </Col>
                       <Col span="12">
                         <input
                           type="file"
                           name="file"
+                          value={oldImage}
                           onChange={(event) => {
                             formProps.setFieldValue(
                               "photo1",
@@ -156,10 +171,10 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>category_id:</TextForm>
+                        <TextForm>Category:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.category_id">
+                        <FieldStyled as="select" name="content.category_id" value={oldCate}>
                           <option value="1">Song</option>
                           <option value="2">Movie</option>
                           <option value="3">Sport</option>
@@ -174,10 +189,10 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>level_reading:</TextForm>
+                        <TextForm>Level Reading:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.level_reading">
+                        <FieldStyled as="select" name="content.level_reading" value={oldLevel}>
                           <option value="A1">A0</option>
                           <option value="A1">A1</option>
                           <option value="A2">A2</option>
