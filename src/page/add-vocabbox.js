@@ -4,39 +4,74 @@ import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { storage } from "../firebase/index";
 
-// const initialValues = {
-//   vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
-//   friends: [
-//     {
-//       engWord: "",
-//       thaiWord: "",
-//     },
-//   ],
-// };
+const initialValues = {
+  content: { title: "", image: "", category_id: "", image: "" },
+  friends: [
+    {
+      engWord: "",
+      thaiWord: "",
+    },
+  ],
+};
 
 const AddVocabBox = () => {
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
-  
+  const [url, setUrl] = useState("");
+  const [image, setImage] = useState("");
+
+  const handleUpload = () => {
+    const uploadTask = storage
+      .ref(
+        `images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`
+      )
+      .put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref(
+            "images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/"
+          )
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+            console.log(url);
+          });
+      }
+    );
+  };
+
   async function postVocabBox(
     boxEngName,
     boxThaiName,
     category_id,
-    image,
     friends
-    ) {
-      const response = await axios.post("http://localhost:3000/vocabBox", {
-        boxEngName: boxEngName,
-        boxThaiName: boxThaiName,
-        category_id: category_id,
-        image: image,
-      });
-      console.log("reading", response.data);
-      var vocabBoxId = response.data.quiz;
-      console.log("this is vocabBox");
+  ) {
+    const response = await axios.post("http://localhost:3000/vocabBox", {
+      boxEngName: boxEngName,
+      boxThaiName: boxThaiName,
+      category_id: category_id,
+      image: image,
+    });
+    console.log("reading", response.data);
+    var vocabBoxId = response.data.quiz;
+    console.log("this is vocabBox");
     console.log(vocabBoxId);
+    // console.log(friends.length);
     setvocabBoxIdD(vocabBoxId);
-    await postVocabCard(response.data.quiz, friends);
+    if (friends && friends.length) {
+      // `theHref` is truthy and has truthy property _length_
+      await postVocabCard(response.data.quiz, friends);
+    } else {
+      console.log(friends)
+    }
   }
 
   // console.log("this is vocabBox 2")
@@ -46,6 +81,7 @@ const AddVocabBox = () => {
     console.log("eiei");
 
     console.log(friends);
+    console.log(friends.length);
     for (let index = 0; index < friends.length; index++) {
       const response = await axios.post("http://localhost:3000/vocabCard", {
         engWord: friends[index]["engWord"],
@@ -65,28 +101,19 @@ const AddVocabBox = () => {
           <WhiteArea>
             <div>
               <Formik
-                initialValues={{
-                  vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
-                  friends: [
-                    {
-                      engWord: "",
-                      thaiWord: "",
-                    },
-                  ],
-                }}
+                initialValues={initialValues}
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
                   alert(JSON.stringify(values, null, 2));
+                  console.log(values);
                   postVocabBox(
                     values.content.title,
                     values.content.title_meaning,
                     values.content.category_id,
-                    "image test",
                     values.friends
                   );
                   console.log(values.friends);
-
-                  console.log(values.friends.length);
+                  // console.log(values.friends.length);
                   // for (let index = 0; index < values.friends.length; index++) {
                   //   postVocabCard(
                   //     values.friends[index].engWord,
@@ -103,7 +130,7 @@ const AddVocabBox = () => {
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title"/>
+                        <FieldStyled name="content.title" />
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -145,10 +172,11 @@ const AddVocabBox = () => {
                           type="file"
                           name="file"
                           onChange={(event) => {
-                            values.setFieldValue(
-                              "photo1",
-                              event.currentTarget.files[0]
-                            );
+                            // values.setFieldValue(
+                            //   "photo1",
+                            //   event.currentTarget.files[0]
+                            // );
+                            setImage(event.currentTarget.files[0]);
                           }}
                         />
                       </Col>
@@ -159,21 +187,21 @@ const AddVocabBox = () => {
                         <div>
                           {values.friends.length > 0 &&
                             values.friends.map((friend, index) => (
-                             
                               <RowStyled key={index}>
                                 <Col span="6">
-                                  
-                                  <TextFormLebel htmlFor={`friends.${index}.engWord`}>
-                                    Vocabulary-{index+1}
+                                  <TextFormLebel
+                                    htmlFor={`friends.${index}.engWord`}
+                                  >
+                                    Vocabulary-{index + 1}
                                   </TextFormLebel>
-                                  </Col>
+                                </Col>
                                 <Col Span="5">
                                   <FieldStyledMini
                                     name={`friends.${index}.engWord`}
                                     // placeholder="Jane Doe"
                                     type="text"
                                   />
-                                  
+
                                   <ErrorMessage
                                     name={`friends.${index}.engWord`}
                                     component="div"
@@ -181,12 +209,13 @@ const AddVocabBox = () => {
                                   />
                                 </Col>
                                 <Col span="6">
-                                  <TextFormLebel htmlFor={`friends.${index}.thaiWord`}>
-                                    Meaning-{index+1}
+                                  <TextFormLebel
+                                    htmlFor={`friends.${index}.thaiWord`}
+                                  >
+                                    Meaning-{index + 1}
                                   </TextFormLebel>
                                 </Col>
                                 <Col Span="5">
-                                  
                                   <FieldStyledMini
                                     name={`friends.${index}.thaiWord`}
                                     // placeholder="jane@acme.com"
@@ -214,7 +243,9 @@ const AddVocabBox = () => {
                             <ButtonStyled
                               type="primary"
                               className="secondary"
-                              onClick={() => push({ engWord: "", thaiWord: "" })}
+                              onClick={() =>
+                                push({ engWord: "", thaiWord: "" })
+                              }
                             >
                               More Words
                             </ButtonStyled>
@@ -223,9 +254,11 @@ const AddVocabBox = () => {
                       )}
                     </FieldArray>
                     <AreaSubmit>
-                    <Link to="/">
-                      <ButtonStyled type="submit">Submit</ButtonStyled>
-                    </Link>
+                      {/* <Link to="/"> */}
+                      <button type="submit" onClick={handleUpload}>
+                        Submit
+                      </button>
+                      {/* </Link> */}
                     </AreaSubmit>
                   </FormStyled>
                 )}
@@ -314,23 +347,22 @@ const FieldContent = styled(FieldStyled)`
 const ColSubmit = styled(Col)`
   display: flex;
   justify-content: center;
-    align-items:center;
+  align-items: center;
 `;
 
 const ButtonStyled = styled(Button)`
   height: 27.6px;
-`
+`;
 const AreaSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2%;
   margin-right: 10%;
-`
+`;
 const AreaMoreWord = styled(AreaSubmit)`
   margin-top: 5%;
-`
-
+`;
 
 const FormStyled = styled(Form)`
   margin-top: 22px;
-`
+`;
