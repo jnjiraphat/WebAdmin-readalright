@@ -6,6 +6,11 @@ import { Row, Col } from "antd";
 import axios from "axios";
 import AddPostTest from './add-postTest'
 import { storage } from '../firebase/index';
+import {
+  BrowserRouter as Router,
+  useRouteMatch,
+} from 'react-router-dom';
+
 
 // const readingId = "";
 const AddArticle = () => {
@@ -13,8 +18,27 @@ const AddArticle = () => {
   const [readingIdD, setReadingIdD] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("")
+  const [readingId2, setReadingId2] = useState(0)
 
-  const handleUpload = () => {
+  async function fetch() {
+    const result = await axios("http://localhost:3000/reading/last");
+
+    // setReadingIdD(result.data.reading[0].reading_id);
+    console.log(result.data.reading[0].reading_id)
+    var number = parseInt(result.data.reading[0].reading_id)
+    var count = number + 1
+    console.log(count)
+    setReadingId2(count)
+
+
+  }
+  // function navigate(readingId2) {
+  //   history.pushState("/add-postTest/" + readingId2)
+  // }
+  useEffect(() => {
+    fetch();
+  });
+  const handleUpload = (imageTemp) => {
     const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
@@ -26,25 +50,26 @@ const AddArticle = () => {
       () => {
         storage
           .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
-          .child(image.name)
+          .child(imageTemp.name)
           .getDownloadURL()
           .then(url => {
             setUrl(url);
+            console.log("pic url")
             console.log(url)
           });
       }
     );
   };
 
-  async function fetch() {
-    const result = await axios("https://jsonplaceholder.typicode.com/users");
+  // async function fetch() {
+  //   const result = await axios("https://jsonplaceholder.typicode.com/users");
 
-    setPerson(result.data);
-    // console.log(person)
-  }
-  useEffect(() => {
-    fetch();
-  });
+  //   setPerson(result.data);
+  // console.log(person)
+  // }
+  // useEffect(() => {
+  //   fetch();
+  // });
 
   async function postReading(
     title,
@@ -118,15 +143,16 @@ const AddArticle = () => {
                   }
                 }}
                 onSubmit={(values) => {
+
                   console.log(values);
                   postReading(
                     values.content.title,
                     values.content.content,
-                    "image test",
+                    url,
                     values.content.category_id,
                     values.content.level_reading,
                   );
-                    // setImage(values.content.image);
+                  // setImage(values.content.image);
                   // same shape as initial values
                 }}
               >
@@ -146,7 +172,7 @@ const AddArticle = () => {
                         <TextForm>content:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldContent name="content.content" component="textarea"/>
+                        <FieldContent name="content.content" component="textarea" />
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -163,7 +189,8 @@ const AddArticle = () => {
                               "image",
                               event.currentTarget.files[0]
                             );
-                            setImage(event.currentTarget.files[0]);
+                            // setImage(event.currentTarget.files[0]);
+                            handleUpload(event.currentTarget.files[0])
                           }}
                         />
                       </Col>
@@ -205,12 +232,28 @@ const AddArticle = () => {
                       <Col span="6"></Col>
                       <Col span="12"></Col>
                       <ColSubmit span="6">
-                        <Link to="/add-postTest">
-                          <button type="submit" onClick={handleUpload}>Next</button>
+
+                        {/* <Link to={`/add-postTest/${readingId2}`}>
+                          <button type="submit">
+                            Submit
+                      </button>
+                        </Link> */}
+
+                        <button type="submit">
+                          Submit
+                      </button>
+                        <Link to={`/add-postTest/${readingId2}`}>
+                          next
                         </Link>
+
+                        {/* <button type="submit">                         
+                          <Link to={`/add-postTest/${readingId2}`}>
+                            Next
+                         </Link>
+                        </button> */}
                       </ColSubmit>
                     </RowStyled>
-                    
+
                   </Form>
                 )}
               </Formik>

@@ -12,11 +12,11 @@ import {
 
 // const readingId = "";
 const AddPostTest = () => {
-  const match = useRouteMatch(`/add-postTest/:readingId`);
+  const match = useRouteMatch('/add-postTest/:readingId2');
   console.log("reading id in add post test")
-  console.log(match.params.readingId)
+  console.log(match.params.readingId2)
   
-  const [readingIdD, setReadingIdD] = useState("");
+  const [readingId, setReadingIdD] = useState("");
 
   useEffect(() => {
     // fetch();
@@ -57,7 +57,7 @@ const AddPostTest = () => {
     const response = await axios.post("http://localhost:3000/quizs", {
       question: question,
       typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: readingIdD,
+      reading_id: readingId,
     });
     console.log("quiz", response.data);
     console.log("quizId", response.data.quiz);

@@ -16,6 +16,8 @@ const ArticleCard = (props) => {
     console.log(article[0]);
   }
 
+
+
   async function deleteArticle(reading_id) {
     console.log("reading_id in delete article")
     console.log(reading_id)
