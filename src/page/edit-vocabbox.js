@@ -26,6 +26,7 @@ const EditVocabBox = () => {
   const [selectImg, setSelectImg] = useState()
   const [word, setWord] = useState([])
   const [loadImage, setLoadImage] = useState(false)
+  const [vocabCardID , setVocabCardID] = useState('')
   const refContainer = useRef();
 
   const handleUpload = (imageTemp) => {
@@ -86,13 +87,14 @@ const EditVocabBox = () => {
   async function editVocabBox() {
     console.log("vocab box ID in editVocabBox")
     console.log(match.params.vocabBox_id)
-    const result = await axios("http://localhost:3000/vocabBox/" + match.params.vocabBox_id);
+    const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
     console.log("result")
     console.log(result.data.reading[0])
     setTitle(result.data.reading[0].boxEngName)
     setTitleMeaning(result.data.reading[0].boxThaiName)
     setCategoryId(result.data.reading[0].category_id)
     setImage(result.data.reading[0].image)
+    setVocabCardID(result.data.reading[0].vocabCard_id)
   }
 
 
@@ -112,9 +114,37 @@ const EditVocabBox = () => {
       boxThaiName: title_meaning,
       category_id: category_id,
       image: image,
-
     });
-    console.log("new vocabbox ", response.data);
+    // console.log("new vocabbox ", response.data);
+    // var readingId = response.data.quiz;
+    // console.log(readingId);
+    // setReadingIdD(readingId);
+
+  }
+
+  async function putVocabCard(
+    vocabCard_id,
+    friends,
+    vocabBox_id
+
+  ) {
+    console.log("function put vocab card")
+    console.log(vocabCard_id)
+    console.log(friends)
+
+    console.log(friends.length);
+    for (let index = 0; index < friends.length; index++) {
+      const response = await axios.put("http://localhost:3000/vocabCard/" + vocabCard_id, {
+        engWord: friends[index]["engWord"],
+        thaiWord: friends[index]["thaiWord"],
+        vocabBox_id: vocabBox_id,
+      });
+    }
+    // const response = await axios.put("http://localhost:3000/vocabCard/" + vocabCard_id, {
+
+    // });
+    
+    // console.log("new vocabcard ", response.data);
     // var readingId = response.data.quiz;
     // console.log(readingId);
     // setReadingIdD(readingId);
@@ -202,7 +232,7 @@ const EditVocabBox = () => {
               <div>
                 <Formik
                   initialValues={{
-                    content: { title: title, title_meaning: titleMeaning, category_id: categoryId, image: image },
+                    content: { title: title, title_meaning: titleMeaning, category_id: categoryId, image: image ,vocabCard_id : vocabCardID },
                     friends: [...word]
                   }}
                   onSubmit={async (values) => {
@@ -212,6 +242,7 @@ const EditVocabBox = () => {
                       title_meaning: titleMeaning,
                       category_id: categoryId,
                       image: selectImg ? selectImg : image,
+                      vocabCard_id : vocabCardID,
                       friends: [...values.friends]
                     }
                     console.log(data)
@@ -222,8 +253,14 @@ const EditVocabBox = () => {
                       data.category_id,
                       data.image
                     );
+                    putVocabCard(
+                      data.vocabCard_id,
+                      data.friends,
+                      match.params.vocabBox_id
+
+                    );
                     // await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(data, null, 3));
+                    alert(JSON.stringify(data, null, 2));
                     // postVocabBox(
                     //   values.content.title,
                     //   values.content.title_meaning,
@@ -327,7 +364,7 @@ const EditVocabBox = () => {
                                     <FieldStyledMini
                                       name={`friends.${index}.engWord`}
                                       // placeholder="Jane Doe"
-                                      onChange={(e) => changeCard(e.target.value, "engWord", index)}
+                                      // onChange={(e) => changeCard(e.target.value, "engWord", index)}
                                       value={friend.engWord}
                                       type="text"
                                     />
@@ -339,18 +376,20 @@ const EditVocabBox = () => {
                                     />
                                   </Col>
                                   <Col span="6">
+
                                     <TextFormLebel htmlFor={`friends.${index}.thaiWord`}>
-                                      Meaning-{index + 1}
+                                      Vocabulary-{index + 1}
                                     </TextFormLebel>
                                   </Col>
                                   <Col Span="5">
-
                                     <FieldStyledMini
                                       name={`friends.${index}.thaiWord`}
-                                      // placeholder="jane@acme.com"
+                                      // placeholder="Jane Doe"
+                                      // onChange={(e) => changeCard(e.target.value, "thaiWord", index)}
                                       value={friend.thaiWord}
                                       type="text"
                                     />
+
                                     <ErrorMessage
                                       name={`friends.${index}.thaiWord`}
                                       component="div"
