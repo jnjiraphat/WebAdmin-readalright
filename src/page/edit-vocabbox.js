@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { Row, Col, Button } from "antd";
@@ -9,24 +9,79 @@ import {
   BrowserRouter as Router,
   useRouteMatch,
 } from 'react-router-dom';
-
-const initialValues = {
-  vocabBox: [{ title: "", image: "", category_id: "", image: "image test" }],
-  friends: [
-    {
-      engWord: "",
-      thaiWord: "",
-    },
-  ],
-};
+import { Spin } from 'antd';
+import { storage } from "../firebase/index";
 
 
 
-const InviteFriends = () => {
+
+//content for edit
+
+
+const EditVocabBox = () => {
+const [title , setTitle] = useState('')
+const [titleMeaning , setTitleMeaning] = useState('')
+const [categoryId , setCategoryId] = useState()
+const [image , setImage] = useState('')
+const [selectImg , setSelectImg] = useState()
+const [word , setWord] = useState([ ])
+const [loadImage , setLoadImage] = useState(false)
+  const refContainer = useRef();
+  
+  const handleUpload = (imageTemp) => {
+    setLoadImage(true)
+    const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
+          .child(imageTemp.name)
+          .getDownloadURL()
+          .then(url => {
+            setSelectImg(url);
+            setLoadImage(false)
+            console.log("pic url")
+            console.log(url)
+          });
+      }
+    );
+  };
+  // const initialValues = {
+  //   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
+  //   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
+  //   friends: [
+  //     {
+  //       engWord: "",
+  //       thaiWord: "",
+  //     },
+  //   ],
+  // };
+// const [oldboxEngName, setOldboxEngName] = useState("");
+// const [oldboxThaiName, setOldboxThaiName] = useState("");
+// const [oldImage, setOldImage] = useState("");
+// const [oldCate, setOldCate] = useState("");
+// const [oldEngWord, setOldEngWord] = useState("");
+// const [oldThaiWord, setOldThaiWord] = useState("");
+// const [formValue , setFormValue] = useState({
+//   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
+//   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
+//   friends: [
+//     {
+//       engWord: "",
+//       thaiWord: "",
+//     },
+//   ],
+// })
+
   const match = useRouteMatch('/edit-vocabbox/:vocabBox_id');
   console.log("voccab box id in edit vocabbox")
   console.log(match.params.vocabBox_id)
-
 
   async function editVocabBox() {
     console.log("vocab box ID in editVocabBox")
@@ -34,54 +89,77 @@ const InviteFriends = () => {
     const result = await axios("http://localhost:3000/vocabBox/" + match.params.vocabBox_id);
     console.log("result")
     console.log(result.data.reading[0])
+    setTitle(result.data.reading[0].boxEngName)
+    setTitleMeaning(result.data.reading[0].boxThaiName)
+    setCategoryId(result.data.reading[0].category_id)
+    setImage(result.data.reading[0].image)
   }
 
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
 
 
 
-  async function postVocabBox(
-    boxEngName,
-    boxThaiName,
-    category_id,
-    image,
-    friends
-  ) {
-    const response = await axios.post("http://localhost:3000/vocabBox", {
-      boxEngName: boxEngName,
-      boxThaiName: boxThaiName,
-      category_id: category_id,
-      image: image,
-    });
-    console.log("reading", response.data);
-    var vocabBoxId = response.data.quiz;
-    console.log("this is vocabBox");
-    console.log(vocabBoxId);
-    setvocabBoxIdD(vocabBoxId);
-    await postVocabCard(response.data.quiz, friends);
-  }
+  // async function postVocabBox(
+  //   boxEngName,
+  //   boxThaiName,
+  //   category_id,
+  //   image,
+  //   friends
+  // ) {
+  //   const response = await axios.post("http://localhost:3000/vocabBox", {
+  //     boxEngName: boxEngName,
+  //     boxThaiName: boxThaiName,
+  //     category_id: category_id,
+  //     image: image,
+  //   });
+  //   console.log("reading", response.data);
+  //   var vocabBoxId = response.data.quiz;
+  //   console.log("this is vocabBox");
+  //   console.log(vocabBoxId);
+  //   setvocabBoxIdD(vocabBoxId);
+  //   await postVocabCard(response.data.quiz, friends);
+  // }
 
   useEffect(() => {
     editVocabBox();
+    getVocabbox()
     // fetch();
-  });
+  },[]);
 
   // console.log("this is vocabBox 2")
   // console.log(vocabBoxIdD)
 
-  async function postVocabCard(vocabBox_id, friends) {
-    console.log("eiei");
+  async function getVocabbox() {
+    console.log(match.params)
+    const response = await axios.get(`http://localhost:3000/vocabCard/${match.params.vocabBox_id}`)
+    console.log(response.data.reading)
+    let data = [];
+    response.data.reading.map(item => {
+      data.push({engWord: item.engWord, thaiWord: item.thaiWord})
+    })
+    console.log(data)
+    setWord(data)
+    
+    // console.log("eiei");
 
-    console.log(friends);
-    for (let index = 0; index < friends.length; index++) {
-      const response = await axios.post("http://localhost:3000/vocabCard", {
-        engWord: friends[index]["engWord"],
-        thaiWord: friends[index]["thaiWord"],
-        vocabBox_id: vocabBox_id,
-      });
-    }
+    // console.log(friends);
+    // for (let index = 0; index < friends.length; index++) {
+    //   const response = await axios.post(`http://localhost:3000/vocabCard/${match.params}`, {
+    //     engWord: friends[index]["engWord"],
+    //     thaiWord: friends[index]["thaiWord"],
+    //     vocabBox_id: vocabBox_id,
+    //   });
+    // }
   }
 
+  const changeCard = (value , type , index) => {
+    console.log(value , type , index)
+    let data = [...word];
+    data[index][type] = value
+    console.log(data)
+    setWord(data)
+  }
+  
   return (
     <Background>
       <Container>
@@ -90,19 +168,35 @@ const InviteFriends = () => {
         </AreaTopic>
         <RowArea>
           <WhiteArea>
+            { title === '' ? 
+            <center style={{marginTop : '20vh'}}>
+            <Spin/>
+            </center>
+            :
             <div>
               <Formik
-                initialValues={initialValues}
+                initialValues={{ content : {title : title, title_meaning : titleMeaning , category_id : categoryId , image : image},
+                 friends: [...word]}}
                 onSubmit={async (values) => {
-                  await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(values, null, 2));
-                  postVocabBox(
-                    values.content.title,
-                    values.content.title_meaning,
-                    values.content.category_id,
-                    "image test",
-                    values.friends
-                  );
+                  // let data = JSON.stringify(values, null, 3)
+                  const data = {
+                    title : title,
+                    title_meaning : titleMeaning,
+                    category_id : categoryId,
+                    image : selectImg ? selectImg : image,
+                    friends : [...values.friends]
+                  }
+                  console.log(data)
+                  // await new Promise((r) => setTimeout(r, 500));
+                  alert(JSON.stringify(data, null, 3));
+                  // postVocabBox(
+                  //   values.content.title,
+                  //   values.content.title_meaning,
+                  //   values.content.category_id,
+                  //   "image test",
+                  //   values.friends
+                  // );
+                  console.log(values)
                   console.log(values.friends);
 
                   console.log(values.friends.length);
@@ -122,7 +216,7 @@ const InviteFriends = () => {
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title" />
+                        <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -131,7 +225,7 @@ const InviteFriends = () => {
                         <TextForm>Title Meaning</TextForm>
                       </Col>
                       <Col span="12">
-                        <Field name="content.title_meaning" />
+                        <Field name="content.title_meaning"value={titleMeaning} onChange={(e) => setTitleMeaning(e.target.value)}/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -140,12 +234,12 @@ const InviteFriends = () => {
                         <TextForm>Category</TextForm>
                       </Col>
                       <Col span="12">
-                        <Field as="select" name="content.category_id">
+                        <Field as="select" name="content.category_id" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
                           <option value="9">Action</option>
                           <option value="10">Sport</option>
                           <option value="11">Conjunction</option>
                           <option value="12">Preposition</option>
-                          <option value="13">Food</option>
+                          <option value="13">Foodasd</option>
                           <option value="14">Feeling</option>
                           <option value="15">House</option>
                           <option value="16">Natural</option>
@@ -160,24 +254,32 @@ const InviteFriends = () => {
                         <TextForm>Vocab Box Picture</TextForm>
                       </Col>
                       <Col span="12">
+                        {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height ={300}/>}
                         <input
                           type="file"
                           name="file"
+                          style={{display : 'none'}}
+                          ref={refContainer}
                           onChange={(event) => {
-                            values.setFieldValue(
-                              "photo1",
-                              event.currentTarget.files[0]
-                            );
+                            // console.log(URL.createObjectURL(event.target.files[0]))
+                            // setSelectImg(URL.createObjectURL(event.target.files[0]))
+                            handleUpload(event.currentTarget.files[0])
+                            // values.setFieldValue(
+                            //   "photo1",
+                            //   event.currentTarget.files[0]
+                            // );
                           }}
                         />
+                        <br></br>
+                        <button onClick={()=> refContainer.current.click()} type="button">Edit</button>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
                     <FieldArray name="friends">
                       {({ insert, remove, push }) => (
                         <div>
-                          {values.friends.length > 0 &&
-                            values.friends.map((friend, index) => (
+                          {word.length > 0 &&
+                            word.map((friend, index) => (
                              
                               <RowStyled key={index}>
                                 <Col span="6">
@@ -190,6 +292,8 @@ const InviteFriends = () => {
                                   <FieldStyledMini
                                     name={`friends.${index}.engWord`}
                                     // placeholder="Jane Doe"
+                                    onChange={(e) => changeCard(e.target.value , "engWord" , index)}
+                                    value={friend.engWord}
                                     type="text"
                                   />
                                   
@@ -209,6 +313,7 @@ const InviteFriends = () => {
                                   <FieldStyledMini
                                     name={`friends.${index}.thaiWord`}
                                     // placeholder="jane@acme.com"
+                                    value={friend.thaiWord}
                                     type="text"
                                   />
                                   <ErrorMessage
@@ -242,20 +347,21 @@ const InviteFriends = () => {
                       )}
                     </FieldArray>
                     <AreaMoreWord>
-                    <ButtonStyled type="submit">Submit</ButtonStyled>
+                    <button type="submit">Submit</button>
                     </AreaMoreWord>
                   </FormStyled>
                 )}
               </Formik>
-            </div>
+            </div>}
           </WhiteArea>
         </RowArea>
       </Container>
     </Background>
   );
-};
+}
 
-export default InviteFriends;
+
+export default EditVocabBox;
 
 const Container = styled.div`
   margin-left: auto;

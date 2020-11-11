@@ -138,6 +138,7 @@ const AddArticle = () => {
                   content: {
                     title: "",
                     content: "",
+                    image:"",
                     category_id: "1",
                     level_reading: "A1",
                   }
@@ -240,10 +241,12 @@ const AddArticle = () => {
                         </Link> */}
 
                         <button type="submit">
-                          Submit
+                          Save
                       </button>
                         <Link to={`/add-postTest/${readingId2}`}>
-                          next
+                          <button>
+                            next
+                          </button>
                         </Link>
 
                         {/* <button type="submit">                         

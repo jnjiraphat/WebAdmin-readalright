@@ -122,6 +122,7 @@ const AddPostTest = () => {
                                   <Col span="14">
                                     <FieldContent
                                       name={`content.${index}.question`}
+                                      component="textarea"
                                     />
                                   </Col>
                                 </RowStyled>
@@ -230,8 +231,11 @@ const AddPostTest = () => {
                     </FieldArray>
 
                     <AreaSubmit>
+                      <ButtonStyled type="submit">Save</ButtonStyled>
                     <Link to="/">
-                      <ButtonStyled type="submit">Submit</ButtonStyled>
+                      <button>
+                        Go to Admin Board
+                      </button>
                     </Link>
                     </AreaSubmit>
                   </Form>

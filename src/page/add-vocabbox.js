@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { storage } from "../firebase/index";
 
 const initialValues = {
-  content: { title: "", image: "", category_id: "", image: "" },
+  content: { boxEngName: "", boxThaiName: "", category_id: "", image: "" },
   friends: [
     {
       engWord: "",
@@ -52,6 +52,7 @@ const AddVocabBox = () => {
     boxEngName,
     boxThaiName,
     category_id,
+    image,
     friends
   ) {
     const response = await axios.post("http://localhost:3000/vocabBox", {
@@ -107,8 +108,9 @@ const AddVocabBox = () => {
                   alert(JSON.stringify(values, null, 2));
                   console.log(values);
                   postVocabBox(
-                    values.content.title,
-                    values.content.title_meaning,
+                    values.content.boxEngName,
+                    values.content.boxThaiName,
+                    url,
                     values.content.category_id,
                     values.friends
                   );
@@ -130,7 +132,7 @@ const AddVocabBox = () => {
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title" />
+                        <FieldStyled name="content.boxEngName" />
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -139,7 +141,7 @@ const AddVocabBox = () => {
                         <TextForm>Title Meaning</TextForm>
                       </Col>
                       <Col span="12">
-                        <Field name="content.title_meaning" />
+                        <Field name="content.boxThaiName" />
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -176,7 +178,7 @@ const AddVocabBox = () => {
                             //   "photo1",
                             //   event.currentTarget.files[0]
                             // );
-                            setImage(event.currentTarget.files[0]);
+                            handleUpload(event.currentTarget.files[0])
                           }}
                         />
                       </Col>
@@ -254,10 +256,13 @@ const AddVocabBox = () => {
                       )}
                     </FieldArray>
                     <AreaSubmit>
-                      <Link to="/">
-                      <button type="submit" onClick={handleUpload}>
-                        Submit
+                      <button type="submit">
+                        Save
                       </button>
+                      <Link to="/">
+                        <button>
+                          Go to Admin Board
+                        </button>
                       </Link>
                     </AreaSubmit>
                   </FormStyled>
