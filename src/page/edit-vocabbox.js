@@ -19,15 +19,15 @@ import { storage } from "../firebase/index";
 
 
 const EditVocabBox = () => {
-const [title , setTitle] = useState('')
-const [titleMeaning , setTitleMeaning] = useState('')
-const [categoryId , setCategoryId] = useState()
-const [image , setImage] = useState('')
-const [selectImg , setSelectImg] = useState()
-const [word , setWord] = useState([ ])
-const [loadImage , setLoadImage] = useState(false)
+  const [title, setTitle] = useState('')
+  const [titleMeaning, setTitleMeaning] = useState('')
+  const [categoryId, setCategoryId] = useState()
+  const [image, setImage] = useState('')
+  const [selectImg, setSelectImg] = useState()
+  const [word, setWord] = useState([])
+  const [loadImage, setLoadImage] = useState(false)
   const refContainer = useRef();
-  
+
   const handleUpload = (imageTemp) => {
     setLoadImage(true)
     const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
@@ -62,22 +62,22 @@ const [loadImage , setLoadImage] = useState(false)
   //     },
   //   ],
   // };
-// const [oldboxEngName, setOldboxEngName] = useState("");
-// const [oldboxThaiName, setOldboxThaiName] = useState("");
-// const [oldImage, setOldImage] = useState("");
-// const [oldCate, setOldCate] = useState("");
-// const [oldEngWord, setOldEngWord] = useState("");
-// const [oldThaiWord, setOldThaiWord] = useState("");
-// const [formValue , setFormValue] = useState({
-//   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
-//   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
-//   friends: [
-//     {
-//       engWord: "",
-//       thaiWord: "",
-//     },
-//   ],
-// })
+  // const [oldboxEngName, setOldboxEngName] = useState("");
+  // const [oldboxThaiName, setOldboxThaiName] = useState("");
+  // const [oldImage, setOldImage] = useState("");
+  // const [oldCate, setOldCate] = useState("");
+  // const [oldEngWord, setOldEngWord] = useState("");
+  // const [oldThaiWord, setOldThaiWord] = useState("");
+  // const [formValue , setFormValue] = useState({
+  //   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
+  //   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
+  //   friends: [
+  //     {
+  //       engWord: "",
+  //       thaiWord: "",
+  //     },
+  //   ],
+  // })
 
   const match = useRouteMatch('/edit-vocabbox/:vocabBox_id');
   console.log("voccab box id in edit vocabbox")
@@ -93,6 +93,32 @@ const [loadImage , setLoadImage] = useState(false)
     setTitleMeaning(result.data.reading[0].boxThaiName)
     setCategoryId(result.data.reading[0].category_id)
     setImage(result.data.reading[0].image)
+  }
+
+
+  const [putVB, settPutVB] = useState("");
+
+
+
+
+  async function putVocabBox(
+    title,
+    title_meaning,
+    category_id,
+    image
+  ) {
+    const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
+      boxEngName: title,
+      boxThaiName: title_meaning,
+      category_id: category_id,
+      image: image,
+
+    });
+    console.log("new vocabbox ", response.data);
+    // var readingId = response.data.quiz;
+    // console.log(readingId);
+    // setReadingIdD(readingId);
+
   }
 
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
@@ -124,7 +150,7 @@ const [loadImage , setLoadImage] = useState(false)
     editVocabBox();
     getVocabbox()
     // fetch();
-  },[]);
+  }, []);
 
   // console.log("this is vocabBox 2")
   // console.log(vocabBoxIdD)
@@ -135,11 +161,11 @@ const [loadImage , setLoadImage] = useState(false)
     console.log(response.data.reading)
     let data = [];
     response.data.reading.map(item => {
-      data.push({engWord: item.engWord, thaiWord: item.thaiWord})
+      data.push({ engWord: item.engWord, thaiWord: item.thaiWord })
     })
     console.log(data)
     setWord(data)
-    
+
     // console.log("eiei");
 
     // console.log(friends);
@@ -152,14 +178,14 @@ const [loadImage , setLoadImage] = useState(false)
     // }
   }
 
-  const changeCard = (value , type , index) => {
-    console.log(value , type , index)
+  const changeCard = (value, type, index) => {
+    console.log(value, type, index)
     let data = [...word];
     data[index][type] = value
     console.log(data)
     setWord(data)
   }
-  
+
   return (
     <Background>
       <Container>
@@ -168,191 +194,200 @@ const [loadImage , setLoadImage] = useState(false)
         </AreaTopic>
         <RowArea>
           <WhiteArea>
-            { title === '' ? 
-            <center style={{marginTop : '20vh'}}>
-            <Spin/>
-            </center>
-            :
-            <div>
-              <Formik
-                initialValues={{ content : {title : title, title_meaning : titleMeaning , category_id : categoryId , image : image},
-                 friends: [...word]}}
-                onSubmit={async (values) => {
-                  // let data = JSON.stringify(values, null, 3)
-                  const data = {
-                    title : title,
-                    title_meaning : titleMeaning,
-                    category_id : categoryId,
-                    image : selectImg ? selectImg : image,
-                    friends : [...values.friends]
-                  }
-                  console.log(data)
-                  // await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(data, null, 3));
-                  // postVocabBox(
-                  //   values.content.title,
-                  //   values.content.title_meaning,
-                  //   values.content.category_id,
-                  //   "image test",
-                  //   values.friends
-                  // );
-                  console.log(values)
-                  console.log(values.friends);
+            {title === '' ?
+              <center style={{ marginTop: '20vh' }}>
+                <Spin />
+              </center>
+              :
+              <div>
+                <Formik
+                  initialValues={{
+                    content: { title: title, title_meaning: titleMeaning, category_id: categoryId, image: image },
+                    friends: [...word]
+                  }}
+                  onSubmit={async (values) => {
+                    // let data = JSON.stringify(values, null, 3)
+                    const data = {
+                      title: title,
+                      title_meaning: titleMeaning,
+                      category_id: categoryId,
+                      image: selectImg ? selectImg : image,
+                      friends: [...values.friends]
+                    }
+                    console.log(data)
+                    console.log(data.title_meaning)
+                    putVocabBox(
+                      data.title,
+                      data.title_meaning,
+                      data.category_id,
+                      data.image
+                    );
+                    // await new Promise((r) => setTimeout(r, 500));
+                    alert(JSON.stringify(data, null, 3));
+                    // postVocabBox(
+                    //   values.content.title,
+                    //   values.content.title_meaning,
+                    //   values.content.category_id,
+                    //   "image test",
+                    //   values.friends
+                    // );
+                    console.log(values)
+                    console.log(values.friends);
 
-                  console.log(values.friends.length);
-                  // for (let index = 0; index < values.friends.length; index++) {
-                  //   postVocabCard(
-                  //     values.friends[index].engWord,
-                  //     values.friends[index].thaiWord
-                  //   )
+                    console.log(values.friends.length);
+                    // for (let index = 0; index < values.friends.length; index++) {
+                    //   postVocabCard(
+                    //     values.friends[index].engWord,
+                    //     values.friends[index].thaiWord
+                    //   )
 
-                  // }
-                }}
-              >
-                {({ values }) => (
-                  <FormStyled>
-                    <RowStyled>
-                      <Col span="6">
-                        <TextForm>Title:</TextForm>
-                      </Col>
-                      <Col span="12">
-                        <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                      </Col>
-                      <Col span="6"></Col>
-                    </RowStyled>
-                    <RowStyled>
-                      <Col span="6">
-                        <TextForm>Title Meaning</TextForm>
-                      </Col>
-                      <Col span="12">
-                        <Field name="content.title_meaning"value={titleMeaning} onChange={(e) => setTitleMeaning(e.target.value)}/>
-                      </Col>
-                      <Col span="6"></Col>
-                    </RowStyled>
-                    <RowStyled>
-                      <Col span="6">
-                        <TextForm>Category</TextForm>
-                      </Col>
-                      <Col span="12">
-                        <Field as="select" name="content.category_id" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-                          <option value="9">Action</option>
-                          <option value="10">Sport</option>
-                          <option value="11">Conjunction</option>
-                          <option value="12">Preposition</option>
-                          <option value="13">Foodasd</option>
-                          <option value="14">Feeling</option>
-                          <option value="15">House</option>
-                          <option value="16">Natural</option>
-                          <option value="17">Animal</option>
-                          <option value="18">Symptoms&illness</option>
-                        </Field>
-                      </Col>
-                      <Col span="6"></Col>
-                    </RowStyled>
-                    <RowStyled>
-                      <Col span="6">
-                        <TextForm>Vocab Box Picture</TextForm>
-                      </Col>
-                      <Col span="12">
-                        {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height ={300}/>}
-                        <input
-                          type="file"
-                          name="file"
-                          style={{display : 'none'}}
-                          ref={refContainer}
-                          onChange={(event) => {
-                            // console.log(URL.createObjectURL(event.target.files[0]))
-                            // setSelectImg(URL.createObjectURL(event.target.files[0]))
-                            handleUpload(event.currentTarget.files[0])
-                            // values.setFieldValue(
-                            //   "photo1",
-                            //   event.currentTarget.files[0]
-                            // );
-                          }}
-                        />
-                        <br></br>
-                        <button onClick={()=> refContainer.current.click()} type="button">Edit</button>
-                      </Col>
-                      <Col span="6"></Col>
-                    </RowStyled>
-                    <FieldArray name="friends">
-                      {({ insert, remove, push }) => (
-                        <div>
-                          {word.length > 0 &&
-                            word.map((friend, index) => (
-                             
-                              <RowStyled key={index}>
-                                <Col span="6">
-                                  
-                                  <TextFormLebel htmlFor={`friends.${index}.engWord`}>
-                                    Vocabulary-{index+1}
-                                  </TextFormLebel>
+                    // }
+                  }}
+                >
+                  {({ values }) => (
+                    <FormStyled>
+                      <RowStyled>
+                        <Col span="6">
+                          <TextForm>Title:</TextForm>
+                        </Col>
+                        <Col span="12">
+                          <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </Col>
+                        <Col span="6"></Col>
+                      </RowStyled>
+                      <RowStyled>
+                        <Col span="6">
+                          <TextForm>Title Meaning</TextForm>
+                        </Col>
+                        <Col span="12">
+                          <Field name="content.title_meaning" value={titleMeaning} onChange={(e) => setTitleMeaning(e.target.value)} />
+                        </Col>
+                        <Col span="6"></Col>
+                      </RowStyled>
+                      <RowStyled>
+                        <Col span="6">
+                          <TextForm>Category</TextForm>
+                        </Col>
+                        <Col span="12">
+                          <Field as="select" name="content.category_id" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+                            <option value="9">Action</option>
+                            <option value="10">Sport</option>
+                            <option value="11">Conjunction</option>
+                            <option value="12">Preposition</option>
+                            <option value="13">Foodasd</option>
+                            <option value="14">Feeling</option>
+                            <option value="15">House</option>
+                            <option value="16">Natural</option>
+                            <option value="17">Animal</option>
+                            <option value="18">Symptoms&illness</option>
+                          </Field>
+                        </Col>
+                        <Col span="6"></Col>
+                      </RowStyled>
+                      <RowStyled>
+                        <Col span="6">
+                          <TextForm>Vocab Box Picture</TextForm>
+                        </Col>
+                        <Col span="12">
+                          {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                          <input
+                            type="file"
+                            name="file"
+                            style={{ display: 'none' }}
+                            ref={refContainer}
+                            onChange={(event) => {
+                              // console.log(URL.createObjectURL(event.target.files[0]))
+                              // setSelectImg(URL.createObjectURL(event.target.files[0]))
+                              handleUpload(event.currentTarget.files[0])
+                              // values.setFieldValue(
+                              //   "photo1",
+                              //   event.currentTarget.files[0]
+                              // );
+                            }}
+                          />
+                          <br></br>
+                          <button onClick={() => refContainer.current.click()} type="button">Edit</button>
+                        </Col>
+                        <Col span="6"></Col>
+                      </RowStyled>
+                      <FieldArray name="friends">
+                        {({ insert, remove, push }) => (
+                          <div>
+                            {word.length > 0 &&
+                              word.map((friend, index) => (
+
+                                <RowStyled key={index}>
+                                  <Col span="6">
+
+                                    <TextFormLebel htmlFor={`friends.${index}.engWord`}>
+                                      Vocabulary-{index + 1}
+                                    </TextFormLebel>
                                   </Col>
-                                <Col Span="5">
-                                  <FieldStyledMini
-                                    name={`friends.${index}.engWord`}
-                                    // placeholder="Jane Doe"
-                                    onChange={(e) => changeCard(e.target.value , "engWord" , index)}
-                                    value={friend.engWord}
-                                    type="text"
-                                  />
-                                  
-                                  <ErrorMessage
-                                    name={`friends.${index}.engWord`}
-                                    component="div"
-                                    className="field-error"
-                                  />
-                                </Col>
-                                <Col span="6">
-                                  <TextFormLebel htmlFor={`friends.${index}.thaiWord`}>
-                                    Meaning-{index+1}
-                                  </TextFormLebel>
-                                </Col>
-                                <Col Span="5">
-                                  
-                                  <FieldStyledMini
-                                    name={`friends.${index}.thaiWord`}
-                                    // placeholder="jane@acme.com"
-                                    value={friend.thaiWord}
-                                    type="text"
-                                  />
-                                  <ErrorMessage
-                                    name={`friends.${index}.thaiWord`}
-                                    component="div"
-                                    className="field-error"
-                                  />
-                                </Col>
-                                <ColSubmit span="2">
-                                  <ButtonStyled
-                                    type="primary"
-                                    className="secondary"
-                                    onClick={() => remove(index)}
-                                    danger
-                                  >
-                                    X
+                                  <Col Span="5">
+                                    <FieldStyledMini
+                                      name={`friends.${index}.engWord`}
+                                      // placeholder="Jane Doe"
+                                      onChange={(e) => changeCard(e.target.value, "engWord", index)}
+                                      value={friend.engWord}
+                                      type="text"
+                                    />
+
+                                    <ErrorMessage
+                                      name={`friends.${index}.engWord`}
+                                      component="div"
+                                      className="field-error"
+                                    />
+                                  </Col>
+                                  <Col span="6">
+                                    <TextFormLebel htmlFor={`friends.${index}.thaiWord`}>
+                                      Meaning-{index + 1}
+                                    </TextFormLebel>
+                                  </Col>
+                                  <Col Span="5">
+
+                                    <FieldStyledMini
+                                      name={`friends.${index}.thaiWord`}
+                                      // placeholder="jane@acme.com"
+                                      value={friend.thaiWord}
+                                      type="text"
+                                    />
+                                    <ErrorMessage
+                                      name={`friends.${index}.thaiWord`}
+                                      component="div"
+                                      className="field-error"
+                                    />
+                                  </Col>
+                                  <ColSubmit span="2">
+                                    <ButtonStyled
+                                      type="primary"
+                                      className="secondary"
+                                      onClick={() => remove(index)}
+                                      danger
+                                    >
+                                      X
                                   </ButtonStyled>
-                                </ColSubmit>
-                              </RowStyled>
-                            ))}
-                          <AreaMoreWord>
-                            <ButtonStyled
-                              type="primary"
-                              className="secondary"
-                              onClick={() => push({ engWord: "", thaiWord: "" })}
-                            >
-                              More Words
+                                  </ColSubmit>
+                                </RowStyled>
+                              ))}
+                            <AreaMoreWord>
+                              <ButtonStyled
+                                type="primary"
+                                className="secondary"
+                                onClick={() => push({ engWord: "", thaiWord: "" })}
+                              >
+                                More Words
                             </ButtonStyled>
-                          </AreaMoreWord>
-                        </div>
-                      )}
-                    </FieldArray>
-                    <AreaMoreWord>
-                    <button type="submit">Submit</button>
-                    </AreaMoreWord>
-                  </FormStyled>
-                )}
-              </Formik>
-            </div>}
+                            </AreaMoreWord>
+                          </div>
+                        )}
+                      </FieldArray>
+                      <AreaMoreWord>
+                        <button type="submit">Submit</button>
+                      </AreaMoreWord>
+                    </FormStyled>
+                  )}
+                </Formik>
+              </div>}
           </WhiteArea>
         </RowArea>
       </Container>
