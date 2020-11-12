@@ -243,22 +243,22 @@ const EditVocabBox = () => {
                       category_id: categoryId,
                       image: selectImg ? selectImg : image,
                       vocabCard_id : vocabCardID,
-                      friends: [...values.friends]
+                      friends: [...word]
                     }
                     console.log(data)
                     console.log(data.title_meaning)
-                    putVocabBox(
-                      data.title,
-                      data.title_meaning,
-                      data.category_id,
-                      data.image
-                    );
-                    putVocabCard(
-                      data.vocabCard_id,
-                      data.friends,
-                      match.params.vocabBox_id
+                    // putVocabBox(
+                    //   data.title,
+                    //   data.title_meaning,
+                    //   data.category_id,
+                    //   data.image
+                    // );
+                    // putVocabCard(
+                    //   data.vocabCard_id,
+                    //   data.friends,
+                    //   match.params.vocabBox_id
 
-                    );
+                    // );
                     // await new Promise((r) => setTimeout(r, 500));
                     alert(JSON.stringify(data, null, 2));
                     // postVocabBox(
@@ -364,7 +364,7 @@ const EditVocabBox = () => {
                                     <FieldStyledMini
                                       name={`friends.${index}.engWord`}
                                       // placeholder="Jane Doe"
-                                      // onChange={(e) => changeCard(e.target.value, "engWord", index)}
+                                      onChange={(e) => changeCard(e.target.value, "engWord", index)}
                                       value={friend.engWord}
                                       type="text"
                                     />
@@ -385,7 +385,7 @@ const EditVocabBox = () => {
                                     <FieldStyledMini
                                       name={`friends.${index}.thaiWord`}
                                       // placeholder="Jane Doe"
-                                      // onChange={(e) => changeCard(e.target.value, "thaiWord", index)}
+                                      onChange={(e) => changeCard(e.target.value, "thaiWord", index)}
                                       value={friend.thaiWord}
                                       type="text"
                                     />
