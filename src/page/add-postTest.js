@@ -26,23 +26,23 @@ const AddPostTest = () => {
 
 
   //ตรงนี้เลยมุกตรงนี้ๆๆๆๆ ขอแค่ URL ที่ get มา เดี๋ยวเราไปต่อเองๆๆๆ
-  async function editPostTest() {
-    console.log("vocab box ID in editVocabBox")
-    console.log(match.params.vocabBox_id)
-    const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
-    console.log("result")
-    console.log(result.data.reading[0])
-    console.log(result.data.reading.length)
-    for (let index = 0; index < result.data.reading.length; index++) {
-      vocabId.push(result.data.reading[index].vocabCard_id)
-      console.log(vocabId[index])
-    }
-    setTitle(result.data.reading[0].boxEngName)
-    setTitleMeaning(result.data.reading[0].boxThaiName)
-    setCategoryId(result.data.reading[0].category_id)
-    setImage(result.data.reading[0].image)
-    setVocabCardID(result.data.reading[0].vocabCard_id)
-  }
+  // async function editPostTest() {
+  //   console.log("vocab box ID in editVocabBox")
+  //   console.log(match.params.vocabBox_id)
+  //   const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
+  //   console.log("result")
+  //   console.log(result.data.reading[0])
+  //   console.log(result.data.reading.length)
+  //   for (let index = 0; index < result.data.reading.length; index++) {
+  //     vocabId.push(result.data.reading[index].vocabCard_id)
+  //     console.log(vocabId[index])
+  //   }
+  //   setTitle(result.data.reading[0].boxEngName)
+  //   setTitleMeaning(result.data.reading[0].boxThaiName)
+  //   setCategoryId(result.data.reading[0].category_id)
+  //   setImage(result.data.reading[0].image)
+  //   setVocabCardID(result.data.reading[0].vocabCard_id)
+  // }
 
 
   async function postQuiz(
@@ -72,11 +72,11 @@ const AddPostTest = () => {
   }
 
 
-  useEffect(() => {
-    editPostTest();
-    getPostTest();
-    // fetch();
-  });
+  // useEffect(() => {
+  //   editPostTest();
+  //   getPostTest();
+  //   // fetch();
+  // });
 
 
   return (

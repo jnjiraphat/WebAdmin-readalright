@@ -161,7 +161,7 @@ const EditArticle = () => {
                   }
                 }}
                 onSubmit={ async (values) => {
-                  console.log(values);
+                  
 
                   const data = {
                     title: title,
@@ -170,6 +170,8 @@ const EditArticle = () => {
                     category_id: categoryId,
                     level_reading: levelReading
                   }
+
+                  console.log(data);
 
                   postReading(
                     data.title,
@@ -264,8 +266,11 @@ const EditArticle = () => {
                       <Col span="6"></Col>
                       <Col span="12"></Col>
                       <ColSubmit span="6">
-                        <Link to={`/add-postTest/${match.params.readingId}`}>
-                          <button type="submit">Next</button>
+                          <button type="submit">Save</button>
+                        <Link to={"/"}>
+                          <button>
+                          Go to Admin Board
+                          </button>
                         </Link>
                       </ColSubmit>
                     </RowStyled>
