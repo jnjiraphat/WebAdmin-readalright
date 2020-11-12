@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { Card, Row, Tabs, Button, Col } from "antd";
 import axios from "axios";
+import { Spin } from "antd";
 
 const ArticleCard = (props) => {
   const { title, catergory, level, editButton, removeButton } = props;
@@ -16,12 +17,11 @@ const ArticleCard = (props) => {
     console.log(article[0]);
   }
 
-
-
   async function deleteArticle(reading_id) {
-    console.log("reading_id in delete article")
-    console.log(reading_id)
-    await axios.delete("http://localhost:3000/admin/deleteReading/" + reading_id)
+    console.log("reading_id in delete article");
+    console.log(reading_id);
+    await axios
+      .delete("http://localhost:3000/admin/deleteReading/" + reading_id)
       .then(
         (response) => {
           console.log("delete article success!!!");
@@ -38,43 +38,59 @@ const ArticleCard = (props) => {
 
   return (
     <>
-      {article.map((items) => (
-        <CardStyled>
-          <Row>
-            <ColStyled span="8">
-              <ui>
-                <li>{items.title}</li>
-              </ui>
-            </ColStyled>
-            <SubCol span="4">
-              <ui>
-                <li>{items.categoryName}</li>
-              </ui>
-            </SubCol>
-            <SubCol span="4">
-              <ui>
-                <li>{items.level_reading}</li>
-              </ui>
-            </SubCol>
-            <TailCol span="8">
-              <Link to="/edit-article">
-                <EditButton type="primary" danger >
-                {/* <Route path="/post/"  component={Post} /> */}
-                <Link to={`/edit-article/${items.reading_id}`}>Edit Content</Link>
-                </EditButton>
-              </Link>
-              <Link to="/edit-postTest">
-                <EditButton type="primary" danger >
-                  <Link to={`/edit-postTest/${items.reading_id}`}>Edit Post Test</Link>
-                </EditButton>
-              </Link>
-                <RemoveButton type="primary" danger onClick={() => deleteArticle(items.reading_id)}>
-                  Remove 
-                </RemoveButton>
-            </TailCol>
-          </Row>
-        </CardStyled>
-      ))}
+      {article.title === "" ? (
+        <center style={{ marginTop: "20vh" }}>
+          <Spin />
+        </center>
+      ) : (
+        <div>
+          {article.map((items) => (
+            <CardStyled>
+              <Row>
+                <ColStyled span="8">
+                  <ui>
+                    <li>{items.title}</li>
+                  </ui>
+                </ColStyled>
+                <SubCol span="4">
+                  <ui>
+                    <li>{items.categoryName}</li>
+                  </ui>
+                </SubCol>
+                <SubCol span="4">
+                  <ui>
+                    <li>{items.level_reading}</li>
+                  </ui>
+                </SubCol>
+                <TailCol span="8">
+                  <Link to="/edit-article">
+                    <EditButton type="primary" danger>
+                      {/* <Route path="/post/"  component={Post} /> */}
+                      <Link to={`/edit-article/${items.reading_id}`}>
+                        Edit Content
+                      </Link>
+                    </EditButton>
+                  </Link>
+                  <Link to="/edit-postTest">
+                    <EditButton type="primary" danger>
+                      <Link to={`/edit-postTest/${items.reading_id}`}>
+                        Edit Post Test
+                      </Link>
+                    </EditButton>
+                  </Link>
+                  <RemoveButton
+                    type="primary"
+                    danger
+                    onClick={() => deleteArticle(items.reading_id)}
+                  >
+                    Remove
+                  </RemoveButton>
+                </TailCol>
+              </Row>
+            </CardStyled>
+          ))}
+        </div>
+      )}
     </>
   );
 };

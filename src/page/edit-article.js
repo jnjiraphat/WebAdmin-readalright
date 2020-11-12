@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Route, Link } from "react-router-dom";
@@ -9,6 +9,8 @@ import {
   BrowserRouter as Router,
   useRouteMatch,
 } from 'react-router-dom';
+import { Spin } from 'antd';
+import { storage } from "../firebase/index";
 
 // const readingId = "";
 const EditArticle = () => {
@@ -19,17 +21,49 @@ const EditArticle = () => {
   const [readingIdD, setReadingIdD] = useState("");
 
   //content for edit
-  const [oldTitle, setOldTitle] = useState("");
-  const [oldContent, setOldContent] = useState("");
-  const [oldImage, setOldImage] = useState("");
-  const [oldCate, setOldCate] = useState("");
-  const [oldLevel, setOldLevel] = useState("");
+  // const [oldTitle, setOldTitle] = useState("");
+  // const [oldContent, setOldContent] = useState("");
+  // const [oldImage, setOldImage] = useState("");
+  // const [oldCate, setOldCate] = useState("");
+  // const [oldLevel, setOldLevel] = useState("");
+
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [categoryId, setCategoryId] = useState()
+  const [image, setImage] = useState('')
+  const [selectImg, setSelectImg] = useState()
+  const [levelReading, setLevelReading] = useState('')
+  const [loadImage, setLoadImage] = useState(false)
+  const refContainer = useRef();
+  
+  
+  const handleUpload = (imageTemp) => {
+    setLoadImage(true)
+    const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
+          .child(imageTemp.name)
+          .getDownloadURL()
+          .then(url => {
+            setSelectImg(url);
+            setLoadImage(false)
+            console.log("pic url")
+            console.log(url)
+          });
+      }
+    );
+  };
   
 
-  useEffect(() => {
-    editContent();
-    // fetch();
-  });
+  
 
   async function editContent() {
     console.log("reading ID in editContent")
@@ -37,11 +71,11 @@ const EditArticle = () => {
     const result = await axios("http://localhost:3000/reading/readingId/" + match.params.readingId);
     console.log("result")
     console.log(result.data.reading[0]) 
-    setOldTitle(result.data.reading[0].title)
-    setOldContent(result.data.reading[0].content)
-    // setOldImage(result.data.reading[0].image)
-    setOldCate(result.data.reading[0].category_id)
-    setOldLevel(result.data.reading[0].level_reading)
+    setTitle(result.data.reading[0].title)
+    setContent(result.data.reading[0].content)
+    setImage(result.data.reading[0].image)
+    setCategoryId(result.data.reading[0].category_id)
+    setLevelReading(result.data.reading[0].level_reading)
     console.log(result.data.reading[0].image)
   }
 
@@ -71,6 +105,10 @@ const EditArticle = () => {
     // }
   }
 
+  useEffect(() => {
+    editContent();
+    // fetch();
+  }, []);
   // async function postQuiz(
   //   question,
   //   typeOfSuggestion_id,
@@ -105,39 +143,53 @@ const EditArticle = () => {
         </AreaTopic>
         <RowArea>
           <WhiteArea>
+          {title === '' ?
+              <center style={{ marginTop: '20vh' }}>
+                <Spin />
+              </center>
+              :
             <div>
               <h1>Article</h1>
               <Formik
                 initialValues={{
                   content: {
-                    title: {oldTitle},
-                    content: {oldContent},
-                    // image: {oldImage},
-                    category_id: {oldCate},
-                    level_reading: {oldLevel},
+                    title: title,
+                    content: content,
+                    image: image,
+                    category_id: categoryId,
+                    level_reading: levelReading
                   }
                 }}
-                onSubmit={(values) => {
+                onSubmit={ async (values) => {
                   console.log(values);
+
+                  const data = {
+                    title: title,
+                    content: content,
+                    image: image,
+                    category_id: categoryId,
+                    level_reading: levelReading
+                  }
+
                   postReading(
-                    values.content.title,
-                    values.content.content,
-                    "image test",
-                    values.content.category_id,
-                    values.content.level_reading,
+                    data.title,
+                    data.content,
+                    data.image,
+                    data.category_id,
+                    data.level_reading,
                   );
 
                   // same shape as initial values
                 }}
               >
-                {(formProps) => (
+                {({values}) => (
                   <Form>
                     <RowStyled>
                       <Col span="6">
                         <TextForm>Title:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled name="content.title" value={oldTitle}/>
+                        <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)} />
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -146,7 +198,7 @@ const EditArticle = () => {
                         <TextForm>Content:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldContent name="content.content" value={oldContent} component="textarea"/>
+                        <FieldContent name="content.content" value={content} component="textarea" onChange={(e) => setContent(e.target.value)}/>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -155,17 +207,24 @@ const EditArticle = () => {
                         <TextForm>Image:</TextForm>
                       </Col>
                       <Col span="12">
-                        <input
-                          type="file"
-                          name="file"
-                          value={oldImage}
-                          onChange={(event) => {
-                            formProps.setFieldValue(
-                              "photo1",
-                              event.currentTarget.files[0]
-                            );
-                          }}
-                        />
+                      {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                          <input
+                            type="file"
+                            name="file"
+                            style={{ display: 'none' }}
+                            ref={refContainer}
+                            onChange={(event) => {
+                              // console.log(URL.createObjectURL(event.target.files[0]))
+                              // setSelectImg(URL.createObjectURL(event.target.files[0]))
+                              handleUpload(event.currentTarget.files[0])
+                              // values.setFieldValue(
+                              //   "photo1",
+                              //   event.currentTarget.files[0]
+                              // );
+                            }}
+                          />
+                          <br></br>
+                          <button onClick={() => refContainer.current.click()} type="button">Edit</button>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -174,7 +233,7 @@ const EditArticle = () => {
                         <TextForm>Category:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.category_id" value={oldCate}>
+                        <FieldStyled as="select" name="content.category_id" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
                           <option value="1">Song</option>
                           <option value="2">Movie</option>
                           <option value="3">Sport</option>
@@ -192,8 +251,8 @@ const EditArticle = () => {
                         <TextForm>Level Reading:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.level_reading" value={oldLevel}>
-                          <option value="A1">A0</option>
+                        <FieldStyled as="select" name="content.level_reading" value={levelReading} onChange={(e) => setLevelReading(e.target.value)}>
+                          <option value="A0">A0</option>
                           <option value="A1">A1</option>
                           <option value="A2">A2</option>
                           <option value="B1">B1</option>
@@ -215,6 +274,7 @@ const EditArticle = () => {
                 )}
               </Formik>
             </div>
+}
           </WhiteArea>
         </RowArea>
       </Container>

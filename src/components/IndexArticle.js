@@ -17,7 +17,7 @@ const IndexArticle = () => {
                 <SubColLevel span="4">Level</SubColLevel>
                 <TailCol span="8"></TailCol>
             </RowStyled>
-            <ContentCard title="title" catergory="cate" level="A1"/>
+            <ContentCard/>
         </Div>
     )
 }

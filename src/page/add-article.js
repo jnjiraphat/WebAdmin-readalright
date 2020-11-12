@@ -221,7 +221,7 @@ const AddArticle = () => {
                       </Col>
                       <Col span="12">
                         <FieldStyled as="select" name="content.level_reading">
-                          <option value="A1">A0</option>
+                          <option value="A0">A0</option>
                           <option value="A1">A1</option>
                           <option value="A2">A2</option>
                           <option value="B1">B1</option>
