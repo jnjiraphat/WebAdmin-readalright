@@ -12,41 +12,38 @@ import {
 
 // const readingId = "";
 const AddPostTest = () => {
-  const match = useRouteMatch('/add-postTest/:readingId2');
-  console.log("reading id in add post test")
-  console.log(match.params.readingId2)
+  // const match = useRouteMatch('/add-postTest/:readingId2');
+  // console.log("reading id in add post test")
+  // console.log(match.params.readingId2)
   
   const [readingId, setReadingIdD] = useState("");
 
-  useEffect(() => {
-    // fetch();
-  });
+  const [questionBox, setQuestionBox] = useState([])
 
-  async function postReading(
-    title,
-    content,
-    image,
-    category_id,
-    level_reading
-  ) {
-    const response = await axios.post("http://localhost:3000/reading", {
-      title: title,
-      content: content,
-      image: image,
-      category_id: category_id,
-      level_reading: level_reading,
-    });
-    console.log("reading", response.data);
-    var readingId = response.data.quiz;
-    console.log(readingId);
-    setReadingIdD(readingId);
-    // console.log("reading", response.data.quiz);
-    // readingId = response.data.quiz;
-    // setReadingId(response.data.quiz)
-    // if (readingId != "") {
-    //   console.log(readingId)
-    // }
+  const match = useRouteMatch('/edit-postTest/:readingId2');
+  console.log("reading id in add post test")
+  console.log(match.params.readingId2)
+
+
+  //ตรงนี้เลยมุกตรงนี้ๆๆๆๆ ขอแค่ URL ที่ get มา เดี๋ยวเราไปต่อเองๆๆๆ
+  async function editPostTest() {
+    console.log("vocab box ID in editVocabBox")
+    console.log(match.params.vocabBox_id)
+    const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
+    console.log("result")
+    console.log(result.data.reading[0])
+    console.log(result.data.reading.length)
+    for (let index = 0; index < result.data.reading.length; index++) {
+      vocabId.push(result.data.reading[index].vocabCard_id)
+      console.log(vocabId[index])
+    }
+    setTitle(result.data.reading[0].boxEngName)
+    setTitleMeaning(result.data.reading[0].boxThaiName)
+    setCategoryId(result.data.reading[0].category_id)
+    setImage(result.data.reading[0].image)
+    setVocabCardID(result.data.reading[0].vocabCard_id)
   }
+
 
   async function postQuiz(
     question,
@@ -73,6 +70,14 @@ const AddPostTest = () => {
     });
     console.log("choice", response.data);
   }
+
+
+  useEffect(() => {
+    editPostTest();
+    getPostTest();
+    // fetch();
+  });
+
 
   return (
     <Background>
