@@ -16,6 +16,7 @@ import { storage } from "../firebase/index";
 
 
 //content for edit
+const vocabId = [];
 
 
 const EditVocabBox = () => {
@@ -25,8 +26,9 @@ const EditVocabBox = () => {
   const [image, setImage] = useState('')
   const [selectImg, setSelectImg] = useState()
   const [word, setWord] = useState([])
+
   const [loadImage, setLoadImage] = useState(false)
-  const [vocabCardID , setVocabCardID] = useState('')
+  const [vocabCardID, setVocabCardID] = useState('')
   const refContainer = useRef();
 
   const handleUpload = (imageTemp) => {
@@ -90,6 +92,11 @@ const EditVocabBox = () => {
     const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
     console.log("result")
     console.log(result.data.reading[0])
+    console.log(result.data.reading.length)
+    for (let index = 0; index < result.data.reading.length; index++) {
+      vocabId.push(result.data.reading[index].vocabCard_id)
+      console.log(vocabId[index])
+    }
     setTitle(result.data.reading[0].boxEngName)
     setTitleMeaning(result.data.reading[0].boxThaiName)
     setCategoryId(result.data.reading[0].category_id)
@@ -97,6 +104,13 @@ const EditVocabBox = () => {
     setVocabCardID(result.data.reading[0].vocabCard_id)
   }
 
+  async function deleteWord(index) {
+    console.log(index)
+    const result = await axios.delete("http://localhost:3000/admin/deleteVocabCard/" + vocabId[index]);
+    console.log("delete vocab")
+    console.log(result.statusText)
+
+  }
 
   const [putVB, settPutVB] = useState("");
 
@@ -109,12 +123,12 @@ const EditVocabBox = () => {
     category_id,
     image
   ) {
-    const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
-      boxEngName: title,
-      boxThaiName: title_meaning,
-      category_id: category_id,
-      image: image,
-    });
+    // const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
+    //   boxEngName: title,
+    //   boxThaiName: title_meaning,
+    //   category_id: category_id,
+    //   image: image,
+    // });
     // console.log("new vocabbox ", response.data);
     // var readingId = response.data.quiz;
     // console.log(readingId);
@@ -134,16 +148,18 @@ const EditVocabBox = () => {
 
     console.log(friends.length);
     for (let index = 0; index < friends.length; index++) {
-      const response = await axios.put("http://localhost:3000/vocabCard/" + vocabCard_id, {
+      const response = await axios.put("http://localhost:3000/vocabCard/" + vocabId[index], {
         engWord: friends[index]["engWord"],
         thaiWord: friends[index]["thaiWord"],
         vocabBox_id: vocabBox_id,
       });
+      console.log("round  = " + index)
+      console.log(response.statusText)
     }
     // const response = await axios.put("http://localhost:3000/vocabCard/" + vocabCard_id, {
 
     // });
-    
+
     // console.log("new vocabcard ", response.data);
     // var readingId = response.data.quiz;
     // console.log(readingId);
@@ -209,6 +225,13 @@ const EditVocabBox = () => {
   }
 
   const changeCard = (value, type, index) => {
+    // if(type=="engWord"){
+    //   wordPutEng.push(value)
+    // }else{
+    //   wordPutThai.push(value)
+
+
+    // }
     console.log(value, type, index)
     let data = [...word];
     data[index][type] = value
@@ -232,7 +255,7 @@ const EditVocabBox = () => {
               <div>
                 <Formik
                   initialValues={{
-                    content: { title: title, title_meaning: titleMeaning, category_id: categoryId, image: image ,vocabCard_id : vocabCardID },
+                    content: { title: title, title_meaning: titleMeaning, category_id: categoryId, image: image, vocabCard_id: vocabCardID },
                     friends: [...word]
                   }}
                   onSubmit={async (values) => {
@@ -242,23 +265,23 @@ const EditVocabBox = () => {
                       title_meaning: titleMeaning,
                       category_id: categoryId,
                       image: selectImg ? selectImg : image,
-                      vocabCard_id : vocabCardID,
+                      vocabCard_id: vocabCardID,
                       friends: [...word]
                     }
                     console.log(data)
                     console.log(data.title_meaning)
-                    // putVocabBox(
-                    //   data.title,
-                    //   data.title_meaning,
-                    //   data.category_id,
-                    //   data.image
-                    // );
-                    // putVocabCard(
-                    //   data.vocabCard_id,
-                    //   data.friends,
-                    //   match.params.vocabBox_id
+                    putVocabBox(
+                      data.title,
+                      data.title_meaning,
+                      data.category_id,
+                      data.image
+                    );
+                    putVocabCard(
+                      data.vocabCard_id,
+                      data.friends,
+                      match.params.vocabBox_id
 
-                    // );
+                    );
                     // await new Promise((r) => setTimeout(r, 500));
                     alert(JSON.stringify(data, null, 2));
                     // postVocabBox(
@@ -365,6 +388,7 @@ const EditVocabBox = () => {
                                       name={`friends.${index}.engWord`}
                                       // placeholder="Jane Doe"
                                       onChange={(e) => changeCard(e.target.value, "engWord", index)}
+
                                       value={friend.engWord}
                                       type="text"
                                     />
@@ -400,7 +424,7 @@ const EditVocabBox = () => {
                                     <ButtonStyled
                                       type="primary"
                                       className="secondary"
-                                      onClick={() => remove(index)}
+                                      onClick={() => deleteWord(index)}
                                       danger
                                     >
                                       X
