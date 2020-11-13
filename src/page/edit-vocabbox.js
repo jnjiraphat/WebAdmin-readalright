@@ -123,12 +123,12 @@ const EditVocabBox = () => {
     category_id,
     image
   ) {
-    // const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
-    //   boxEngName: title,
-    //   boxThaiName: title_meaning,
-    //   category_id: category_id,
-    //   image: image,
-    // });
+    const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
+      boxEngName: title,
+      boxThaiName: title_meaning,
+      category_id: category_id,
+      image: image,
+    });
     // console.log("new vocabbox ", response.data);
     // var readingId = response.data.quiz;
     // console.log(readingId);
