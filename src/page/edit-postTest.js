@@ -26,7 +26,11 @@ const EditPostTest = () => {
 
   const [quiz,setQuiz] = useState([]);
 
-  const fetchAPI = async () => {
+  const fetchAPI = async (dataArrayQuizChallenge) => {
+    console.log("feych api")
+    console.log(dataArrayQuizChallenge)
+    console.log("data array length")
+    console.log(dataArrayQuizChallenge.length)
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
@@ -57,6 +61,7 @@ const EditPostTest = () => {
         .get("http://localhost:3000/quizInContent/" + match.params.reading_id)
         .then(
           (response) => {
+            console.log("fetch api challenge")
             console.log(response.data.quiz);
             temp.push(response.data.quiz);
             console.log(temp.length);
@@ -66,15 +71,23 @@ const EditPostTest = () => {
           }
         );
         setdataArrayQuizChallenge(temp)
+        console.log("data array quiz chal")
+        console.log(dataArrayQuizChallenge)
+        // for (let index = 1; index < temp.length; index++) {
+          fetchAPI(dataArrayQuizChallenge)
+          
+        // }
+        // fetchAPI(dataArrayQuizChallenge)
     } else {
     }
   };
+  
 
   const [readingIdD, setReadingIdD] = useState("");
 
-  useEffect(() => {
+  useEffect(()  => {
     fetchApiChallenge();
-    fetchAPI();
+    // fetchAPI();
   });
 
   async function postReading(
