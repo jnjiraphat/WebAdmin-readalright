@@ -30,7 +30,7 @@ const EditPostTest = () => {
     console.log("feych api")
     console.log(dataArrayQuizChallenge)
     console.log("data array length")
-    console.log(dataArrayQuizChallenge.length)
+    // console.log(dataArrayQuizChallenge[0].length)
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
@@ -74,7 +74,7 @@ const EditPostTest = () => {
         console.log("data array quiz chal")
         console.log(dataArrayQuizChallenge)
         // for (let index = 1; index < temp.length; index++) {
-          fetchAPI(dataArrayQuizChallenge)
+          fetchAPI(temp)
           
         // }
         // fetchAPI(dataArrayQuizChallenge)
