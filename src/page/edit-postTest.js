@@ -30,6 +30,11 @@ const EditPostTest = () => {
     console.log("feych api")
     console.log(dataArrayQuizChallenge)
     console.log("data array length")
+    // const data = [];
+    // const newdata = [];
+    // data.map(item=>{
+    //   newdata.push({id :item.id, name : item.name})
+    // })
     // console.log(dataArrayQuizChallenge[0].length)
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
@@ -48,7 +53,18 @@ const EditPostTest = () => {
         );
     }
     setQuiz(dataArrayQuiz);
+    // getQuiz(quiz)
   };
+
+  const getQuiz = (quiz) => {
+    let data = [];
+    quiz.map(item => {
+      data.push({
+        
+        
+      })
+    })
+  }
 
   console.log("quiz in edit post")
   console.log(quiz)
@@ -88,7 +104,7 @@ const EditPostTest = () => {
   useEffect(()  => {
     fetchApiChallenge();
     // fetchAPI();
-  });
+  },[]);
 
   async function postReading(
     title,
