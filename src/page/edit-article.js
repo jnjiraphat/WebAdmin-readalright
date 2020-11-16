@@ -86,7 +86,7 @@ const EditArticle = () => {
     category_id,
     level_reading
   ) {
-    const response = await axios.post("http://localhost:3000/reading", {
+    const response = await axios.put("http://localhost:3000/reading/" + match.params.readingId, {
       title: title,
       content: content,
       image: image,
