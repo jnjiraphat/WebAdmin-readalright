@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { formatTimeStr } from "antd/lib/statistic/utils";
 import {
   BrowserRouter as Router,
+  Link,
   useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
@@ -445,8 +446,14 @@ const EditVocabBox = () => {
                         )}
                       </FieldArray>
                       <AreaMoreWord>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Save</button>
                       </AreaMoreWord>
+                      <AreaMoreWord>
+                      <Link to="/">
+                        <button>Go to Admin Board</button>
+                      </Link>
+                      </AreaMoreWord>
+
                     </FormStyled>
                   )}
                 </Formik>
