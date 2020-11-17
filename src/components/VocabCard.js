@@ -51,7 +51,7 @@ const VocabCard = (props) => {
 
   useEffect(() => {
     fetch();
-  });
+  }, []);
 
   const { boxEngName, boxThaiName, editButton, removeButton } = props
   return (

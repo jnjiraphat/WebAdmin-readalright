@@ -10,7 +10,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
-import { storage } from "../firebase/index";
+import { storage } from "../firebase";
 
 // const readingId = "";
 const EditArticle = () => {

@@ -5,7 +5,7 @@ import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import AddPostTest from './add-postTest'
-import { storage } from '../firebase/index';
+import { storage } from '../firebase';
 import {
   BrowserRouter as Router,
   useRouteMatch,
@@ -37,7 +37,7 @@ const AddArticle = () => {
   // }
   useEffect(() => {
     fetch();
-  });
+  }, []);
   const handleUpload = (imageTemp) => {
     const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
     uploadTask.on(

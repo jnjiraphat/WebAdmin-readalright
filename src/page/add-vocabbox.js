@@ -4,7 +4,7 @@ import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { storage } from "../firebase/index";
+import { storage } from "../firebase";
 
 const initialValues = {
   content: { boxEngName: "", boxThaiName: "", category_id: "", image: "" },
