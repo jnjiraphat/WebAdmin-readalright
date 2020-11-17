@@ -23,15 +23,6 @@ const EditPostTest = () => {
   const [quiz, setQuiz] = useState([]);
 
   const fetchAPI = async (dataArrayQuizChallenge) => {
-    console.log("feych api");
-    console.log(dataArrayQuizChallenge);
-    console.log("data array length");
-    // const data = [];
-    // const newdata = [];
-    // data.map(item=>{
-    //   newdata.push({id :item.id, name : item.name})
-    // })
-    // console.log(dataArrayQuizChallenge[0].length)
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
@@ -42,7 +33,8 @@ const EditPostTest = () => {
         .then(
           (response) => {
             console.log(response.data);
-            dataArrayQuiz.push(response.data);
+				dataArrayQuiz.push(response.data);
+				
             console.log(dataArrayQuiz.length);
           },
           (error) => {
@@ -63,7 +55,6 @@ const EditPostTest = () => {
     quizData.map((item) => {
       data.push({
         questionText: item.questionText,
-        // typeOfSuggestion_id: item.typeOfSuggestion_id,
         option: item.options,
       });
     });
@@ -71,9 +62,6 @@ const EditPostTest = () => {
     console.log(data);
     setQuiz(data);
   };
-
-  console.log("quiz in edit post");
-  console.log(quiz);
 
   const fetchApiChallenge = async () => {
     var temp = [];
@@ -95,11 +83,7 @@ const EditPostTest = () => {
       setdataArrayQuizChallenge(temp);
       console.log("data array quiz chal");
       console.log(dataArrayQuizChallenge);
-      // for (let index = 1; index < temp.length; index++) {
       fetchAPI(temp);
-
-      // }
-      // fetchAPI(dataArrayQuizChallenge)
     } else {
     }
   };
@@ -108,7 +92,6 @@ const EditPostTest = () => {
 
   useEffect(() => {
     fetchApiChallenge();
-    // fetchAPI();
   }, []);
 
   async function postReading(
@@ -129,12 +112,6 @@ const EditPostTest = () => {
     var readingId = response.data.quiz;
     console.log(readingId);
     setReadingIdD(readingId);
-    // console.log("reading", response.data.quiz);
-    // readingId = response.data.quiz;
-    // setReadingId(response.data.quiz)
-    // if (readingId != "") {
-    //   console.log(readingId)
-    // }
   }
 
   async function postQuiz(
@@ -163,25 +140,9 @@ const EditPostTest = () => {
     console.log("choice", response.data);
   }
 
-  // const changeCard = (value, head, type, index, numberOfQuestion) => {
-    // if(type=="engWord"){
-    //   wordPutEng.push(value)
-    // }else{
-    //   wordPutThai.push(value)
-
-
-    // }
-    // console.log(value, head, type, index, numberOfQuestion)
-    // let quiz = [...option];
-    // quiz[index][head][type][numberOfQuestion] = value
-    // console.log(quiz)
-    // setQuiz(quiz)
-  // }
-
-
   return (
     <Background>
-      <Container>
+      <Container>	
         <AreaTopic>
           <TopicAdd>Edit PostTest</TopicAdd>
         </AreaTopic>
@@ -189,26 +150,13 @@ const EditPostTest = () => {
           <WhiteArea>
             <div>
               <h1>Post Test</h1>
-              <Formik
+             {quizData.length >  0 ?  <Formik
                 initialValues={{
-                  content: [
-                    {
-                      questionText: quiz.questionText,
-                      // typeOfSuggestion_id: "",
-                      // correctChoice: "",
-                      // choice: [...quiz.option],
-                    },
-                  ],
+						content : [...quizData]
                 }}
                 onSubmit={(values) => {
-                  console.log(values);
-                  postQuiz(
-                    values.content.question
-                    // values.content.typeOfSuggestion_id,
-                  );
-                  // values.content.corectChoice,
-                  // values.content.choice
-                  //ต้องปรับ correctChoice เป็น rightChoice ก่อน
+						console.log(values);
+						alert(JSON.stringify(values , null , 0))
                 }}
               >
                 {({ values }) => (
@@ -216,8 +164,8 @@ const EditPostTest = () => {
                     <FieldArray name="content">
                       {({ insert, remove, push }) => (
                         <div>
-                          {quiz.length > 0 &&
-                            quiz.map((content, index) => (
+                          {quizData.length > 0 &&
+                            quizData.map((content, index) => (
                               <Col key={index}>
                                 <h4>Question no.{index + 1}</h4>
                                 <div>
@@ -227,14 +175,53 @@ const EditPostTest = () => {
                                     </Col>
                                     <Col span="14">
                                       <FieldContent
-                                        name={`content.${index}.question`}
+                                        name={`content.${index}.questionText`}
                                         component="textarea"
-                                        value={content.questionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+											 <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice A:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.options.${0}.optionText`}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+											 <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice B:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.options.${1}.optionText`}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+											 <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice C:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.options.${2}.optionText`}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+											 <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice D:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.options.${3}.optionText`}
                                       />
                                     </Col>
                                   </RowStyled>
 
-                                  <RowStyled>
+                                  {/* <RowStyled>
                                     <Col span="8">
                                       <TextForm>Choice A:</TextForm>
                                     </Col>
@@ -250,7 +237,7 @@ const EditPostTest = () => {
                                         //     0
                                         //   )
                                         // }
-                                        // value={content.choice[0].optionText}
+                                        // value={content.choice.optionText}
                                       />
                                     </Col>
                                   </RowStyled>
@@ -313,8 +300,8 @@ const EditPostTest = () => {
                                         // value={content.choice[3].optionText}
                                       />
                                     </Col>
-                                  </RowStyled>
-                                  {/* <RowStyled>
+                                  </RowStyled> */}
+                                  <RowStyled>
                                     <Col span="8">
                                       <TextForm>typeOfSuggestion:</TextForm>
                                     </Col>
@@ -327,7 +314,7 @@ const EditPostTest = () => {
                                         <option value="2">Noun</option>
                                       </FieldStyled>
                                     </Col>
-                                  </RowStyled> */}
+                                  </RowStyled>
                                   {/* <RowStyled>
                                     <Col span="8">
                                       <TextForm>Correct choice:</TextForm>
@@ -406,8 +393,6 @@ const EditPostTest = () => {
                                       Remove Question
                                     </ButtonStyled>
                                   </AreaMoreWord>
-                                  {/* </ColSubmit>
-                                </RowStyled> */}
                                 </div>
                               </Col>
                             ))}
@@ -430,15 +415,12 @@ const EditPostTest = () => {
                         </div>
                       )}
                     </FieldArray>
-
-                    <AreaSubmit>
-                      <Link to="/">
-                        <ButtonStyled type="submit">Submit</ButtonStyled>
-                      </Link>
-                    </AreaSubmit>
+						  <AreaSubmit>
+						  	<button type="submit">Submit</button>
+						  </AreaSubmit>
                   </Form>
                 )}
-              </Formik>
+              </Formik>  : null}
             </div>
           </WhiteArea>
         </RowArea>
