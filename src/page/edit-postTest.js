@@ -5,32 +5,27 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import { Button } from "antd";
-import {
-  BrowserRouter as Router,
-  useRouteMatch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, useRouteMatch } from "react-router-dom";
 
 // const readingId = "";
 const EditPostTest = () => {
-
   const [oldQuestion, setOldQuestion] = useState("");
   const [oldtypeOfSuggestionId, setOldtypeOfSuggestionId] = useState("");
   const [oldIsRightChoice, setOldIsRightChoice] = useState("");
   const [oldChoice, setOldChoice] = useState("");
 
-
   const [dataArrayQuizChallenge, setdataArrayQuizChallenge] = useState([]);
   const match = useRouteMatch(`/edit-postTest/:reading_id`);
-  console.log("reading id in edit post test")
-  console.log(match.params.reading_id)
+  console.log("reading id in edit post test");
+  console.log(match.params.reading_id);
 
-  const [quizData,setQuizData] = useState([]);
-  const [quiz,setQuiz] = useState([]);
+  const [quizData, setQuizData] = useState([]);
+  const [quiz, setQuiz] = useState([]);
 
   const fetchAPI = async (dataArrayQuizChallenge) => {
-    console.log("feych api")
-    console.log(dataArrayQuizChallenge)
-    console.log("data array length")
+    console.log("feych api");
+    console.log(dataArrayQuizChallenge);
+    console.log("data array length");
     // const data = [];
     // const newdata = [];
     // data.map(item=>{
@@ -41,7 +36,9 @@ const EditPostTest = () => {
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
         .get(
-          "http://localhost:3000/quiz/" + dataArrayQuizChallenge[0][index].question_id)
+          "http://localhost:3000/quiz/" +
+            dataArrayQuizChallenge[0][index].question_id
+        )
         .then(
           (response) => {
             console.log(response.data);
@@ -54,27 +51,29 @@ const EditPostTest = () => {
         );
     }
     setQuizData(dataArrayQuiz);
-    console.log("quizData")
-    console.log(quizData)
-    getQuiz(quizData)
+    console.log("quizData");
+    console.log(quizData);
+    getQuiz(quizData);
+    console.log("Quiz");
+    console.log(quiz);
   };
 
   const getQuiz = (quizData) => {
     let data = [];
-    quiz.map(item => {
+    quizData.map((item) => {
       data.push({
-        questionText: item.question,
+        questionText: item.questionText,
         // typeOfSuggestion_id: item.typeOfSuggestion_id,
-        // option: item.options
-      })
-    })
-    console.log("SetQuiz")
-    console.log(data)
-    setQuiz(data)
-  }
+        option: item.options,
+      });
+    });
+    console.log("SetQuiz");
+    console.log(data);
+    setQuiz(data);
+  };
 
-  console.log("quiz in edit post")
-  console.log(quiz)
+  console.log("quiz in edit post");
+  console.log(quiz);
 
   const fetchApiChallenge = async () => {
     var temp = [];
@@ -84,7 +83,7 @@ const EditPostTest = () => {
         .get("http://localhost:3000/quizInContent/" + match.params.reading_id)
         .then(
           (response) => {
-            console.log("fetch api challenge")
+            console.log("fetch api challenge");
             console.log(response.data.quiz);
             temp.push(response.data.quiz);
             console.log(temp.length);
@@ -93,25 +92,24 @@ const EditPostTest = () => {
             console.log(error);
           }
         );
-        setdataArrayQuizChallenge(temp)
-        console.log("data array quiz chal")
-        console.log(dataArrayQuizChallenge)
-        // for (let index = 1; index < temp.length; index++) {
-          fetchAPI(temp)
-          
-        // }
-        // fetchAPI(dataArrayQuizChallenge)
+      setdataArrayQuizChallenge(temp);
+      console.log("data array quiz chal");
+      console.log(dataArrayQuizChallenge);
+      // for (let index = 1; index < temp.length; index++) {
+      fetchAPI(temp);
+
+      // }
+      // fetchAPI(dataArrayQuizChallenge)
     } else {
     }
   };
-  
 
   const [readingIdD, setReadingIdD] = useState("");
 
-  useEffect(()  => {
+  useEffect(() => {
     fetchApiChallenge();
     // fetchAPI();
-  },[]);
+  }, []);
 
   async function postReading(
     title,
@@ -165,6 +163,22 @@ const EditPostTest = () => {
     console.log("choice", response.data);
   }
 
+  // const changeCard = (value, head, type, index, numberOfQuestion) => {
+    // if(type=="engWord"){
+    //   wordPutEng.push(value)
+    // }else{
+    //   wordPutThai.push(value)
+
+
+    // }
+    // console.log(value, head, type, index, numberOfQuestion)
+    // let quiz = [...option];
+    // quiz[index][head][type][numberOfQuestion] = value
+    // console.log(quiz)
+    // setQuiz(quiz)
+  // }
+
+
   return (
     <Background>
       <Container>
@@ -179,18 +193,18 @@ const EditPostTest = () => {
                 initialValues={{
                   content: [
                     {
-                      question: "",
-                      typeOfSuggestion_id: "",
-                      corectChoice: "",
-                      choice: "",
+                      questionText: quiz.questionText,
+                      // typeOfSuggestion_id: "",
+                      // correctChoice: "",
+                      // choice: [...quiz.option],
                     },
                   ],
                 }}
                 onSubmit={(values) => {
                   console.log(values);
                   postQuiz(
-                    values.content.question,
-                    values.content.typeOfSuggestion_id,
+                    values.content.question
+                    // values.content.typeOfSuggestion_id,
                   );
                   // values.content.corectChoice,
                   // values.content.choice
@@ -202,113 +216,152 @@ const EditPostTest = () => {
                     <FieldArray name="content">
                       {({ insert, remove, push }) => (
                         <div>
-                          {values.content.length > 0 &&
-                            values.content.map((content, index) => (
+                          {quiz.length > 0 &&
+                            quiz.map((content, index) => (
                               <Col key={index}>
-                                <h4>Question no.{index+1}</h4>
+                                <h4>Question no.{index + 1}</h4>
                                 <div>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>question:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldContent
-                                      name={`content.${index}.question`}
-                                      component="textarea"
-                                    />
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>question:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldContent
-                                      name={`content.${index}.question`}
-                                      
-                                    />
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>question:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldContent
-                                      name={`content.${index}.question`}
-                                      
-                                    />
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>question:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldContent
-                                      name={`content.${index}.question`}
-                                      
-                                    />
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>question:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldContent
-                                      name={`content.${index}.question`}
-                                      
-                                    />
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>typeOfSuggestion:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <FieldStyled
-                                      as="select"
-                                      name={`content.${index}.typeOfSuggestion_id`}
-                                    >
-                                      <option value="1">Verb</option>
-                                      <option value="2">Noun</option>
-                                    </FieldStyled>
-                                  </Col>
-                                </RowStyled>
-                                <RowStyled>
-                                  <Col span="8">
-                                    <TextForm>Correct choice:</TextForm>
-                                  </Col>
-                                  <Col span="14">
-                                    <Field
-                                      type="radio"
-                                      name={`content.${index}.corectChoice`}
-                                      value="a"
-                                    />{" "}
-                                    A
-                                    <Field
-                                      type="radio"
-                                      name={`content.${index}.corectChoice`}
-                                      value="b"
-                                    />{" "}
-                                    B
-                                    <Field
-                                      type="radio"
-                                      name={`content.${index}.corectChoice`}
-                                      value="c"
-                                    />{" "}
-                                    C
-                                    <FieldRadio
-                                      type="radio"
-                                      name={`content.${index}.corectChoice`}
-                                      value="d"
-                                    />{" "}
-                                    D
-                                    {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
-                                  </Col>
-                                </RowStyled>
-                                {/* <RowStyled>
+                                  <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>question:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldContent
+                                        name={`content.${index}.question`}
+                                        component="textarea"
+                                        value={content.questionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+
+                                  <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice A:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.choice.${0}.optionText`}
+                                        // onChange={(e) =>
+                                        //   changeCard(
+                                        //     e.target.value,
+                                        //     "option",
+                                        //     "optionText",
+                                        //     index,
+                                        //     0
+                                        //   )
+                                        // }
+                                        // value={content.choice[0].optionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+                                  <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice B:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.choice.${1}.optionText`}
+                                        // onChange={(e) =>
+                                        //   changeCard(
+                                        //     e.target.value,
+                                        //     "option",
+                                        //     "optionText",
+                                        //     index,
+                                        //     1
+                                        //   )
+                                        // }
+                                        // value={content.choice[1].optionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+                                  <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice C:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.choice.${2}.optionText`}
+                                        // onChange={(e) =>
+                                        //   changeCard(
+                                        //     e.target.value,
+                                        //     "option",
+                                        //     "optionText",
+                                        //     index,
+                                        //     2
+                                        //   )
+                                        // }
+                                        // value={content.choice[2].optionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+                                  <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Choice D:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        name={`content.${index}.choice.${3}.optionText`}
+                                        // onChange={(e) =>
+                                        //   changeCard(
+                                        //     e.target.value,
+                                        //     "option",
+                                        //     "optionText",
+                                        //     index,
+                                        //     3
+                                        //   )
+                                        // }
+                                        // value={content.choice[3].optionText}
+                                      />
+                                    </Col>
+                                  </RowStyled>
+                                  {/* <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>typeOfSuggestion:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <FieldStyled
+                                        as="select"
+                                        name={`content.${index}.typeOfSuggestion_id`}
+                                      >
+                                        <option value="1">Verb</option>
+                                        <option value="2">Noun</option>
+                                      </FieldStyled>
+                                    </Col>
+                                  </RowStyled> */}
+                                  {/* <RowStyled>
+                                    <Col span="8">
+                                      <TextForm>Correct choice:</TextForm>
+                                    </Col>
+                                    <Col span="14">
+                                      <Field
+                                        type="radio"
+                                        name={`content.${index}.corectChoice`}
+                                        value="a"
+                                      />{" "}
+                                      A
+                                      <Field
+                                        type="radio"
+                                        name={`content.${index}.corectChoice`}
+                                        value="b"
+                                      />{" "}
+                                      B
+                                      <Field
+                                        type="radio"
+                                        name={`content.${index}.corectChoice`}
+                                        value="c"
+                                      />{" "}
+                                      C
+                                      <FieldRadio
+                                        type="radio"
+                                        name={`content.${index}.corectChoice`}
+                                        value="d"
+                                      />{" "}
+                                      D
+                                      ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F
+                                    </Col>
+                                  </RowStyled> */}
+
+                                  {/* <RowStyled>
                                   <Col span="8">
                                     <TextForm>choice:</TextForm>
                                   </Col>
@@ -318,7 +371,7 @@ const EditPostTest = () => {
                                     />
                                   </Col>
                                 </RowStyled> */}
-                                {/* <Col span="6">
+                                  {/* <Col span="6">
                                   
                                   <TextFormLebel htmlFor={`content.${index}.question`}>
                                     question-{index+1}
@@ -337,23 +390,23 @@ const EditPostTest = () => {
                                     className="field-error"
                                   />
                                 </Col> */}
-                                {/* <RowStyled>
+                                  {/* <RowStyled>
                                 <Col span="8">
                                     
                                   </Col>
                                   
                                 <ColSubmit span="12"> */}
                                   <AreaMoreWord>
-                                  <ButtonStyled
-                                    type="primary"
-                                    className="secondary"
-                                    onClick={() => remove(index)}
-                                    danger
-                                  >
-                                    Remove Question
-                                  </ButtonStyled>
+                                    <ButtonStyled
+                                      type="primary"
+                                      className="secondary"
+                                      onClick={() => remove(index)}
+                                      danger
+                                    >
+                                      Remove Question
+                                    </ButtonStyled>
                                   </AreaMoreWord>
-                                {/* </ColSubmit>
+                                  {/* </ColSubmit>
                                 </RowStyled> */}
                                 </div>
                               </Col>
@@ -379,9 +432,9 @@ const EditPostTest = () => {
                     </FieldArray>
 
                     <AreaSubmit>
-                    <Link to="/">
-                      <ButtonStyled type="submit">Submit</ButtonStyled>
-                    </Link>
+                      <Link to="/">
+                        <ButtonStyled type="submit">Submit</ButtonStyled>
+                      </Link>
                     </AreaSubmit>
                   </Form>
                 )}
@@ -492,4 +545,4 @@ const FormStyled = styled(Form)`
 
 const FieldRadio = styled(Field)`
   margin-left: 2%;
-`
+`;
