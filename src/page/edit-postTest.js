@@ -46,7 +46,7 @@ const EditPostTest = () => {
             console.log(response.data);
             dataArrayQuiz.push(response.data);
             console.log("typeOfSuggestion_id")
-            console.log(response.data.quiz[0].typeOfSuggestion_id);
+            // console.log(response.data.quiz[0].typeOfSuggestion_id);
             console.log(dataArrayQuiz.length);
           },
           (error) => {
