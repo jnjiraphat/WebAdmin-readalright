@@ -24,6 +24,7 @@ const EditPostTest = () => {
   console.log("reading id in edit post test")
   console.log(match.params.reading_id)
 
+  const [quizData,setQuizData] = useState([]);
   const [quiz,setQuiz] = useState([]);
 
   const fetchAPI = async (dataArrayQuizChallenge) => {
@@ -52,18 +53,24 @@ const EditPostTest = () => {
           }
         );
     }
-    setQuiz(dataArrayQuiz);
-    // getQuiz(quiz)
+    setQuizData(dataArrayQuiz);
+    console.log("quizData")
+    console.log(quizData)
+    getQuiz(quizData)
   };
 
-  const getQuiz = (quiz) => {
+  const getQuiz = (quizData) => {
     let data = [];
     quiz.map(item => {
       data.push({
-        
-        
+        questionText: item.question,
+        // typeOfSuggestion_id: item.typeOfSuggestion_id,
+        // option: item.options
       })
     })
+    console.log("SetQuiz")
+    console.log(data)
+    setQuiz(data)
   }
 
   console.log("quiz in edit post")
@@ -173,8 +180,8 @@ const EditPostTest = () => {
                   content: [
                     {
                       question: "",
-                      typeOfSuggestion_id: "1",
-                      isRightChoice: "1",
+                      typeOfSuggestion_id: "",
+                      corectChoice: "",
                       choice: "",
                     },
                   ],
@@ -184,9 +191,10 @@ const EditPostTest = () => {
                   postQuiz(
                     values.content.question,
                     values.content.typeOfSuggestion_id,
-                    values.content.isRightChoice,
-                    values.content.choice
                   );
+                  // values.content.corectChoice,
+                  // values.content.choice
+                  //ต้องปรับ correctChoice เป็น rightChoice ก่อน
                 }}
               >
                 {({ values }) => (
@@ -206,6 +214,51 @@ const EditPostTest = () => {
                                   <Col span="14">
                                     <FieldContent
                                       name={`content.${index}.question`}
+                                      component="textarea"
+                                    />
+                                  </Col>
+                                </RowStyled>
+                                <RowStyled>
+                                  <Col span="8">
+                                    <TextForm>question:</TextForm>
+                                  </Col>
+                                  <Col span="14">
+                                    <FieldContent
+                                      name={`content.${index}.question`}
+                                      
+                                    />
+                                  </Col>
+                                </RowStyled>
+                                <RowStyled>
+                                  <Col span="8">
+                                    <TextForm>question:</TextForm>
+                                  </Col>
+                                  <Col span="14">
+                                    <FieldContent
+                                      name={`content.${index}.question`}
+                                      
+                                    />
+                                  </Col>
+                                </RowStyled>
+                                <RowStyled>
+                                  <Col span="8">
+                                    <TextForm>question:</TextForm>
+                                  </Col>
+                                  <Col span="14">
+                                    <FieldContent
+                                      name={`content.${index}.question`}
+                                      
+                                    />
+                                  </Col>
+                                </RowStyled>
+                                <RowStyled>
+                                  <Col span="8">
+                                    <TextForm>question:</TextForm>
+                                  </Col>
+                                  <Col span="14">
+                                    <FieldContent
+                                      name={`content.${index}.question`}
+                                      
                                     />
                                   </Col>
                                 </RowStyled>
@@ -225,21 +278,33 @@ const EditPostTest = () => {
                                 </RowStyled>
                                 <RowStyled>
                                   <Col span="8">
-                                    <TextForm>isRightChoice:</TextForm>
+                                    <TextForm>Correct choice:</TextForm>
                                   </Col>
                                   <Col span="14">
                                     <Field
                                       type="radio"
-                                      name={`content.${index}.isRightChoice`}
-                                      value="1"
+                                      name={`content.${index}.corectChoice`}
+                                      value="a"
                                     />{" "}
-                                    True
+                                    A
+                                    <Field
+                                      type="radio"
+                                      name={`content.${index}.corectChoice`}
+                                      value="b"
+                                    />{" "}
+                                    B
+                                    <Field
+                                      type="radio"
+                                      name={`content.${index}.corectChoice`}
+                                      value="c"
+                                    />{" "}
+                                    C
                                     <FieldRadio
                                       type="radio"
-                                      name={`content.${index}.isRightChoice`}
-                                      value="0"
+                                      name={`content.${index}.corectChoice`}
+                                      value="d"
                                     />{" "}
-                                    False
+                                    D
                                     {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
                                   </Col>
                                 </RowStyled>
