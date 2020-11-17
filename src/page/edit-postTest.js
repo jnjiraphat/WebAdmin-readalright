@@ -27,7 +27,7 @@ const EditPostTest = () => {
   const [quiz,setQuiz] = useState([]);
 
   const fetchAPI = async (dataArrayQuizChallenge) => {
-    console.log("feych api")
+    console.log("fetch api")
     console.log(dataArrayQuizChallenge)
     console.log("data array length")
     // const data = [];
@@ -45,6 +45,8 @@ const EditPostTest = () => {
           (response) => {
             console.log(response.data);
             dataArrayQuiz.push(response.data);
+            console.log("typeOfSuggestion_id")
+            console.log(response.data.quiz[0].typeOfSuggestion_id);
             console.log(dataArrayQuiz.length);
           },
           (error) => {
