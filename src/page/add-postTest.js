@@ -20,7 +20,7 @@ const AddPostTest = () => {
 
   const [questionBox, setQuestionBox] = useState([])
 
-  const match = useRouteMatch('/edit-postTest/:readingId2');
+  const match = useRouteMatch('/add-postTest/:readingId2');
   console.log("reading id in add post test")
   console.log(match.params.readingId2)
 

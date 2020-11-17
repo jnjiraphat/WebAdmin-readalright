@@ -26,7 +26,7 @@ const AddArticle = () => {
     // setReadingIdD(result.data.reading[0].reading_id);
     console.log(result.data.reading[0].reading_id)
     var number = parseInt(result.data.reading[0].reading_id)
-    var count = number + 1
+    var count = number 
     console.log(count)
     setReadingId2(count)
 
