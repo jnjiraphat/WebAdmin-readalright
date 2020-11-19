@@ -153,7 +153,8 @@ const EditPostTest = () => {
               <h1>Post Test</h1>
              {quizData.length >  0 ?  <Formik
                 initialValues={{
-						content : [...quizData]
+            content : [...quizData],
+            // correctChoice: ""
                 }}
                 onSubmit={(values) => {
 						console.log(values);
@@ -221,85 +222,20 @@ const EditPostTest = () => {
                                       />
                                     </Col>
                                   </RowStyled>
-
                                   {/* <RowStyled>
                                     <Col span="8">
-                                      <TextForm>Choice A:</TextForm>
+                                      <TextForm>Correct choice:</TextForm>
                                     </Col>
                                     <Col span="14">
                                       <FieldStyled
-                                        name={`content.${index}.choice.${0}.optionText`}
-                                        // onChange={(e) =>
-                                        //   changeCard(
-                                        //     e.target.value,
-                                        //     "option",
-                                        //     "optionText",
-                                        //     index,
-                                        //     0
-                                        //   )
-                                        // }
-                                        // value={content.choice.optionText}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice B:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.choice.${1}.optionText`}
-                                        // onChange={(e) =>
-                                        //   changeCard(
-                                        //     e.target.value,
-                                        //     "option",
-                                        //     "optionText",
-                                        //     index,
-                                        //     1
-                                        //   )
-                                        // }
-                                        // value={content.choice[1].optionText}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice C:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.choice.${2}.optionText`}
-                                        // onChange={(e) =>
-                                        //   changeCard(
-                                        //     e.target.value,
-                                        //     "option",
-                                        //     "optionText",
-                                        //     index,
-                                        //     2
-                                        //   )
-                                        // }
-                                        // value={content.choice[2].optionText}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice D:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.choice.${3}.optionText`}
-                                        // onChange={(e) =>
-                                        //   changeCard(
-                                        //     e.target.value,
-                                        //     "option",
-                                        //     "optionText",
-                                        //     index,
-                                        //     3
-                                        //   )
-                                        // }
-                                        // value={content.choice[3].optionText}
-                                      />
+                                        as="select"
+                                        name="correctChoice"
+                                      >
+                                        <option value="0">A</option>
+                                        <option value="1">B</option>
+                                        <option value="2">C</option>
+                                        <option value="3">D</option>
+                                      </FieldStyled>
                                     </Col>
                                   </RowStyled> */}
                                   <RowStyled>
