@@ -9,15 +9,11 @@ import { BrowserRouter as Router, useRouteMatch } from "react-router-dom";
 
 // const readingId = "";
 const EditPostTest = () => {
-  const [oldQuestion, setOldQuestion] = useState("");
-  const [oldtypeOfSuggestionId, setOldtypeOfSuggestionId] = useState("");
-  const [oldIsRightChoice, setOldIsRightChoice] = useState("");
-  const [oldChoice, setOldChoice] = useState("");
 
   const [dataArrayQuizChallenge, setdataArrayQuizChallenge] = useState([]);
   const match = useRouteMatch(`/edit-postTest/:reading_id`);
-  console.log("reading id in edit post test");
-  console.log(match.params.reading_id);
+  // console.log("reading id in edit post test");
+  // console.log(match.params.reading_id);
 
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
@@ -34,7 +30,7 @@ const EditPostTest = () => {
           (response) => {
             console.log(response.data);
             dataArrayQuiz.push(response.data);
-            console.log("typeOfSuggestion_id")
+            console.log("typeOfSuggestion_id");
             // console.log(response.data.quiz[0].typeOfSuggestion_id);
             console.log(dataArrayQuiz.length);
           },
@@ -56,7 +52,8 @@ const EditPostTest = () => {
     quizData.map((item) => {
       data.push({
         questionText: item.questionText,
-        option: item.options,
+        typeOfSuggestionID: item.typeOfSuggestionID,
+        options: item.options,
       });
     });
     console.log("SetQuiz");
@@ -140,10 +137,11 @@ const EditPostTest = () => {
     });
     console.log("choice", response.data);
   }
-
+  
+  
   return (
     <Background>
-      <Container>	
+      <Container>
         <AreaTopic>
           <TopicAdd>Edit PostTest</TopicAdd>
         </AreaTopic>
@@ -151,108 +149,216 @@ const EditPostTest = () => {
           <WhiteArea>
             <div>
               <h1>Post Test</h1>
-             {quizData.length >  0 ?  <Formik
-                initialValues={{
-            content : [...quizData],
-            // correctChoice: ""
-                }}
-                onSubmit={(values) => {
-						console.log(values);
-						alert(JSON.stringify(values , null , 0))
-                }}
-              >
-                {({ values }) => (
-                  <Form>
-                    <FieldArray name="content">
-                      {({ insert, remove, push }) => (
-                        <div>
-                          {quizData.length > 0 &&
-                            quizData.map((content, index) => (
-                              <Col key={index}>
-                                <h4>Question no.{index + 1}</h4>
-                                <div>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>question:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldContent
-                                        name={`content.${index}.questionText`}
-                                        component="textarea"
-                                      />
-                                    </Col>
-                                  </RowStyled>
-											 <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice A:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${0}.optionText`}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-											 <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice B:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${1}.optionText`}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-											 <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice C:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${2}.optionText`}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-											 <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice D:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${3}.optionText`}
-                                      />
-                                    </Col>
-                                  </RowStyled>
-                                  {/* <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Correct choice:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        as="select"
-                                        name="correctChoice"
-                                      >
-                                        <option value="0">A</option>
-                                        <option value="1">B</option>
-                                        <option value="2">C</option>
-                                        <option value="3">D</option>
-                                      </FieldStyled>
-                                    </Col>
-                                  </RowStyled> */}
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>typeOfSuggestion:</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldStyled
-                                        as="select"
-                                        name={`content.${index}.typeOfSuggestion_id`}
-                                      >
-                                        <option value="1">Verb</option>
-                                        <option value="2">Noun</option>
-                                      </FieldStyled>
-                                    </Col>
-                                  </RowStyled>
-                                  {/* <RowStyled>
+              {quizData.length > 0 ? (
+                <Formik
+                  initialValues={{
+                    content: [...quizData],
+                    // correctChoice: ""
+                  }}
+                  onSubmit={(values) => {
+                    console.log(values);
+                    
+                    console.log(values.content[0].options.length)
+                    console.log("Q1")
+                    var countQ1 = 0;
+                    for (let index = 0; index < values.content[0].options.length; index++) {
+                      console.log(values.content[0].options[index].isRightChoice)
+                      if(values.content[0].options[index].isRightChoice == '1') {
+                        countQ1++
+                        console.log("count in if")
+                        console.log(countQ1)
+                      }
+                    }
+                    console.log("Q2")
+                    var countQ2 = 0;
+                    for (let index = 0; index < values.content[1].options.length; index++) {
+                  
+                      console.log(values.content[1].options[index].isRightChoice)
+                      if(values.content[1].options[index].isRightChoice == '1') {
+                        countQ2++
+                        console.log("count in if")
+                        console.log(countQ2)
+                      }
+                    }
+                    console.log("Q3")
+                    var countQ3 = 0;
+                    for (let index = 0; index < values.content[2].options.length; index++) {
+                  
+                      console.log(values.content[2].options[index].isRightChoice)
+                      if(values.content[2].options[index].isRightChoice == '1') {
+                        countQ3++
+                        console.log("count in if")
+                        console.log(countQ3)
+                      }
+                    }
+                    console.log("countQ3")
+                    console.log(countQ3)
+                    if(countQ1 == 1 && countQ2==1 && countQ3 ==1) {
+                      console.log("Post in this condition")
+                      alert(JSON.stringify(values, null, 0));
+                    } else {
+                      console.log("not success")
+                      alert(JSON.stringify("Please edit Question1 correct choice just 1"));
+                    }
+                  }}
+                >
+                  {({ values }) => (
+                    <Form>
+                      <FieldArray name="content">
+                        {({ insert, remove, push }) => (
+                          <div>
+                            {quizData.length > 0 &&
+                              quizData.map((content, index) => (
+                                <Col key={index}>
+                                  <h4>Question no.{index + 1}</h4>
+                                  <div>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>question:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldContent
+                                          name={`content.${index}.questionText`}
+                                          component="textarea"
+                                        />
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>Choice A:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldStyled
+                                          name={`content.${index}.options.${0}.optionText`}
+                                        />
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>isRightChoice:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <Field
+                                          type="radio"
+                                          name={`content.${index}.options.${0}.isRightChoice`}
+                                          value="1"
+                                        />{" "}
+                                        Correct
+                                        <FieldRadio
+                                          type="radio"
+                                          name={`content.${index}.options.${0}.isRightChoice`}
+                                          value="0"
+                                        />{" "}
+                                        Wrong
+                                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>Choice B:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldStyled
+                                          name={`content.${index}.options.${1}.optionText`}
+                                        />
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>isRightChoice:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <Field
+                                          type="radio"
+                                          name={`content.${index}.options.${1}.isRightChoice`}
+                                          value="1"
+                                        />{" "}
+                                        Correct
+                                        <FieldRadio
+                                          type="radio"
+                                          name={`content.${index}.options.${1}.isRightChoice`}
+                                          value="0"
+                                        />{" "}
+                                        Wrong
+                                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>Choice C:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldStyled
+                                          name={`content.${index}.options.${2}.optionText`}
+                                        />
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>isRightChoice:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <Field
+                                          type="radio"
+                                          name={`content.${index}.options.${2}.isRightChoice`}
+                                          value="1"
+                                        />{" "}
+                                        Correct
+                                        <FieldRadio
+                                          type="radio"
+                                          name={`content.${index}.options.${2}.isRightChoice`}
+                                          value="0"
+                                        />{" "}
+                                        Wrong
+                                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>Choice D:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldStyled
+                                          name={`content.${index}.options.${3}.optionText`}
+                                        />
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>isRightChoice:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <Field
+                                          type="radio"
+                                          name={`content.${index}.options.${3}.isRightChoice`}
+                                          value="1"
+                                        />{" "}
+                                        Correct
+                                        <FieldRadio
+                                          type="radio"
+                                          name={`content.${index}.options.${3}.isRightChoice`}
+                                          value="0"
+                                        />{" "}
+                                        Wrong
+                                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
+                                      </Col>
+                                    </RowStyled>
+                                    <RowStyled>
+                                      <Col span="8">
+                                        <TextForm>typeOfSuggestion:</TextForm>
+                                      </Col>
+                                      <Col span="14">
+                                        <FieldStyled
+                                          as="select"
+                                          name={`content.${index}.typeOfSuggestionID`}
+                                        >
+                                          <option value="1">Verb</option>
+                                          <option value="2">Noun</option>
+                                          <option value="3">Adverb</option>
+                                        </FieldStyled>
+                                      </Col>
+                                    </RowStyled>
+                                    {/* <RowStyled>
                                     <Col span="8">
                                       <TextForm>Correct choice:</TextForm>
                                     </Col>
@@ -285,7 +391,7 @@ const EditPostTest = () => {
                                     </Col>
                                   </RowStyled> */}
 
-                                  {/* <RowStyled>
+                                    {/* <RowStyled>
                                   <Col span="8">
                                     <TextForm>choice:</TextForm>
                                   </Col>
@@ -295,7 +401,7 @@ const EditPostTest = () => {
                                     />
                                   </Col>
                                 </RowStyled> */}
-                                  {/* <Col span="6">
+                                    {/* <Col span="6">
                                   
                                   <TextFormLebel htmlFor={`content.${index}.question`}>
                                     question-{index+1}
@@ -314,50 +420,51 @@ const EditPostTest = () => {
                                     className="field-error"
                                   />
                                 </Col> */}
-                                  {/* <RowStyled>
+                                    {/* <RowStyled>
                                 <Col span="8">
                                     
                                   </Col>
                                   
                                 <ColSubmit span="12"> */}
-                                  <AreaMoreWord>
-                                    <ButtonStyled
-                                      type="primary"
-                                      className="secondary"
-                                      onClick={() => remove(index)}
-                                      danger
-                                    >
-                                      Remove Question
-                                    </ButtonStyled>
-                                  </AreaMoreWord>
-                                </div>
-                              </Col>
-                            ))}
-                          <AreaSubmit>
-                            <ButtonStyled
-                              type="primary"
-                              className="secondary"
-                              onClick={() =>
-                                push({
-                                  question: "",
-                                  typeOfSuggestion_id: "",
-                                  isRightChoice: "",
-                                  choice: "",
-                                })
-                              }
-                            >
-                              More Questions
-                            </ButtonStyled>
-                          </AreaSubmit>
-                        </div>
-                      )}
-                    </FieldArray>
-						  <AreaSubmit>
-						  	<button type="submit">Submit</button>
-						  </AreaSubmit>
-                  </Form>
-                )}
-              </Formik>  : null}
+                                    <AreaMoreWord>
+                                      <ButtonStyled
+                                        type="primary"
+                                        className="secondary"
+                                        onClick={() => remove(index)}
+                                        danger
+                                      >
+                                        Remove Question
+                                      </ButtonStyled>
+                                    </AreaMoreWord>
+                                  </div>
+                                </Col>
+                              ))}
+                            <AreaSubmit>
+                              <ButtonStyled
+                                type="primary"
+                                className="secondary"
+                                onClick={() =>
+                                  push({
+                                    question: "",
+                                    typeOfSuggestion_id: "",
+                                    isRightChoice: "",
+                                    choice: "",
+                                  })
+                                }
+                              >
+                                More Questions
+                              </ButtonStyled>
+                            </AreaSubmit>
+                          </div>
+                        )}
+                      </FieldArray>
+                      <AreaSubmit>
+                        <button type="submit">Submit</button>
+                      </AreaSubmit>
+                    </Form>
+                  )}
+                </Formik>
+              ) : null}
             </div>
           </WhiteArea>
         </RowArea>
