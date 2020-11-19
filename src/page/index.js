@@ -4,8 +4,11 @@ import { Link, NavLink } from "react-router-dom";
 import Icon from '../asset/image/icon.png'
 import { Row, Col, Button } from 'antd'
 import IndexArea from '../components/IndexArea'
+import { useRouteMatch } from "react-router-dom";
 
 const menuSite = () => {
+    // const match = useRouteMatch('/index');
+    // const match = useRouteMatch(`/index`);
     return(
         <Background>
             <Container>

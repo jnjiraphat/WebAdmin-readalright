@@ -18,13 +18,50 @@ const EditPostTest = () => {
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
 
+  async function putPostTest(
+    content
+    // title,
+    // content,
+    // image,
+    // category_id,
+    // level_reading
+  ) {
+    console.log("content in put post tes")
+    console.log(content)
+    console.log(content[0].questionText)
+    console.log(content[1].questionText)
+    console.log(content[2].questionText)
+    console.log(dataArrayQuizChallenge[0][0].question_id)
+    for (let index = 0; index < 3; index++) {
+      const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
+        question: content[index].questionText,
+        typeOfSuggestion_id : 1,
+        reading_id: match.params.reading_id,
+        typeOfQuestion: "chal"
+        // thaiWord: friends[index]["thaiWord"],
+        // vocabBox_id: vocabBox_id,
+      });
+      console.log("quiz", response.data);
+      // var readingId = response.data.quiz;
+      // console.log(readingId);
+      // setReadingIdD(readingId);
+      // console.log("reading", response.data.quiz);
+      // readingId = response.data.quiz;
+      // setReadingId(response.data.quiz)
+      // if (readingId != "") {
+      //   console.log(readingId)
+      // }
+    }
+
+  }
+
   const fetchAPI = async (dataArrayQuizChallenge) => {
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
         .get(
           "http://localhost:3000/quiz/" +
-            dataArrayQuizChallenge[0][index].question_id
+          dataArrayQuizChallenge[0][index].question_id
         )
         .then(
           (response) => {

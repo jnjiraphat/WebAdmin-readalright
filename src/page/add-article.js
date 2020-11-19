@@ -5,7 +5,7 @@ import { Route, Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import AddPostTest from './add-postTest'
-import { storage } from '../firebase';
+import firebaseMethod from '../firebase';
 import {
   BrowserRouter as Router,
   useRouteMatch,
@@ -19,6 +19,9 @@ const AddArticle = () => {
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("")
   const [readingId2, setReadingId2] = useState(0)
+
+ 
+  
 
   async function fetch() {
     const result = await axios("http://localhost:3000/reading/last");
@@ -39,7 +42,7 @@ const AddArticle = () => {
     fetch();
   }, []);
   const handleUpload = (imageTemp) => {
-    const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    const uploadTask =firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -48,7 +51,7 @@ const AddArticle = () => {
         console.log(error);
       },
       () => {
-        storage
+        firebaseMethod.storage
           .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
           .child(imageTemp.name)
           .getDownloadURL()
