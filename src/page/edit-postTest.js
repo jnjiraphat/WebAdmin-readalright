@@ -22,13 +22,50 @@ const EditPostTest = () => {
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
 
+  async function putPostTest(
+    content
+    // title,
+    // content,
+    // image,
+    // category_id,
+    // level_reading
+  ) {
+    console.log("content in put post tes")
+    console.log(content)
+    console.log(content[0].questionText)
+    console.log(content[1].questionText)
+    console.log(content[2].questionText)
+    console.log(dataArrayQuizChallenge[0][0].question_id)
+    for (let index = 0; index < 3; index++) {
+      const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
+        question: content[index].questionText,
+        typeOfSuggestion_id : 1,
+        reading_id: match.params.reading_id,
+        typeOfQuestion: "chal"
+        // thaiWord: friends[index]["thaiWord"],
+        // vocabBox_id: vocabBox_id,
+      });
+      console.log("quiz", response.data);
+      // var readingId = response.data.quiz;
+      // console.log(readingId);
+      // setReadingIdD(readingId);
+      // console.log("reading", response.data.quiz);
+      // readingId = response.data.quiz;
+      // setReadingId(response.data.quiz)
+      // if (readingId != "") {
+      //   console.log(readingId)
+      // }
+    }
+
+  }
+
   const fetchAPI = async (dataArrayQuizChallenge) => {
     var dataArrayQuiz = [];
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
         .get(
           "http://localhost:3000/quiz/" +
-            dataArrayQuizChallenge[0][index].question_id
+          dataArrayQuizChallenge[0][index].question_id
         )
         .then(
           (response) => {
@@ -143,7 +180,7 @@ const EditPostTest = () => {
 
   return (
     <Background>
-      <Container>	
+      <Container>
         <AreaTopic>
           <TopicAdd>Edit PostTest</TopicAdd>
         </AreaTopic>
@@ -151,14 +188,21 @@ const EditPostTest = () => {
           <WhiteArea>
             <div>
               <h1>Post Test</h1>
-             {quizData.length >  0 ?  <Formik
+              {quizData.length > 0 ? <Formik
                 initialValues={{
-            content : [...quizData],
-            // correctChoice: ""
+                  content: [...quizData],
+                  // correctChoice: ""
                 }}
                 onSubmit={(values) => {
-						console.log(values);
-						alert(JSON.stringify(values , null , 0))
+                  console.log(values);
+                  console.log("value")
+                  console.log(values.content[0].questionText)
+                  putPostTest(
+                    values.content
+                  );
+
+
+                  alert(JSON.stringify(values, null, 0))
                 }}
               >
                 {({ values }) => (
@@ -182,7 +226,7 @@ const EditPostTest = () => {
                                       />
                                     </Col>
                                   </RowStyled>
-											 <RowStyled>
+                                  <RowStyled>
                                     <Col span="8">
                                       <TextForm>Choice A:</TextForm>
                                     </Col>
@@ -192,7 +236,7 @@ const EditPostTest = () => {
                                       />
                                     </Col>
                                   </RowStyled>
-											 <RowStyled>
+                                  <RowStyled>
                                     <Col span="8">
                                       <TextForm>Choice B:</TextForm>
                                     </Col>
@@ -202,7 +246,7 @@ const EditPostTest = () => {
                                       />
                                     </Col>
                                   </RowStyled>
-											 <RowStyled>
+                                  <RowStyled>
                                     <Col span="8">
                                       <TextForm>Choice C:</TextForm>
                                     </Col>
@@ -212,7 +256,7 @@ const EditPostTest = () => {
                                       />
                                     </Col>
                                   </RowStyled>
-											 <RowStyled>
+                                  <RowStyled>
                                     <Col span="8">
                                       <TextForm>Choice D:</TextForm>
                                     </Col>
@@ -352,12 +396,12 @@ const EditPostTest = () => {
                         </div>
                       )}
                     </FieldArray>
-						  <AreaSubmit>
-						  	<button type="submit">Submit</button>
-						  </AreaSubmit>
+                    <AreaSubmit>
+                      <button type="submit">Submit</button>
+                    </AreaSubmit>
                   </Form>
                 )}
-              </Formik>  : null}
+              </Formik> : null}
             </div>
           </WhiteArea>
         </RowArea>

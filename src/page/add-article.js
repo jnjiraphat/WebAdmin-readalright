@@ -20,6 +20,9 @@ const AddArticle = () => {
   const [image, setImage] = useState("")
   const [readingId2, setReadingId2] = useState(0)
 
+ 
+  
+
   async function fetch() {
     const result = await axios("http://localhost:3000/reading/last");
 
