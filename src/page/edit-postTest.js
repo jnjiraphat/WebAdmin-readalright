@@ -35,7 +35,7 @@ const EditPostTest = () => {
     for (let index = 0; index < 3; index++) {
       const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
         question: content[index].questionText,
-        typeOfSuggestion_id : 1,
+        typeOfSuggestion_id: 1,
         reading_id: match.params.reading_id,
         typeOfQuestion: "chal"
         // thaiWord: friends[index]["thaiWord"],
@@ -174,8 +174,8 @@ const EditPostTest = () => {
     });
     console.log("choice", response.data);
   }
-  
-  
+
+
   return (
     <Background>
       <Container>
@@ -194,13 +194,19 @@ const EditPostTest = () => {
                   }}
                   onSubmit={(values) => {
                     console.log(values);
-                    
+                    // console.log(values);
+                    console.log("value")
+                    console.log(values.content[0].questionText)
+                    putPostTest(
+                      values.content
+                    );
+
                     console.log(values.content[0].options.length)
                     console.log("Q1")
                     var countQ1 = 0;
                     for (let index = 0; index < values.content[0].options.length; index++) {
                       console.log(values.content[0].options[index].isRightChoice)
-                      if(values.content[0].options[index].isRightChoice == '1') {
+                      if (values.content[0].options[index].isRightChoice == '1') {
                         countQ1++
                         console.log("count in if")
                         console.log(countQ1)
@@ -209,9 +215,9 @@ const EditPostTest = () => {
                     console.log("Q2")
                     var countQ2 = 0;
                     for (let index = 0; index < values.content[1].options.length; index++) {
-                  
+
                       console.log(values.content[1].options[index].isRightChoice)
-                      if(values.content[1].options[index].isRightChoice == '1') {
+                      if (values.content[1].options[index].isRightChoice == '1') {
                         countQ2++
                         console.log("count in if")
                         console.log(countQ2)
@@ -220,9 +226,9 @@ const EditPostTest = () => {
                     console.log("Q3")
                     var countQ3 = 0;
                     for (let index = 0; index < values.content[2].options.length; index++) {
-                  
+
                       console.log(values.content[2].options[index].isRightChoice)
-                      if(values.content[2].options[index].isRightChoice == '1') {
+                      if (values.content[2].options[index].isRightChoice == '1') {
                         countQ3++
                         console.log("count in if")
                         console.log(countQ3)
@@ -230,7 +236,7 @@ const EditPostTest = () => {
                     }
                     console.log("countQ3")
                     console.log(countQ3)
-                    if(countQ1 == 1 && countQ2==1 && countQ3 ==1) {
+                    if (countQ1 == 1 && countQ2 == 1 && countQ3 == 1) {
                       console.log("Post in this condition")
                       alert(JSON.stringify(values, null, 0));
                     } else {
