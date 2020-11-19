@@ -34,7 +34,7 @@ const ArticleCard = (props) => {
 
   useEffect(() => {
     fetch();
-  });
+  }, []);
 
   return (
     <>
