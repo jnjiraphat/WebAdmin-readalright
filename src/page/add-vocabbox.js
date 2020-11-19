@@ -4,7 +4,7 @@ import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { storage } from "../firebase";
+import firebaseMethod from '../firebase';
 
 const initialValues = {
   content: { boxEngName: "", boxThaiName: "", category_id: "", image: "" },
@@ -22,7 +22,7 @@ const AddVocabBox = () => {
   const [image, setImage] = useState("");
 
   const handleUpload = () => {
-    const uploadTask = storage
+    const uploadTask = firebaseMethod.storage
       .ref(
         `images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`
       )
@@ -34,7 +34,7 @@ const AddVocabBox = () => {
         console.log(error);
       },
       () => {
-        storage
+        firebaseMethod.storage
           .ref(
             "images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/"
           )

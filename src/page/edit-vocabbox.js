@@ -11,8 +11,8 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
-import { storage } from "../firebase/index";
-
+// import { storage } from "../firebase/index";
+import firebaseMethod from '../firebase';
 
 
 
@@ -34,7 +34,7 @@ const EditVocabBox = () => {
 
   const handleUpload = (imageTemp) => {
     setLoadImage(true)
-    const uploadTask = storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -43,7 +43,7 @@ const EditVocabBox = () => {
         console.log(error);
       },
       () => {
-        storage
+        firebaseMethod.storage
           .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
           .child(imageTemp.name)
           .getDownloadURL()
