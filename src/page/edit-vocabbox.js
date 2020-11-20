@@ -34,7 +34,7 @@ const EditVocabBox = () => {
 
   const handleUpload = (imageTemp) => {
     setLoadImage(true)
-    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${imageTemp.name}`).put(imageTemp);
     uploadTask.on(
       "state_changed",
       snapshot => {

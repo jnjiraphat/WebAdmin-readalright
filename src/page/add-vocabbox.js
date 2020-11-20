@@ -20,29 +20,25 @@ const AddVocabBox = () => {
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
-
-  const handleUpload = () => {
-    const uploadTask = firebaseMethod.storage
-      .ref(
-        `images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`
-      )
-      .put(image);
+  
+  const handleUpload = (imageTemp) => {
+    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${imageTemp.name}`).put(imageTemp);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
-      (error) => {
+      snapshot => {
+      },
+      error => {
         console.log(error);
       },
       () => {
         firebaseMethod.storage
-          .ref(
-            "images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/"
-          )
-          .child(image.name)
+          .ref("images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/")
+          .child(imageTemp.name)
           .getDownloadURL()
-          .then((url) => {
+          .then(url => {
             setUrl(url);
-            console.log(url);
+            console.log("pic url")
+            console.log(url)
           });
       }
     );

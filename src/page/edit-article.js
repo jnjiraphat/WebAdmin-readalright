@@ -32,14 +32,14 @@ const EditArticle = () => {
   const [categoryId, setCategoryId] = useState()
   const [image, setImage] = useState('')
   const [selectImg, setSelectImg] = useState()
-  const [levelReading, setLevelReading] = useState('')
   const [loadImage, setLoadImage] = useState(false)
+  const [levelReading, setLevelReading] = useState('')
   const refContainer = useRef();
   
   
   const handleUpload = (imageTemp) => {
     setLoadImage(true)
-    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${imageTemp.name}`).put(imageTemp);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -162,7 +162,7 @@ const EditArticle = () => {
                 }}
                 onSubmit={ async (values) => {
                   
-
+                  
                   const data = {
                     title: title,
                     content: content,
@@ -170,8 +170,9 @@ const EditArticle = () => {
                     category_id: categoryId,
                     level_reading: levelReading
                   }
-
+                  
                   console.log(data);
+                  alert(JSON.stringify(data, null, 0));
 
                   postReading(
                     data.title,
