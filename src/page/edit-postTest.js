@@ -20,41 +20,86 @@ const EditPostTest = () => {
 
   async function putPostTest(
     content
-    // title,
-    // content,
-    // image,
-    // category_id,
-    // level_reading
   ) {
-    console.log("content in put post tes");
-    console.log(content);
-    console.log(content[0].questionText);
-    console.log(content[1].questionText);
-    console.log(content[2].questionText);
-    console.log(dataArrayQuizChallenge[0][0].question_id);
+    console.log("content in put post tes")
+    console.log(dataArrayQuizChallenge)
+    console.log(content)
+    console.log(content[0].questionText)
+    console.log(content[1].questionText)
+    console.log(content[2].questionText)
+    console.log(dataArrayQuizChallenge[0][0].question_id)
     for (let index = 0; index < 3; index++) {
-      const response = await axios.put(
-        "http://localhost:3000/admin/updateQuiz/" +
-          dataArrayQuizChallenge[0][index].question_id,
-        {
-          question: content[index].questionText,
-          typeOfSuggestion_id: 1,
-          reading_id: match.params.reading_id,
-          typeOfQuestion: "chal",
-          // thaiWord: friends[index]["thaiWord"],
-          // vocabBox_id: vocabBox_id,
-        }
-      );
+      const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
+        question: content[index].questionText,
+        typeOfSuggestion_id: 1,
+        reading_id: match.params.reading_id,
+        typeOfQuestion: "chal"
+      });
       console.log("quiz", response.data);
-      // var readingId = response.data.quiz;
-      // console.log(readingId);
-      // setReadingIdD(readingId);
-      // console.log("reading", response.data.quiz);
-      // readingId = response.data.quiz;
-      // setReadingId(response.data.quiz)
-      // if (readingId != "") {
-      //   console.log(readingId)
-      // }
+    }
+  }
+
+  async function putPostTestAnswer(
+    content
+  ) {
+    console.log("choice in put post test lenghtttt")
+    console.log(content[0].options.length)
+    console.log("choice in put post test")
+    console.log(content[0].options[0].choice_id)
+
+
+    console.log(content[0].options[0].choice_id)
+    console.log(content[0].options[0].choice)
+    console.log(content[0].options[0].isRightChoice)
+    console.log(content[0].options[0].optionText) 
+    console.log(content[0].options[1].choice_id)
+    console.log(content[0].options[1].choice)
+    console.log(content[0].options[2].choice_id)
+    console.log(content[0].options[2].choice)
+    console.log(content[0].options[3].choice_id)
+    console.log(content[0].options[3].choice)
+    console.log(content[0].options[3].isRightChoice)
+    // console.log(content[0].options[4].choice_id)
+    // console.log(content[0].options[4].choice)
+    console.log(content[1].options[0].choice_id)
+    console.log(content[1].options[0].choice)
+
+    console.log(content[1].options[1].choice_id)
+    console.log(content[1].options[1].choice)
+    console.log(content[1].options[2].choice_id)
+    console.log(content[1].options[2].choice)
+    console.log(content[1].options[3].choice_id)
+    console.log(content[1].options[3].choice)
+
+
+    for (let index = 0; index < content[0].options.length; index++) {
+      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[0].options[index].choice_id, {
+        isRightChoice: content[0].options[index].isRightChoice,
+        choice: content[0].options[index].optionText,
+        question_id: content[0].options[index].question_id,
+        optionText: content[0].options[index].optionText,
+        value: content[0].options[index].optionText
+      });
+    }
+
+    for (let index = 0; index < content[1].options.length; index++) {
+      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[1].options[index].choice_id, {
+        isRightChoice: content[1].options[index].isRightChoice,
+        choice: content[1].options[index].optionText,
+        question_id: content[1].options[index].question_id,
+        optionText: content[1].options[index].optionText,
+        value: content[1].options[index].optionText
+      });
+    }
+
+    for (let index = 0; index < content[2].options.length; index++) {
+      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[2].options[index].choice_id, {
+        isRightChoice: content[2].options[index].isRightChoice,
+        choice: content[2].options[index].optionText,
+        question_id: content[2].options[index].question_id,
+        optionText: content[2].options[index].optionText,
+        value: content[2].options[index].optionText
+      });
     }
   }
 
@@ -197,9 +242,13 @@ const EditPostTest = () => {
                   onSubmit={(values) => {
                     console.log(values);
                     // console.log(values);
-                    console.log("value");
-                    console.log(values.content[0].questionText);
-                    putPostTest(values.content);
+                    console.log("value")
+                    console.log(values.content[0])
+                    console.log(values.content[0].questionText)
+                    console.log("value choice")
+                    console.log(values.content[0].options[0].choice_id)
+
+
 
                     console.log(values.content[0].options.length);
                     console.log("Q1");
@@ -261,6 +310,12 @@ const EditPostTest = () => {
                     if (countQ1 == 1 && countQ2 == 1 && countQ3 == 1) {
                       console.log("Post in this condition");
                       alert(JSON.stringify(values, null, 0));
+                      putPostTest(
+                        values.content
+                      );
+                      putPostTestAnswer(
+                        values.content
+                      );
                     } else {
                       console.log("not success");
                       alert(
