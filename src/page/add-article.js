@@ -14,12 +14,14 @@ import {
 
 // const readingId = "";
 const AddArticle = () => {
-  const [person, setPerson] = useState([]);
+  
   const [readingIdD, setReadingIdD] = useState("");
   const [url, setUrl] = useState("");
-  const [image, setImage] = useState("")
-  const [readingId2, setReadingId2] = useState(0)
-
+  const [image, setImage] = useState("");
+  const [readingId2, setReadingId2] = useState(0);
+  
+  // const [categoryId, setCategoryId] = useState(1);
+  // const [levelReading, setLevelReading] = useState("A0")
  
   
 
@@ -42,7 +44,7 @@ const AddArticle = () => {
     fetch();
   }, []);
   const handleUpload = (imageTemp) => {
-    const uploadTask =firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`).put(image);
+    const uploadTask =firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${imageTemp.name}`).put(imageTemp);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -77,14 +79,14 @@ const AddArticle = () => {
   async function postReading(
     title,
     content,
-    image,
+    url,
     category_id,
     level_reading
   ) {
     const response = await axios.post("http://localhost:3000/reading", {
       title: title,
       content: content,
-      image: image,
+      image: url,
       category_id: category_id,
       level_reading: level_reading,
     });
@@ -100,31 +102,31 @@ const AddArticle = () => {
     // }
   }
 
-  async function postQuiz(
-    question,
-    typeOfSuggestion_id,
-    isRightChoice,
-    choice
-  ) {
-    const response = await axios.post("http://localhost:3000/quizs", {
-      question: question,
-      typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: readingIdD,
-    });
-    console.log("quiz", response.data);
-    console.log("quizId", response.data.quiz);
-    await postChoice(isRightChoice, choice, response.data.quiz);
-  }
-  async function postChoice(isRightChoice, choice, question_id) {
-    const response = await axios.post("http://localhost:3000/choice", {
-      isRightChoice: isRightChoice,
-      choice: choice,
-      optionText: choice,
-      value: choice,
-      question_id: question_id,
-    });
-    console.log("choice", response.data);
-  }
+  // async function postQuiz(
+  //   question,
+  //   typeOfSuggestion_id,
+  //   isRightChoice,
+  //   choice
+  // ) {
+  //   const response = await axios.post("http://localhost:3000/quizs", {
+  //     question: question,
+  //     typeOfSuggestion_id: typeOfSuggestion_id,
+  //     reading_id: readingIdD,
+  //   });
+  //   console.log("quiz", response.data);
+  //   console.log("quizId", response.data.quiz);
+  //   await postChoice(isRightChoice, choice, response.data.quiz);
+  // }
+  // async function postChoice(isRightChoice, choice, question_id) {
+  //   const response = await axios.post("http://localhost:3000/choice", {
+  //     isRightChoice: isRightChoice,
+  //     choice: choice,
+  //     optionText: choice,
+  //     value: choice,
+  //     question_id: question_id,
+  //   });
+  //   console.log("choice", response.data);
+  // }
 
   return (
     <Background>
@@ -141,14 +143,17 @@ const AddArticle = () => {
                   content: {
                     title: "",
                     content: "",
-                    image:"",
-                    category_id: "1",
-                    level_reading: "A1",
+                    image: "",
+                    category_id: "",
+                    level_reading: "",
                   }
                 }}
                 onSubmit={(values) => {
+                  alert(JSON.stringify(values, null, 0));
+                  console.log(values.content.category_id)
 
                   console.log(values);
+                  console.log(url);
                   postReading(
                     values.content.title,
                     values.content.content,
@@ -160,7 +165,7 @@ const AddArticle = () => {
                   // same shape as initial values
                 }}
               >
-                {(formProps) => (
+                {({ values }) => (
                   <Form>
                     <RowStyled>
                       <Col span="6">
@@ -189,10 +194,10 @@ const AddArticle = () => {
                           type="file"
                           name="file"
                           onChange={(event) => {
-                            formProps.setFieldValue(
-                              "image",
-                              event.currentTarget.files[0]
-                            );
+                            // formProps.setFieldValue(
+                            //   "image",
+                            //   event.currentTarget.files[0]
+                            // );
                             // setImage(event.currentTarget.files[0]);
                             handleUpload(event.currentTarget.files[0])
                           }}
@@ -205,7 +210,7 @@ const AddArticle = () => {
                         <TextForm>category_id:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.category_id">
+                        <Field as="select" name="content.category_id">
                           <option value="1">Song</option>
                           <option value="2">Movie</option>
                           <option value="3">Sport</option>
@@ -214,7 +219,7 @@ const AddArticle = () => {
                           <option value="6">Information Technology</option>
                           <option value="7">Travel</option>
                           <option value="8">Story</option>
-                        </FieldStyled>
+                        </Field>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -223,12 +228,12 @@ const AddArticle = () => {
                         <TextForm>level_reading:</TextForm>
                       </Col>
                       <Col span="12">
-                        <FieldStyled as="select" name="content.level_reading">
+                        <Field as="select" name="content.level_reading">
                           <option value="A0">A0</option>
                           <option value="A1">A1</option>
                           <option value="A2">A2</option>
                           <option value="B1">B1</option>
-                        </FieldStyled>
+                        </Field>
                       </Col>
                       <Col span="6"></Col>
                     </RowStyled>
@@ -236,13 +241,6 @@ const AddArticle = () => {
                       <Col span="6"></Col>
                       <Col span="12"></Col>
                       <ColSubmit span="6">
-
-                        {/* <Link to={`/add-postTest/${readingId2}`}>
-                          <button type="submit">
-                            Submit
-                      </button>
-                        </Link> */}
-
                         <button type="submit">
                           Save
                       </button>
