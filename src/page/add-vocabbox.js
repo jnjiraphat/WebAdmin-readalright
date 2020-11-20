@@ -21,7 +21,7 @@ const AddVocabBox = () => {
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
 
-  const handleUpload = () => {
+  const handleUpload = (imageTemp) => {
     const uploadTask = firebaseMethod.storage
       .ref(
         `images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${image.name}`
@@ -38,7 +38,7 @@ const AddVocabBox = () => {
           .ref(
             "images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/"
           )
-          .child(image.name)
+          .child(imageTemp.name)
           .getDownloadURL()
           .then((url) => {
             setUrl(url);
@@ -51,25 +51,27 @@ const AddVocabBox = () => {
   async function postVocabBox(
     boxEngName,
     boxThaiName,
+    url,
     category_id,
-    image,
     friends
   ) {
     const response = await axios.post("http://localhost:3000/vocabBox", {
       boxEngName: boxEngName,
       boxThaiName: boxThaiName,
       category_id: category_id,
-      image: image,
+      image: url,
     });
-    console.log("reading", response.data);
+    console.log("vocab box", response.data);
     var vocabBoxId = response.data.quiz;
+    console.log(response.data.quiz)
     console.log("this is vocabBox");
     console.log(vocabBoxId);
+    console.log(friends)
     // console.log(friends.length);
     setvocabBoxIdD(vocabBoxId);
     if (friends && friends.length) {
       // `theHref` is truthy and has truthy property _length_
-      await postVocabCard(response.data.quiz, friends);
+      await postVocabCard(vocabBoxId, friends);
     } else {
       console.log(friends)
     }
@@ -80,13 +82,22 @@ const AddVocabBox = () => {
 
   async function postVocabCard(vocabBox_id, friends) {
     console.log("eiei");
+    console.log(vocabBox_id)
 
     console.log(friends);
     console.log(friends.length);
+    console.log(friends[0].engWord)
+    console.log(friends[0].thaiWord)
+    console.log(friends[1].engWord)
+    console.log(friends[1].thaiWord)
+    console.log(friends[2].engWord)
+
+    console.log(friends[2].thaiWord)
+
     for (let index = 0; index < friends.length; index++) {
-      const response = await axios.post("http://localhost:3000/vocabCard", {
-        engWord: friends[index]["engWord"],
-        thaiWord: friends[index]["thaiWord"],
+        const response = axios.post("http://localhost:3000/vocabCard", {
+        engWord: friends[index].engWord,
+        thaiWord: friends[index].engWord,
         vocabBox_id: vocabBox_id,
       });
     }
@@ -106,7 +117,13 @@ const AddVocabBox = () => {
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
                   alert(JSON.stringify(values, null, 2));
+                  console.log("on submit")
                   console.log(values);
+                  console.log(values.content.boxEngName)
+                  console.log(values.content.boxThaiName)
+                  console.log(url)
+                  console.log(values.friends)
+
                   postVocabBox(
                     values.content.boxEngName,
                     values.content.boxThaiName,
@@ -116,13 +133,13 @@ const AddVocabBox = () => {
                   );
                   console.log(values.friends);
                   // console.log(values.friends.length);
-                  // for (let index = 0; index < values.friends.length; index++) {
-                  //   postVocabCard(
-                  //     values.friends[index].engWord,
-                  //     values.friends[index].thaiWord
-                  //   )
+                  for (let index = 0; index < values.friends.length; index++) {
+                    postVocabCard(
+                      values.friends[index].engWord,
+                      values.friends[index].thaiWord
+                    )
 
-                  // }
+                  }
                 }}
               >
                 {({ values }) => (
