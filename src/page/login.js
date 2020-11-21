@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { Link, NavLink } from "react-router-dom";
+import Icon from "../asset/image/icon.png";
+import { Row, Col} from 'antd'
 
 // import * as firebase from "firebase";
 
@@ -62,58 +64,13 @@ const Login = () => {
 
 
 
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     email: '',
-  //     password: '',
-  //     currentUser: null,
-  //     message: ''
-  //   }
-  // }
-
-  // onChange = e => {
-  //   const { name, value } = e.target
-
-  //   this.setState({
-  //     [name]: value
-  //   })
-  // }
-
-  // onSubmit = e => {
-  //   e.preventDefault()
-
-  //   const { email, password } = this.state
-
-  //   firebaseFunction.auth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then(response => {
-  //       this.setState({
-  //         currentUser: response.user
-  //       })
-  //     })
-  //     .catch(error => {
-  //       this.setState({
-  //         message: error.message
-  //       })
-  //     })
-  // }
-
-  // TODO: implement signInWithEmailAndPassword()
-
-  // const { message, currentUser } = this.state
-
-  // if (currentUser) {
-  //   return (
-  //     <div>
-  //       <p>Hello {currentUser.email}</p>
-  //       <button onClick={this.logout}>Logout</button>
-  //     </div>
-  //   )
-  // }
   return (
+    
+    <Background>
+    <Container>
+      <CenterArea>
 
-    <div>
+      <img src={Icon} width={80} height={80} />
       <h1>Login</h1>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -151,33 +108,83 @@ const Login = () => {
           /* and other goodies */
         }) => (
             <form onSubmit={handleSubmit}>
+              <RowStyled>
               <input
+                style={{width: "300px"}}
                 type="email"
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
+                placeholder="Email"
               />
               {errors.email && touched.email && errors.email}
-              <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-              {errors.password && touched.password && errors.password}
+              </RowStyled>
+              <RowStyled style={{marginBottom: "15px"}}>
+                <input
+                  style={{width: "300px"}}
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  placeholder="Password"
+                />
+                {errors.password && touched.password && errors.password}
+                
+              </RowStyled>
               {/* <Link to={`/index/${email}`}> */}
-              <button type="submit" disabled={isSubmitting} >
-                login
-              </button>
+              <RowStyled style={{display: "flex", justifyContent: "center"}}>
+                <ButtonSubmit type="submit" disabled={isSubmitting}>
+                  Login
+                </ButtonSubmit>
+
+              </RowStyled>
               {/* </Link> */}
             </form>
           )}
       </Formik>
-    </div>
+      </CenterArea>
+      
+
+    </Container>
+    </Background>
   );
 
 }
 
 export default Login;
+
+const Container = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding-top: 3%;
+  align-items: center;
+  
+`;
+const Background = styled.div`
+  background-color: #ECECEC;  
+  min-height: 100vh;
+`;
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`
+
+const RowStyled = styled(Row)`
+  margin-top: 20px;
+`
+
+const ButtonSubmit = styled.button`
+  background: linear-gradient(180deg, #7EF192 0%, #2DC897 100%);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 50px;
+width: 200px;
+border-color: transparent;
+font-weight: bold;
+`
