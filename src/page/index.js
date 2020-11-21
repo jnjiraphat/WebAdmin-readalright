@@ -6,21 +6,36 @@ import { Row, Col, Button } from "antd";
 import IndexArea from "../components/IndexArea";
 import { useRouteMatch } from "react-router-dom";
 
+import firebaseFunction from '../firebase'
+
 const MenuSite = () => {
   // const match = useRouteMatch('/index');
   var email = window.localStorage.getItem("email");
 
   console.log(email);
+
+  const logout = () => {
+    firebaseFunction.auth.signOut().then(function() {
+      alert("Sign-out successful")
+      // Sign-out successful.
+    }).catch(function(error) {
+      alert("Error")
+      // An error happened.
+    });
+  }
+
   return (
     <Background>
-      {email === null ? (
-        <center>
+     {/* {email === null ? (
+        <Container>
+          <CenterArea>
           <span>Please Login First</span>
           <Link to="/">
             <button>Login</button>
           </Link>
-        </center>
-      ) : (
+          </CenterArea>
+        </Container>
+      ) : ( */}
         <Container>
           <Row>
             <Col span="4" style={{ display: "flex", justifyContent: "center" }}>
@@ -38,14 +53,14 @@ const MenuSite = () => {
               }}
             >
               <Topic>{email}</Topic>
-              <ButtonLogout type="primary" danger>
+              <ButtonLogout type="primary" onClick={logout()}>
                 Logout
               </ButtonLogout>
             </Col>
           </Row>
           <IndexArea />
         </Container>
-      )}
+      {/* )} */}
     </Background>
   );
 };
@@ -59,6 +74,14 @@ const Container = styled.div`
   padding-top: 3%;
   align-items: center;
 `;
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 const Background = styled.div`
   background: linear-gradient(
     180deg,
