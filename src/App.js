@@ -10,14 +10,12 @@ import EditVocabBox from './page/edit-vocabbox'
 import AddPostTest from './page/add-postTest';
 import EditArticle from './page/edit-article'
 import EditPostTest from './page/edit-postTest'
-import loginFormt from './components/LoginForm'
 
 function App() {
   return (
     <div className="container">
+        <Route exact path="/" component={Login}/>
         <Route exact path="/index" component={Index}/>
-        <Route path="/login-form" component={loginFormt}/>
-        <Route path="/login" component={Login}/>
         <Route path="/menu-site" component={MenuSite} />
         <Route path="/add-article" component={AddArticle} />
         <Route path="/add-vocabBox" component={AddVocabBox} />
