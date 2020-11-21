@@ -42,7 +42,7 @@ const Login = () => {
                 window.location.assign('/console')
               } else {
                 console.log("not admin")
-
+                alert("Account is not admin")
               }
             },
             (error) => {
@@ -52,6 +52,7 @@ const Login = () => {
       })
       .catch(error => {
         console.error(error);
+        alert("Account is not admin")
       })
       .finally(() => {
         // setLoading(false);
