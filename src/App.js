@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="container">
         <Route exact path="/" component={Login}/>
-        <Route exact path="/index" component={Index}/>
+        <Route exact path="/console" component={Index}/>
         <Route path="/menu-site" component={MenuSite} />
         <Route path="/add-article" component={AddArticle} />
         <Route path="/add-vocabBox" component={AddVocabBox} />
