@@ -37,7 +37,7 @@ const Login = () => {
                 console.log("admin")
                 window.localStorage.setItem('email', email);
                 // Storage.prototype.setItem('email', email)
-                window.location.assign('/index')
+                window.location.assign('/console')
               } else {
                 console.log("not admin")
 
