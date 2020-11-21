@@ -18,88 +18,98 @@ const EditPostTest = () => {
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
 
-  async function putPostTest(
-    content
-  ) {
-    console.log("content in put post tes")
-    console.log(dataArrayQuizChallenge)
-    console.log(content)
-    console.log(content[0].questionText)
-    console.log(content[1].questionText)
-    console.log(content[2].questionText)
-    console.log(dataArrayQuizChallenge[0][0].question_id)
+  async function putPostTest(content) {
+    console.log("content in put post tes");
+    console.log(dataArrayQuizChallenge);
+    console.log(content);
+    console.log(content[0].questionText);
+    console.log(content[1].questionText);
+    console.log(content[2].questionText);
+    console.log(dataArrayQuizChallenge[0][0].question_id);
     for (let index = 0; index < 3; index++) {
-      const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
-        question: content[index].questionText,
-        typeOfSuggestion_id: 1,
-        reading_id: match.params.reading_id,
-        typeOfQuestion: "chal"
-      });
+      const response = await axios.put(
+        "http://localhost:3000/admin/updateQuiz/" +
+          dataArrayQuizChallenge[0][index].question_id,
+        {
+          question: content[index].questionText,
+          typeOfSuggestion_id: 1,
+          reading_id: match.params.reading_id,
+          typeOfQuestion: "chal",
+        }
+      );
       console.log("quiz", response.data);
     }
   }
 
-  async function putPostTestAnswer(
-    content
-  ) {
-    console.log("choice in put post test lenghtttt")
-    console.log(content[0].options.length)
-    console.log("choice in put post test")
-    console.log(content[0].options[0].choice_id)
+  async function putPostTestAnswer(content) {
+    console.log("choice in put post test lenghtttt");
+    console.log(content[0].options.length);
+    console.log("choice in put post test");
+    console.log(content[0].options[0].choice_id);
 
-
-    console.log(content[0].options[0].choice_id)
-    console.log(content[0].options[0].choice)
-    console.log(content[0].options[0].isRightChoice)
-    console.log(content[0].options[0].optionText) 
-    console.log(content[0].options[1].choice_id)
-    console.log(content[0].options[1].choice)
-    console.log(content[0].options[2].choice_id)
-    console.log(content[0].options[2].choice)
-    console.log(content[0].options[3].choice_id)
-    console.log(content[0].options[3].choice)
-    console.log(content[0].options[3].isRightChoice)
+    console.log(content[0].options[0].choice_id);
+    console.log(content[0].options[0].choice);
+    console.log(content[0].options[0].isRightChoice);
+    console.log(content[0].options[0].optionText);
+    console.log(content[0].options[1].choice_id);
+    console.log(content[0].options[1].choice);
+    console.log(content[0].options[2].choice_id);
+    console.log(content[0].options[2].choice);
+    console.log(content[0].options[3].choice_id);
+    console.log(content[0].options[3].choice);
+    console.log(content[0].options[3].isRightChoice);
     // console.log(content[0].options[4].choice_id)
     // console.log(content[0].options[4].choice)
-    console.log(content[1].options[0].choice_id)
-    console.log(content[1].options[0].choice)
+    console.log(content[1].options[0].choice_id);
+    console.log(content[1].options[0].choice);
 
-    console.log(content[1].options[1].choice_id)
-    console.log(content[1].options[1].choice)
-    console.log(content[1].options[2].choice_id)
-    console.log(content[1].options[2].choice)
-    console.log(content[1].options[3].choice_id)
-    console.log(content[1].options[3].choice)
-
+    console.log(content[1].options[1].choice_id);
+    console.log(content[1].options[1].choice);
+    console.log(content[1].options[2].choice_id);
+    console.log(content[1].options[2].choice);
+    console.log(content[1].options[3].choice_id);
+    console.log(content[1].options[3].choice);
 
     for (let index = 0; index < content[0].options.length; index++) {
-      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[0].options[index].choice_id, {
-        isRightChoice: content[0].options[index].isRightChoice,
-        choice: content[0].options[index].optionText,
-        question_id: content[0].options[index].question_id,
-        optionText: content[0].options[index].optionText,
-        value: content[0].options[index].optionText
-      });
+      const response = await axios.put(
+        "http://localhost:3000/admin/updateChoice/" +
+          content[0].options[index].choice_id,
+        {
+          isRightChoice: content[0].options[index].isRightChoice,
+          choice: content[0].options[index].optionText,
+          question_id: content[0].options[index].question_id,
+          optionText: content[0].options[index].optionText,
+          value: content[0].options[index].optionText,
+        }
+      );
     }
 
     for (let index = 0; index < content[1].options.length; index++) {
-      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[1].options[index].choice_id, {
-        isRightChoice: content[1].options[index].isRightChoice,
-        choice: content[1].options[index].optionText,
-        question_id: content[1].options[index].question_id,
-        optionText: content[1].options[index].optionText,
-        value: content[1].options[index].optionText
-      });
+      const response = await axios.put(
+        "http://localhost:3000/admin/updateChoice/" +
+          content[1].options[index].choice_id,
+        {
+          isRightChoice: content[1].options[index].isRightChoice,
+          choice: content[1].options[index].optionText,
+          question_id: content[1].options[index].question_id,
+          optionText: content[1].options[index].optionText,
+          value: content[1].options[index].optionText,
+        }
+      );
     }
 
     for (let index = 0; index < content[2].options.length; index++) {
-      const response = await axios.put("http://localhost:3000/admin/updateChoice/" + content[2].options[index].choice_id, {
-        isRightChoice: content[2].options[index].isRightChoice,
-        choice: content[2].options[index].optionText,
-        question_id: content[2].options[index].question_id,
-        optionText: content[2].options[index].optionText,
-        value: content[2].options[index].optionText
-      });
+      const response = await axios.put(
+        "http://localhost:3000/admin/updateChoice/" +
+          content[2].options[index].choice_id,
+        {
+          isRightChoice: content[2].options[index].isRightChoice,
+          choice: content[2].options[index].optionText,
+          question_id: content[2].options[index].question_id,
+          optionText: content[2].options[index].optionText,
+          value: content[2].options[index].optionText,
+        }
+      );
     }
   }
 
@@ -175,9 +185,18 @@ const EditPostTest = () => {
     fetchApiChallenge();
   }, []);
 
-
   return (
     <Background>
+      {/* {email === null ? (
+        <Container>
+          <CenterArea>
+          <span>Please Login First</span>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
+          </CenterArea>
+        </Container>
+      ) : ( */}
       <Container>
         <AreaTopic>
           <TopicAdd>Edit PostTest</TopicAdd>
@@ -185,7 +204,6 @@ const EditPostTest = () => {
         <RowArea>
           <WhiteArea>
             <div>
-              <h1>Post Test</h1>
               {quizData.length > 0 ? (
                 <Formik
                   initialValues={{
@@ -195,13 +213,11 @@ const EditPostTest = () => {
                   onSubmit={(values) => {
                     console.log(values);
                     // console.log(values);
-                    console.log("value")
-                    console.log(values.content[0])
-                    console.log(values.content[0].questionText)
-                    console.log("value choice")
-                    console.log(values.content[0].options[0].choice_id)
-
-
+                    console.log("value");
+                    console.log(values.content[0]);
+                    console.log(values.content[0].questionText);
+                    console.log("value choice");
+                    console.log(values.content[0].options[0].choice_id);
 
                     console.log(values.content[0].options.length);
                     console.log("Q1");
@@ -262,13 +278,9 @@ const EditPostTest = () => {
                     console.log(countQ3);
                     if (countQ1 == 1 && countQ2 == 1 && countQ3 == 1) {
                       console.log("Post in this condition");
-                      alert(JSON.stringify(values, null, 0));
-                      putPostTest(
-                        values.content
-                      );
-                      putPostTestAnswer(
-                        values.content
-                      );
+                      putPostTest(values.content);
+                      putPostTestAnswer(values.content);
+                      alert(JSON.stringify("Edit Successful"));
                     } else {
                       console.log("not success");
                       alert(
@@ -287,14 +299,16 @@ const EditPostTest = () => {
                             {quizData.length > 0 &&
                               quizData.map((content, index) => (
                                 <Col key={index}>
-                                  <h4>Question no.{index + 1}</h4>
+                                  <center>
+                                    <h2>Question no.{index + 1}</h2>
+                                  </center>
                                   <div>
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>question:</TextForm>
+                                        <TextForm>Question</TextForm>
                                       </Col>
                                       <Col span="14">
-                                        <FieldContent
+                                        <FieldTextArea
                                           name={`content.${index}.questionText`}
                                           component="textarea"
                                         />
@@ -302,19 +316,14 @@ const EditPostTest = () => {
                                     </RowStyled>
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>Choice A:</TextForm>
+                                        <TextForm>Choice A</TextForm>
                                       </Col>
-                                      <Col span="14">
+                                      <Col span="6">
                                         <FieldStyled
                                           name={`content.${index}.options.${0}.optionText`}
                                         />
                                       </Col>
-                                    </RowStyled>
-                                    <RowStyled>
-                                      <Col span="8">
-                                        <TextForm>isRightChoice:</TextForm>
-                                      </Col>
-                                      <Col span="14">
+                                      <Col span="10">
                                         <Field
                                           type="radio"
                                           name={`content.${index}.options.${0}.isRightChoice`}
@@ -330,17 +339,32 @@ const EditPostTest = () => {
                                         {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
                                       </Col>
                                     </RowStyled>
+
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>Choice B:</TextForm>
+                                        <TextForm>Choice B</TextForm>
                                       </Col>
-                                      <Col span="14">
+                                      <Col span="6">
                                         <FieldStyled
                                           name={`content.${index}.options.${1}.optionText`}
                                         />
                                       </Col>
+                                      <Col span="10">
+                                        <Field
+                                          type="radio"
+                                          name={`content.${index}.options.${1}.isRightChoice`}
+                                          value="1"
+                                        />{" "}
+                                        Correct
+                                        <FieldRadio
+                                          type="radio"
+                                          name={`content.${index}.options.${1}.isRightChoice`}
+                                          value="0"
+                                        />{" "}
+                                        Wrong
+                                      </Col>
                                     </RowStyled>
-                                    <RowStyled>
+                                    {/* <RowStyled>
                                       <Col span="8">
                                         <TextForm>isRightChoice:</TextForm>
                                       </Col>
@@ -357,24 +381,18 @@ const EditPostTest = () => {
                                           value="0"
                                         />{" "}
                                         Wrong
-                                        {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
                                       </Col>
-                                    </RowStyled>
+                                    </RowStyled> */}
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>Choice C:</TextForm>
+                                        <TextForm>Choice C</TextForm>
                                       </Col>
-                                      <Col span="14">
+                                      <Col span="6">
                                         <FieldStyled
                                           name={`content.${index}.options.${2}.optionText`}
                                         />
                                       </Col>
-                                    </RowStyled>
-                                    <RowStyled>
-                                      <Col span="8">
-                                        <TextForm>isRightChoice:</TextForm>
-                                      </Col>
-                                      <Col span="14">
+                                      <Col span="10">
                                         <Field
                                           type="radio"
                                           name={`content.${index}.options.${2}.isRightChoice`}
@@ -392,19 +410,14 @@ const EditPostTest = () => {
                                     </RowStyled>
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>Choice D:</TextForm>
+                                        <TextForm>Choice D</TextForm>
                                       </Col>
-                                      <Col span="14">
+                                      <Col span="6">
                                         <FieldStyled
                                           name={`content.${index}.options.${3}.optionText`}
                                         />
                                       </Col>
-                                    </RowStyled>
-                                    <RowStyled>
-                                      <Col span="8">
-                                        <TextForm>isRightChoice:</TextForm>
-                                      </Col>
-                                      <Col span="14">
+                                      <Col span="10">
                                         <Field
                                           type="radio"
                                           name={`content.${index}.options.${3}.isRightChoice`}
@@ -422,7 +435,7 @@ const EditPostTest = () => {
                                     </RowStyled>
                                     <RowStyled>
                                       <Col span="8">
-                                        <TextForm>typeOfSuggestion:</TextForm>
+                                        <TextForm>Type Of Suggestion</TextForm>
                                       </Col>
                                       <Col span="14">
                                         <FieldStyled
@@ -435,6 +448,16 @@ const EditPostTest = () => {
                                         </FieldStyled>
                                       </Col>
                                     </RowStyled>
+                                    <RowStyled
+                                      style={{ justifyContent: "center" }}
+                                    >
+                                      <Line
+                                        style={{
+                                          marginTop: "15px",
+                                          marginBottom: "50px",
+                                        }}
+                                      ></Line>
+                                    </RowStyled>
                                   </div>
                                 </Col>
                               ))}
@@ -443,6 +466,9 @@ const EditPostTest = () => {
                       </FieldArray>
                       <AreaSubmit>
                         <button type="submit">Submit</button>
+                        <Link to="/console">
+                          <button style={{marginLeft: "10px"}}>Back to Console</button>
+                        </Link>
                       </AreaSubmit>
                     </Form>
                   )}
@@ -456,11 +482,18 @@ const EditPostTest = () => {
           </WhiteArea>
         </RowArea>
       </Container>
+      {/* )} */}
     </Background>
   );
 };
 
 export default EditPostTest;
+
+const Line = styled.div`
+  width: 500px;
+  height: 1px;
+  background-color: #000;
+`;
 
 const Container = styled.div`
   margin-left: auto;
@@ -478,6 +511,13 @@ const Background = styled.div`
   );
   min-height: 100vh;
 `;
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 
 const WhiteArea = styled.div`
   width: 1100px;
@@ -524,8 +564,14 @@ const RowStyled = styled(Row)`
 `;
 
 const FieldStyled = styled(Field)`
-  width: 500px;
+  width: 250px;
 `;
+
+const FieldTextArea = styled(Field)`
+  width: 500px;
+  height: 100px;
+`;
+
 const FieldStyledMini = styled(Field)`
   width: 200px;
 `;
