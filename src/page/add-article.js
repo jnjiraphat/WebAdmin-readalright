@@ -102,34 +102,18 @@ const AddArticle = () => {
     // }
   }
 
-  // async function postQuiz(
-  //   question,
-  //   typeOfSuggestion_id,
-  //   isRightChoice,
-  //   choice
-  // ) {
-  //   const response = await axios.post("http://localhost:3000/quizs", {
-  //     question: question,
-  //     typeOfSuggestion_id: typeOfSuggestion_id,
-  //     reading_id: readingIdD,
-  //   });
-  //   console.log("quiz", response.data);
-  //   console.log("quizId", response.data.quiz);
-  //   await postChoice(isRightChoice, choice, response.data.quiz);
-  // }
-  // async function postChoice(isRightChoice, choice, question_id) {
-  //   const response = await axios.post("http://localhost:3000/choice", {
-  //     isRightChoice: isRightChoice,
-  //     choice: choice,
-  //     optionText: choice,
-  //     value: choice,
-  //     question_id: question_id,
-  //   });
-  //   console.log("choice", response.data);
-  // }
-
   return (
     <Background>
+       {/* {email === null ? (
+        <Container>
+          <CenterArea>
+          <span>Please Login First</span>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
+          </CenterArea>
+        </Container>
+      ) : ( */}
       <Container>
         <AreaTopic>
           <TopicAdd>Add Article</TopicAdd>
@@ -137,7 +121,6 @@ const AddArticle = () => {
         <RowArea>
           <WhiteArea>
             <div>
-              <h1>Article</h1>
               <Formik
                 initialValues={{
                   content: {
@@ -156,15 +139,15 @@ const AddArticle = () => {
                   console.log(url);
                   
                   if(values.content.category_id && values.content.level_reading) {
-                    alert(JSON.stringify(values, null, 0));
                     postReading(
                       values.content.title,
                       values.content.content,
                       url,
                       values.content.category_id,
                       values.content.level_reading,
-                    );
-                  } else{
+                      );
+                      alert("Add Successful");
+                    } else{
                     alert("Please select All of Field");
                   }
                   // setImage(values.content.image);
@@ -173,9 +156,9 @@ const AddArticle = () => {
               >
                 {({ values }) => (
                   <Form>
-                    <RowStyled>
+                    <RowStyled style={{marginTop: "50px"}}>
                       <Col span="6">
-                        <TextForm>Title:</TextForm>
+                        <TextForm>Title</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldStyled name="content.title" />
@@ -184,7 +167,7 @@ const AddArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>content:</TextForm>
+                        <TextForm>Content:</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldContent name="content.content" component="textarea" />
@@ -193,7 +176,7 @@ const AddArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>photo:</TextForm>
+                        <TextForm>Image</TextForm>
                       </Col>
                       <Col span="12">
                         <input
@@ -213,7 +196,7 @@ const AddArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>category_id:</TextForm>
+                        <TextForm>Category</TextForm>
                       </Col>
                       <Col span="12">
                         <Field as="select" name="content.category_id">
@@ -232,7 +215,7 @@ const AddArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>level_reading:</TextForm>
+                        <TextForm>Level Reading</TextForm>
                       </Col>
                       <Col span="12">
                         <Field as="select" name="content.level_reading">
@@ -253,8 +236,8 @@ const AddArticle = () => {
                           Save
                       </button>
                         <Link to={`/add-postTest/${readingId2}`}>
-                          <button>
-                            next
+                          <button style={{marginLeft: "15px"}}>
+                            Create Post Test
                           </button>
                         </Link>
 
@@ -273,6 +256,7 @@ const AddArticle = () => {
           </WhiteArea>
         </RowArea>
       </Container>
+      {/* )} */}
     </Background>
   );
 };
@@ -286,6 +270,15 @@ const Container = styled.div`
   padding-top: 3%;
   align-items: center;
 `;
+
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 
 const Background = styled.div`
   background: linear-gradient(

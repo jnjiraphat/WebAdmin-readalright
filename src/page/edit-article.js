@@ -109,34 +109,19 @@ const EditArticle = () => {
     editContent();
     // fetch();
   }, []);
-  // async function postQuiz(
-  //   question,
-  //   typeOfSuggestion_id,
-  //   isRightChoice,
-  //   choice
-  // ) {
-  //   const response = await axios.post("http://localhost:3000/quizs", {
-  //     question: question,
-  //     typeOfSuggestion_id: typeOfSuggestion_id,
-  //     // reading_id: readingIdD,
-  //   });
-  //   console.log("quiz", response.data);
-  //   console.log("quizId", response.data.quiz);
-  //   await postChoice(isRightChoice, choice, response.data.quiz);
-  // }
-  // async function postChoice(isRightChoice, choice, question_id) {
-  //   const response = await axios.post("http://localhost:3000/choice", {
-  //     isRightChoice: isRightChoice,
-  //     choice: choice,
-  //     optionText: choice,
-  //     value: choice,
-  //     question_id: question_id,
-  //   });
-  //   console.log("choice", response.data);
-  // }
 
   return (
     <Background>
+       {/* {email === null ? (
+        <Container>
+          <CenterArea>
+          <span>Please Login First</span>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
+          </CenterArea>
+        </Container>
+      ) : ( */}
       <Container>
         <AreaTopic>
           <TopicAdd>Edit Content Article</TopicAdd>
@@ -149,7 +134,6 @@ const EditArticle = () => {
               </center>
               :
             <div>
-              <h1>Article</h1>
               <Formik
                 initialValues={{
                   content: {
@@ -173,26 +157,26 @@ const EditArticle = () => {
                   if(selectImg) {
                     data.image = selectImg;
                   }
-                  
-                  console.log(data);
-                  alert(JSON.stringify(data, null, 0));
 
+                  console.log(data);
+                  
                   postReading(
                     data.title,
                     data.content,
                     data.image,
                     data.category_id,
                     data.level_reading,
-                  );
-
+                    );
+                    
+                    alert("Edit Successful");
                   // same shape as initial values
                 }}
               >
                 {({values}) => (
                   <Form>
-                    <RowStyled>
+                    <RowStyled style={{marginTop: "50px"}}>
                       <Col span="6">
-                        <TextForm>Title:</TextForm>
+                        <TextForm>Title</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -201,7 +185,7 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Content:</TextForm>
+                        <TextForm>Content</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldContent name="content.content" value={content} component="textarea" onChange={(e) => setContent(e.target.value)}/>
@@ -210,7 +194,7 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Image:</TextForm>
+                        <TextForm>Image</TextForm>
                       </Col>
                       <Col span="12">
                       {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
@@ -236,7 +220,7 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Category:</TextForm>
+                        <TextForm>Category</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldStyled as="select" name="content.category_id" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
@@ -254,7 +238,7 @@ const EditArticle = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Level Reading:</TextForm>
+                        <TextForm>Level Reading</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldStyled as="select" name="content.level_reading" value={levelReading} onChange={(e) => setLevelReading(e.target.value)}>
@@ -271,9 +255,9 @@ const EditArticle = () => {
                       <Col span="12"></Col>
                       <ColSubmit span="6">
                           <button type="submit">Save</button>
-                        <Link to={"/"}>
-                          <button>
-                          Go to Admin Board
+                        <Link to={"/console"}>
+                          <button  style={{marginLeft: "15px"}}>
+                          Back to Console
                           </button>
                         </Link>
                       </ColSubmit>
@@ -287,6 +271,7 @@ const EditArticle = () => {
           </WhiteArea>
         </RowArea>
       </Container>
+      {/* )} */}
     </Background>
   );
 };
@@ -300,6 +285,15 @@ const Container = styled.div`
   padding-top: 3%;
   align-items: center;
 `;
+
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 
 const Background = styled.div`
   background: linear-gradient(
