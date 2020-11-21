@@ -149,18 +149,24 @@ const AddArticle = () => {
                   }
                 }}
                 onSubmit={(values) => {
-                  alert(JSON.stringify(values, null, 0));
+                  
                   console.log(values.content.category_id)
 
                   console.log(values);
                   console.log(url);
-                  postReading(
-                    values.content.title,
-                    values.content.content,
-                    url,
-                    values.content.category_id,
-                    values.content.level_reading,
-                  );
+                  
+                  if(values.content.category_id && values.content.level_reading) {
+                    alert(JSON.stringify(values, null, 0));
+                    postReading(
+                      values.content.title,
+                      values.content.content,
+                      url,
+                      values.content.category_id,
+                      values.content.level_reading,
+                    );
+                  } else{
+                    alert("Please select All of Field");
+                  }
                   // setImage(values.content.image);
                   // same shape as initial values
                 }}
@@ -211,6 +217,7 @@ const AddArticle = () => {
                       </Col>
                       <Col span="12">
                         <Field as="select" name="content.category_id">
+                          <option value="0">Select</option>
                           <option value="1">Song</option>
                           <option value="2">Movie</option>
                           <option value="3">Sport</option>
@@ -229,6 +236,7 @@ const AddArticle = () => {
                       </Col>
                       <Col span="12">
                         <Field as="select" name="content.level_reading">
+                          <option value="0">Select</option>
                           <option value="A0">A0</option>
                           <option value="A1">A1</option>
                           <option value="A2">A2</option>
