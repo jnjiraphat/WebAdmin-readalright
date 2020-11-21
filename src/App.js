@@ -15,7 +15,7 @@ import loginFormt from './components/LoginForm'
 function App() {
   return (
     <div className="container">
-        <Route exact path="/" component={Index}/>
+        <Route exact path="/index" component={Index}/>
         <Route path="/login-form" component={loginFormt}/>
         <Route path="/login" component={Login}/>
         <Route path="/menu-site" component={MenuSite} />

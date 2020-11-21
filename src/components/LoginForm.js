@@ -31,6 +31,7 @@ class LoginForm extends React.Component {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(response => {
+        console.log(response)
         this.setState({
           currentUser: response.user
         })

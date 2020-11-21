@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import { Link, NavLink } from "react-router-dom";
+
 // import * as firebase from "firebase";
 
 import firebaseFunction from '../firebase'
@@ -15,22 +17,31 @@ const Login = () => {
   // let [loading, setLoading] = useState(false);
 
   const handleSubmit2 = (email, password) => {
+    setEmail(email)
+    setPassword(password)
     // setLoading(true);     
     firebaseFunction.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
+        var uid = firebaseFunction.auth.currentUser.uid;
+
         // console.log(result.user.uid)
         console.log('success!');
         axios
-          .post("http://localhost:3000/createAdmin", {
-            email : email,
-            password: password,
-          })
+          .get("http://localhost:3000/user/admin/" + uid)
           .then(
             (response) => {
-              setEmail(email)
-              setPassword(password)
+
               console.log("post admin success!!!");
-              console.log(response);
+              console.log(response.data.user);
+              if (response.data.user != null) {
+                console.log("admin")
+                window.localStorage.setItem('email', email);
+                // Storage.prototype.setItem('email', email)
+                window.location.assign('/index')
+              } else {
+                console.log("not admin")
+
+              }
             },
             (error) => {
               console.log(error);
@@ -49,7 +60,7 @@ const Login = () => {
   console.log(email)
   console.log(password)
 
-  
+
 
   // constructor(props) {
   //   super(props)
@@ -156,9 +167,11 @@ const Login = () => {
                 value={values.password}
               />
               {errors.password && touched.password && errors.password}
+              {/* <Link to={`/index/${email}`}> */}
               <button type="submit" disabled={isSubmitting} >
                 login
               </button>
+              {/* </Link> */}
             </form>
           )}
       </Formik>

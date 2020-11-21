@@ -6,31 +6,33 @@ import { Row, Col, Button } from 'antd'
 import IndexArea from '../components/IndexArea'
 import { useRouteMatch } from "react-router-dom";
 
-const menuSite = () => {
+const MenuSite = () => {
     // const match = useRouteMatch('/index');
-    // const match = useRouteMatch(`/index`);
-    return(
+    var email = window.localStorage.getItem('email');
+    
+    console.log(email)
+    return (
         <Background>
             <Container>
                 <Row>
-                    <Col span="4" style={{display:"flex",justifyContent:"center"}}>
-                        <img src={Icon} width={80} height={80}/>
+                    <Col span="4" style={{ display: "flex", justifyContent: "center" }}>
+                        <img src={Icon} width={80} height={80} />
                     </Col>
-                    <Col span="10" style={{display:"flex",alignItems:"center"}}>
+                    <Col span="10" style={{ display: "flex", alignItems: "center" }}>
                         <Topic>Admin</Topic>
                     </Col>
-                    <Col span="8" style={{display:"flex",alignItems:"center", justifyContent:"flex-end"}}>
-                        <Topic>Jenny</Topic>
+                    <Col span="8" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                        <Topic>{email}</Topic>
                         <ButtonLogout type="primary" danger>Logout</ButtonLogout>
                     </Col>
                 </Row>
-                <IndexArea/>
+                <IndexArea />
             </Container>
         </Background>
     )
 }
 
-export default menuSite;
+export default MenuSite
 
 const Container = styled.div`
     margin-left: auto;
