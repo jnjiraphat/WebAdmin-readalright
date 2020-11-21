@@ -21,6 +21,10 @@ const vocabId = [];
 
 
 const EditVocabBox = () => {
+  var email = window.localStorage.getItem("email");
+  console.log("get email");
+  console.log(email);
+
   const [title, setTitle] = useState('')
   const [titleMeaning, setTitleMeaning] = useState('')
   const [categoryId, setCategoryId] = useState()
@@ -56,32 +60,6 @@ const EditVocabBox = () => {
       }
     );
   };
-  // const initialValues = {
-  //   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
-  //   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
-  //   friends: [
-  //     {
-  //       engWord: "",
-  //       thaiWord: "",
-  //     },
-  //   ],
-  // };
-  // const [oldboxEngName, setOldboxEngName] = useState("");
-  // const [oldboxThaiName, setOldboxThaiName] = useState("");
-  // const [oldImage, setOldImage] = useState("");
-  // const [oldCate, setOldCate] = useState("");
-  // const [oldEngWord, setOldEngWord] = useState("");
-  // const [oldThaiWord, setOldThaiWord] = useState("");
-  // const [formValue , setFormValue] = useState({
-  //   content : {title : 'title' , title_meaning : 'titel_meaning' , category_id : 10},
-  //   // vocabBox: [{ boxEngName: "adasdasd", boxThaiName: "asdasdasd", category_id: "", image: "image test" }],
-  //   friends: [
-  //     {
-  //       engWord: "",
-  //       thaiWord: "",
-  //     },
-  //   ],
-  // })
 
   const match = useRouteMatch('/edit-vocabbox/:vocabBox_id');
   console.log("voccab box id in edit vocabbox")
@@ -130,10 +108,6 @@ const EditVocabBox = () => {
       category_id: category_id,
       image: image,
     });
-    // console.log("new vocabbox ", response.data);
-    // var readingId = response.data.quiz;
-    // console.log(readingId);
-    // setReadingIdD(readingId);
 
   }
 
@@ -157,50 +131,15 @@ const EditVocabBox = () => {
       console.log("round  = " + index)
       console.log(response.statusText)
     }
-    // const response = await axios.put("http://localhost:3000/vocabCard/" + vocabCard_id, {
-
-    // });
-
-    // console.log("new vocabcard ", response.data);
-    // var readingId = response.data.quiz;
-    // console.log(readingId);
-    // setReadingIdD(readingId);
 
   }
 
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
 
-
-
-  // async function postVocabBox(
-  //   boxEngName,
-  //   boxThaiName,
-  //   category_id,
-  //   image,
-  //   friends
-  // ) {
-  //   const response = await axios.post("http://localhost:3000/vocabBox", {
-  //     boxEngName: boxEngName,
-  //     boxThaiName: boxThaiName,
-  //     category_id: category_id,
-  //     image: image,
-  //   });
-  //   console.log("reading", response.data);
-  //   var vocabBoxId = response.data.quiz;
-  //   console.log("this is vocabBox");
-  //   console.log(vocabBoxId);
-  //   setvocabBoxIdD(vocabBoxId);
-  //   await postVocabCard(response.data.quiz, friends);
-  // }
-
   useEffect(() => {
     editVocabBox();
     getVocabbox()
-    // fetch();
   }, []);
-
-  // console.log("this is vocabBox 2")
-  // console.log(vocabBoxIdD)
 
   async function getVocabbox() {
     console.log(match.params)
@@ -212,27 +151,9 @@ const EditVocabBox = () => {
     })
     console.log(data)
     setWord(data)
-
-    // console.log("eiei");
-
-    // console.log(friends);
-    // for (let index = 0; index < friends.length; index++) {
-    //   const response = await axios.post(`http://localhost:3000/vocabCard/${match.params}`, {
-    //     engWord: friends[index]["engWord"],
-    //     thaiWord: friends[index]["thaiWord"],
-    //     vocabBox_id: vocabBox_id,
-    //   });
-    // }
   }
 
   const changeCard = (value, type, index) => {
-    // if(type=="engWord"){
-    //   wordPutEng.push(value)
-    // }else{
-    //   wordPutThai.push(value)
-
-
-    // }
     console.log(value, type, index)
     let data = [...word];
     data[index][type] = value
@@ -242,6 +163,16 @@ const EditVocabBox = () => {
 
   return (
     <Background>
+      {/* {email === null ? (
+        <Container>
+          <CenterArea>
+          <span>Please Login First</span>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
+          </CenterArea>
+        </Container>
+      ) : ( */}
       <Container>
         <AreaTopic>
           <TopicAdd>Edit Vocab Box</TopicAdd>
@@ -461,6 +392,7 @@ const EditVocabBox = () => {
           </WhiteArea>
         </RowArea>
       </Container>
+      {/* )} */}
     </Background>
   );
 }
@@ -475,6 +407,14 @@ const Container = styled.div`
   padding-top: 3%;
   align-items: center;
 `;
+
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 
 const Background = styled.div`
   background: linear-gradient(
