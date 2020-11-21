@@ -7,7 +7,7 @@ import styled from "styled-components";
 import firebaseMethod from '../firebase';
 
 const initialValues = {
-  content: { boxEngName: "", boxThaiName: "", category_id: "", image: "" },
+  content: { boxEngName: "", boxThaiName: "", category_id: "9", image: "" },
   friends: [
     {
       engWord: "",
@@ -59,13 +59,13 @@ const AddVocabBox = () => {
     });
     console.log("vocab box", response.data);
     var vocabBoxId = response.data.quiz;
-    console.log(response.data.quiz)
-    console.log("this is vocabBox");
-    console.log(vocabBoxId);
-    console.log(friends)
+    // console.log(response.data.quiz)
+    // console.log("this is vocabBox");
+    // console.log(vocabBoxId);
+    // console.log(friends)
     // console.log(friends.length);
-    setvocabBoxIdD(vocabBoxId);
-    if (friends && friends.length) {
+    // setvocabBoxIdD(vocabBoxId);
+    if (friends.length!=0) {
       // `theHref` is truthy and has truthy property _length_
       await postVocabCard(vocabBoxId, friends);
     } else {
@@ -84,11 +84,11 @@ const AddVocabBox = () => {
     console.log(friends.length);
     console.log(friends[0].engWord)
     console.log(friends[0].thaiWord)
-    console.log(friends[1].engWord)
-    console.log(friends[1].thaiWord)
-    console.log(friends[2].engWord)
+    // console.log(friends[1].engWord)
+    // console.log(friends[1].thaiWord)
+    // console.log(friends[2].engWord)
 
-    console.log(friends[2].thaiWord)
+    // console.log(friends[2].thaiWord)
 
     for (let index = 0; index < friends.length; index++) {
         const response = axios.post("http://localhost:3000/vocabCard", {
@@ -129,13 +129,9 @@ const AddVocabBox = () => {
                   );
                   console.log(values.friends);
                   // console.log(values.friends.length);
-                  for (let index = 0; index < values.friends.length; index++) {
-                    postVocabCard(
-                      values.friends[index].engWord,
-                      values.friends[index].thaiWord
-                    )
 
-                  }
+
+                  // }
                 }}
               >
                 {({ values }) => (
