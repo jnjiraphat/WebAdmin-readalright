@@ -284,7 +284,7 @@ const EditVocabBox = () => {
 
                     );
                     // await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify(data, null, 2));
+                    alert(JSON.stringify("Edit Vocab Box Succesee!"));
                     // postVocabBox(
                     //   values.content.title,
                     //   values.content.title_meaning,
@@ -309,7 +309,7 @@ const EditVocabBox = () => {
                     <FormStyled>
                       <RowStyled>
                         <Col span="6">
-                          <TextForm>Title:</TextForm>
+                          <TextForm>Vocab Box English Name</TextForm>
                         </Col>
                         <Col span="12">
                           <FieldStyled name="content.title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -318,7 +318,7 @@ const EditVocabBox = () => {
                       </RowStyled>
                       <RowStyled>
                         <Col span="6">
-                          <TextForm>Title Meaning</TextForm>
+                          <TextForm>Vocab Box Thai Name</TextForm>
                         </Col>
                         <Col span="12">
                           <Field name="content.title_meaning" value={titleMeaning} onChange={(e) => setTitleMeaning(e.target.value)} />
@@ -381,7 +381,7 @@ const EditVocabBox = () => {
                                   <Col span="6">
 
                                     <TextFormLebel htmlFor={`friends.${index}.engWord`}>
-                                      Vocabulary-{index + 1}
+                                    No.{index + 1} | Vocabulary
                                     </TextFormLebel>
                                   </Col>
                                   <Col Span="5">
@@ -403,7 +403,7 @@ const EditVocabBox = () => {
                                   <Col span="6">
 
                                     <TextFormLebel htmlFor={`friends.${index}.thaiWord`}>
-                                      Vocabulary-{index + 1}
+                                    Meaning
                                     </TextFormLebel>
                                   </Col>
                                   <Col Span="5">
@@ -449,8 +449,8 @@ const EditVocabBox = () => {
                         <button type="submit">Save</button>
                       </AreaMoreWord>
                       <AreaMoreWord>
-                      <Link to="/">
-                        <button>Go to Admin Board</button>
+                      <Link to="/index">
+                        <button>Back</button>
                       </Link>
                       </AreaMoreWord>
 
