@@ -161,14 +161,17 @@ const EditArticle = () => {
                   }
                 }}
                 onSubmit={ async (values) => {
-                  
-                  
+
                   const data = {
                     title: title,
                     content: content,
                     image: image,
                     category_id: categoryId,
                     level_reading: levelReading
+                  }
+                  
+                  if(selectImg) {
+                    data.image = selectImg;
                   }
                   
                   console.log(data);
