@@ -17,6 +17,9 @@ const initialValues = {
 };
 
 const AddVocabBox = () => {
+  var email = window.localStorage.getItem("email");
+  console.log("get email");
+  console.log(email);
   const [vocabBoxIdD, setvocabBoxIdD] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
@@ -101,6 +104,16 @@ const AddVocabBox = () => {
 
   return (
     <Background>
+       {/* {email === null ? (
+        <Container>
+          <CenterArea>
+          <span>Please Login First</span>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
+          </CenterArea>
+        </Container>
+      ) : ( */}
       <Container>
         <AreaTopic>
           <TopicAdd>Add Vocab Box</TopicAdd>
@@ -112,24 +125,23 @@ const AddVocabBox = () => {
                 initialValues={initialValues}
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(values, null, 2));
                   console.log("on submit")
                   console.log(values);
                   console.log(values.content.boxEngName)
                   console.log(values.content.boxThaiName)
                   console.log(url)
                   console.log(values.friends)
-
+                  
                   postVocabBox(
                     values.content.boxEngName,
                     values.content.boxThaiName,
                     url,
                     values.content.category_id,
                     values.friends
-                  );
-                  console.log(values.friends);
-                  // console.log(values.friends.length);
-
+                    );
+                    console.log(values.friends);
+                    alert(JSON.stringify("Add Vocab Box Succesee!"));
+                    // console.log(values.friends.length);
 
                   // }
                 }}
@@ -138,7 +150,7 @@ const AddVocabBox = () => {
                   <FormStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Title:</TextForm>
+                        <TextForm>Vocab Box English Name</TextForm>
                       </Col>
                       <Col span="12">
                         <FieldStyled name="content.boxEngName" />
@@ -147,7 +159,7 @@ const AddVocabBox = () => {
                     </RowStyled>
                     <RowStyled>
                       <Col span="6">
-                        <TextForm>Title Meaning</TextForm>
+                        <TextForm>Vocab Box Thai Name</TextForm>
                       </Col>
                       <Col span="12">
                         <Field name="content.boxThaiName" />
@@ -203,7 +215,7 @@ const AddVocabBox = () => {
                                   <TextFormLebel
                                     htmlFor={`friends.${index}.engWord`}
                                   >
-                                    Vocabulary-{index + 1}
+                                    No.{index + 1} | Vocabulary
                                   </TextFormLebel>
                                 </Col>
                                 <Col Span="5">
@@ -223,7 +235,7 @@ const AddVocabBox = () => {
                                   <TextFormLebel
                                     htmlFor={`friends.${index}.thaiWord`}
                                   >
-                                    Meaning-{index + 1}
+                                    Meaning
                                   </TextFormLebel>
                                 </Col>
                                 <Col Span="5">
@@ -268,9 +280,9 @@ const AddVocabBox = () => {
                       <button type="submit">
                         Save
                       </button>
-                      <Link to="/">
+                      <Link to="/index">
                         <button>
-                          Go to Admin Board
+                          Back
                         </button>
                       </Link>
                     </AreaSubmit>
@@ -281,6 +293,7 @@ const AddVocabBox = () => {
           </WhiteArea>
         </RowArea>
       </Container>
+      {/* )} */}
     </Background>
   );
 };
@@ -294,6 +307,13 @@ const Container = styled.div`
   padding-top: 3%;
   align-items: center;
 `;
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 
 const Background = styled.div`
   background: linear-gradient(
