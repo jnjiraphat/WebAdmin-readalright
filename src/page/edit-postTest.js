@@ -171,57 +171,10 @@ const EditPostTest = () => {
     }
   };
 
-  const [readingIdD, setReadingIdD] = useState("");
-
   useEffect(() => {
     fetchApiChallenge();
   }, []);
 
-  async function postReading(
-    title,
-    content,
-    image,
-    category_id,
-    level_reading
-  ) {
-    const response = await axios.post("http://localhost:3000/reading", {
-      title: title,
-      content: content,
-      image: image,
-      category_id: category_id,
-      level_reading: level_reading,
-    });
-    console.log("reading", response.data);
-    var readingId = response.data.quiz;
-    console.log(readingId);
-    setReadingIdD(readingId);
-  }
-
-  async function postQuiz(
-    question,
-    typeOfSuggestion_id,
-    isRightChoice,
-    choice
-  ) {
-    const response = await axios.post("http://localhost:3000/quizs", {
-      question: question,
-      typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: readingIdD,
-    });
-    console.log("quiz", response.data);
-    console.log("quizId", response.data.quiz);
-    await postChoice(isRightChoice, choice, response.data.quiz);
-  }
-  async function postChoice(isRightChoice, choice, question_id) {
-    const response = await axios.post("http://localhost:3000/choice", {
-      isRightChoice: isRightChoice,
-      choice: choice,
-      optionText: choice,
-      value: choice,
-      question_id: question_id,
-    });
-    console.log("choice", response.data);
-  }
 
   return (
     <Background>
@@ -485,22 +438,6 @@ const EditPostTest = () => {
                                   </div>
                                 </Col>
                               ))}
-                            <AreaSubmit>
-                              <ButtonStyled
-                                type="primary"
-                                className="secondary"
-                                onClick={() =>
-                                  push({
-                                    question: "",
-                                    typeOfSuggestion_id: "",
-                                    isRightChoice: "",
-                                    choice: "",
-                                  })
-                                }
-                              >
-                                More Questions
-                              </ButtonStyled>
-                            </AreaSubmit>
                           </div>
                         )}
                       </FieldArray>
