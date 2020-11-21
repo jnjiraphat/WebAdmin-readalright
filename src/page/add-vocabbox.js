@@ -140,7 +140,7 @@ const AddVocabBox = () => {
                     values.friends
                     );
                     console.log(values.friends);
-                    alert(JSON.stringify("Add Vocab Box Succesee!"));
+                    alert("Add Successful");
                     // console.log(values.friends.length);
 
                   // }
@@ -280,9 +280,9 @@ const AddVocabBox = () => {
                       <button type="submit">
                         Save
                       </button>
-                      <Link to="/index">
+                      <Link to="/console">
                         <button>
-                          Back
+                        Back to Console
                         </button>
                       </Link>
                     </AreaSubmit>

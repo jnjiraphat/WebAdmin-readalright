@@ -215,7 +215,7 @@ const EditVocabBox = () => {
 
                     );
                     // await new Promise((r) => setTimeout(r, 500));
-                    alert(JSON.stringify("Edit Vocab Box Succesee!"));
+                    alert(JSON.stringify("Edit Successful"));
                     // postVocabBox(
                     //   values.content.title,
                     //   values.content.title_meaning,
@@ -380,7 +380,7 @@ const EditVocabBox = () => {
                         <button type="submit">Save</button>
                       </AreaMoreWord>
                       <AreaMoreWord>
-                      <Link to="/index">
+                      <Link to="/console">
                         <button>Back</button>
                       </Link>
                       </AreaMoreWord>
