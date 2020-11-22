@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "../asset/image/icon.png";
 import { Row, Col, Button } from "antd";
 import IndexArea from "../components/IndexArea";
-import { useRouteMatch } from "react-router-dom";
-
 import firebaseFunction from '../firebase'
 
 const MenuSite = () => {

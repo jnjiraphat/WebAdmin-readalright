@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { Row, Col, Button } from "antd";
 import axios from "axios";
 import styled from "styled-components";
-import { formatTimeStr } from "antd/lib/statistic/utils";
 import {
   BrowserRouter as Router,
   Link,
   useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
-// import { storage } from "../firebase/index";
 import firebaseMethod from '../firebase';
 
 

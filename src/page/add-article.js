@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
-import AddPostTest from './add-postTest'
 import firebaseMethod from '../firebase';
-import {
-  BrowserRouter as Router,
-  useRouteMatch,
-} from 'react-router-dom';
-
 
 // const readingId = "";
 const AddArticle = () => {

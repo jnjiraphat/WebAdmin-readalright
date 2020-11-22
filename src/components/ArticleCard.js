@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
-import { Card, Row, Tabs, Button, Col } from "antd";
+import { Link } from "react-router-dom";
+import { Card, Row, Button, Col } from "antd";
 import axios from "axios";
 import { Spin } from "antd";
 

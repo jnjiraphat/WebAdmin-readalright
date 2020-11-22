@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import { Formik, Field, Form, FieldArray } from "formik";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
@@ -527,12 +527,6 @@ const RowStyled = styled(Row)`
 
 const FieldStyled = styled(Field)`
   width: 250px;
-`;
-const FieldStyledMini = styled(Field)`
-  width: 200px;
-`;
-const FieldContent = styled(FieldStyled)`
-  height: 150px;
 `;
 
 const FieldTextArea = styled(Field)`
