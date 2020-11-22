@@ -292,7 +292,7 @@ const AddPostTest = () => {
                                       <TextForm>Question</TextForm>
                                     </Col>
                                     <Col span="14">
-                                      <FieldContent
+                                      <FieldTextArea
                                         name={`content.${index}.questionText`}
                                         component="textarea"
                                       />
@@ -306,6 +306,7 @@ const AddPostTest = () => {
                                       <FieldStyled
                                         name={`content.${index}.options.${0}.optionText`}
                                       />
+                                      </Col>
                                       <Col span="10">
                                         <Field
                                           type="radio"
@@ -320,7 +321,7 @@ const AddPostTest = () => {
                                         />{" "}
                                         Wrong
                                         {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
-                                      </Col>
+                                      
                                     </Col>
                                   </RowStyled>
                                   <RowStyled>
@@ -356,6 +357,7 @@ const AddPostTest = () => {
                                       <FieldStyled
                                         name={`content.${index}.options.${2}.optionText`}
                                       />
+                                      </Col>
                                       <Col span="10">
                                         <Field
                                           type="radio"
@@ -369,7 +371,6 @@ const AddPostTest = () => {
                                           value="0"
                                         />{" "}
                                         Wrong
-                                      </Col>
                                     </Col>
                                   </RowStyled>
                                   <RowStyled>
@@ -380,6 +381,7 @@ const AddPostTest = () => {
                                       <FieldStyled
                                         name={`content.${index}.options.${3}.optionText`}
                                       />
+                                      </Col>
                                       <Col span="8">
                                         <Field
                                           type="radio"
@@ -393,7 +395,7 @@ const AddPostTest = () => {
                                           value="0"
                                         />{" "}
                                         Wrong
-                                      </Col>
+                                      
                                     </Col>
                                   </RowStyled>
                                   <RowStyled>
@@ -432,7 +434,7 @@ const AddPostTest = () => {
                     <AreaSubmit>
                       <button type="submit">Save</button>
                       <Link to="/console">
-                        <button>Back to Console</button>
+                        <button style={{marginLeft: "10px"}}>Back to Console</button>
                       </Link>
                     </AreaSubmit>
                   </Form>
@@ -524,7 +526,7 @@ const RowStyled = styled(Row)`
 `;
 
 const FieldStyled = styled(Field)`
-  width: 500px;
+  width: 250px;
 `;
 const FieldStyledMini = styled(Field)`
   width: 200px;
@@ -532,6 +534,12 @@ const FieldStyledMini = styled(Field)`
 const FieldContent = styled(FieldStyled)`
   height: 150px;
 `;
+
+const FieldTextArea = styled(Field)`
+  width: 500px;
+  height: 100px;
+`;
+
 
 const ColSubmit = styled(Col)`
   display: flex;
