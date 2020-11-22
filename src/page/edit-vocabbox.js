@@ -163,7 +163,7 @@ const EditVocabBox = () => {
 
   return (
     <Background>
-      {/* {email === null ? (
+      {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -172,7 +172,7 @@ const EditVocabBox = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Edit Vocab Box</TopicAdd>
@@ -392,7 +392,7 @@ const EditVocabBox = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+       )} 
     </Background>
   );
 }

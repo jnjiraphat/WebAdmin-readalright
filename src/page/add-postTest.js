@@ -13,6 +13,10 @@ const AddPostTest = () => {
   // console.log("reading id in add post test")
   // console.log(match.params.readingId2)
 
+  var email = window.localStorage.getItem("email");
+
+  console.log(email);
+
   const [readingId, setReadingIdD] = useState("");
 
   const [questionBox, setQuestionBox] = useState([]);
@@ -159,7 +163,7 @@ const AddPostTest = () => {
 
   return (
     <Background>
-      {/* {email === null ? (
+      {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -168,7 +172,7 @@ const AddPostTest = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Add PostTest</TopicAdd>
@@ -438,7 +442,7 @@ const AddPostTest = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+      )}
     </Background>
   );
 };

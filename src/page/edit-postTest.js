@@ -10,10 +10,14 @@ import { Spin } from "antd";
 
 // const readingId = "";
 const EditPostTest = () => {
+  var email = window.localStorage.getItem("email");
+
+  console.log(email);
   const [dataArrayQuizChallenge, setdataArrayQuizChallenge] = useState([]);
   const match = useRouteMatch(`/edit-postTest/:reading_id`);
   // console.log("reading id in edit post test");
   // console.log(match.params.reading_id);
+
 
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
@@ -187,7 +191,7 @@ const EditPostTest = () => {
 
   return (
     <Background>
-      {/* {email === null ? (
+      {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -196,7 +200,7 @@ const EditPostTest = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Edit PostTest</TopicAdd>
@@ -482,7 +486,7 @@ const EditPostTest = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+      )} 
     </Background>
   );
 };

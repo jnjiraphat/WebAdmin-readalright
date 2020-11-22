@@ -15,6 +15,10 @@ import {
 // const readingId = "";
 const AddArticle = () => {
   
+  var email = window.localStorage.getItem("email");
+
+  console.log(email);
+
   const [readingIdD, setReadingIdD] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
@@ -104,7 +108,7 @@ const AddArticle = () => {
 
   return (
     <Background>
-       {/* {email === null ? (
+       {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -113,7 +117,7 @@ const AddArticle = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Add Article</TopicAdd>
@@ -256,7 +260,7 @@ const AddArticle = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+     )} 
     </Background>
   );
 };

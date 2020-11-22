@@ -10,14 +10,20 @@ import firebaseFunction from '../firebase'
 
 const MenuSite = () => {
   // const match = useRouteMatch('/index');
-  var email = window.localStorage.getItem("email");
+  var email = window.localStorage.getItem('email');
 
   console.log(email);
 
   const logout = () => {
     firebaseFunction.auth.signOut().then(function() {
-      alert("Sign-out successful")
-      // Sign-out successful.
+      email = window.localStorage.removeItem('email');
+      console.log(email)
+      
+      if (email == null) {
+        alert("Sign-out successful")
+        window.location.assign('/')
+      }
+      
     }).catch(function(error) {
       alert("Error")
       // An error happened.
@@ -26,7 +32,7 @@ const MenuSite = () => {
 
   return (
     <Background>
-     {/* {email === null ? (
+     {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -35,7 +41,7 @@ const MenuSite = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
         <Container>
           <Row>
             <Col span="4" style={{ display: "flex", justifyContent: "center" }}>
@@ -53,14 +59,14 @@ const MenuSite = () => {
               }}
             >
               <Topic>{email}</Topic>
-              <ButtonLogout type="primary" onClick={logout()}>
+              <ButtonLogout type="primary" onClick={logout}>
                 Logout
               </ButtonLogout>
             </Col>
           </Row>
           <IndexArea />
         </Container>
-      {/* )} */}
+      )} 
     </Background>
   );
 };
@@ -96,7 +102,7 @@ const Topic = styled.span`
   font-weight: bold;
 `;
 
-const ButtonLogout = styled(Button)`
+const ButtonLogout = styled.button`
   background: #f66181 !important;
   border-color: #f66181 !important;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

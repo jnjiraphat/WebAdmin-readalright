@@ -41,18 +41,19 @@ const Login = () => {
                 // Storage.prototype.setItem('email', email)
                 window.location.assign('/console')
               } else {
-                console.log("not admin")
                 alert("Account is not admin")
               }
             },
             (error) => {
               console.log(error);
+             
             }
           );
       })
       .catch(error => {
         console.error(error);
         alert("Account is not admin")
+        window.location.reload();
       })
       .finally(() => {
         // setLoading(false);
@@ -188,4 +189,5 @@ border-radius: 50px;
 width: 200px;
 border-color: transparent;
 font-weight: bold;
+cursor: pointer;
 `

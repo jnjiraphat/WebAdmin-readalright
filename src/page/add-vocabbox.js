@@ -104,7 +104,7 @@ const AddVocabBox = () => {
 
   return (
     <Background>
-       {/* {email === null ? (
+       {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -113,7 +113,7 @@ const AddVocabBox = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Add Vocab Box</TopicAdd>
@@ -293,7 +293,7 @@ const AddVocabBox = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+      )}
     </Background>
   );
 };

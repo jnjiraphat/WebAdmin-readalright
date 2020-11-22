@@ -14,6 +14,9 @@ import firebaseMethod from '../firebase';
 
 // const readingId = "";
 const EditArticle = () => {
+  var email = window.localStorage.getItem("email");
+
+  console.log(email);
   const match = useRouteMatch('/edit-article/:readingId');
   console.log("reading id in edit article")
   console.log(match.params.readingId)
@@ -112,7 +115,7 @@ const EditArticle = () => {
 
   return (
     <Background>
-       {/* {email === null ? (
+       {email === null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
@@ -121,7 +124,7 @@ const EditArticle = () => {
           </Link>
           </CenterArea>
         </Container>
-      ) : ( */}
+      ) : (
       <Container>
         <AreaTopic>
           <TopicAdd>Edit Content Article</TopicAdd>
@@ -271,7 +274,7 @@ const EditArticle = () => {
           </WhiteArea>
         </RowArea>
       </Container>
-      {/* )} */}
+      )} 
     </Background>
   );
 };
