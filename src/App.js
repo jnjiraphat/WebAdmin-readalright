@@ -4,7 +4,7 @@ import MenuSite from './page/menu-site'
 import Login from './page/login'
 import Index from './page/index'
 import AddArticle from './page/add-article'
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import AddVocabBox from './page/add-vocabbox'
 import EditVocabBox from './page/edit-vocabbox'
 import AddPostTest from './page/add-postTest';

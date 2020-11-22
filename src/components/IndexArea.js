@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
-import Icon from "../asset/image/icon.png";
 import { Row, Tabs, Button } from "antd";
 import Article from "./IndexArticle";
 import VocabBox from './IndexVocabBox'

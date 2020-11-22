@@ -1,11 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Link } from "react-router-dom";
-// import Login from './page/login'
-// import Index from './page/index'
-// import AddArticle from './page/add-article'
-// import AddVocabBox from './page/add-vocabbox'
-import { Route, Switch } from 'react-router-dom'
 
 
 const menuSite = () => {

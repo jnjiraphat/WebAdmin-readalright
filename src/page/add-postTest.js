@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import { Formik, Field, Form, FieldArray } from "formik";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
@@ -292,7 +292,7 @@ const AddPostTest = () => {
                                       <TextForm>Question</TextForm>
                                     </Col>
                                     <Col span="14">
-                                      <FieldContent
+                                      <FieldTextArea
                                         name={`content.${index}.questionText`}
                                         component="textarea"
                                       />
@@ -524,8 +524,15 @@ const RowStyled = styled(Row)`
 `;
 
 const FieldStyled = styled(Field)`
-  width: 500px;
+  width: 250px;
 `;
+
+const FieldTextArea = styled(Field)`
+  width: 500px;
+  height: 100px;
+`;
+
+
 const FieldStyledMini = styled(Field)`
   width: 200px;
 `;

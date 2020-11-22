@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import { Link, NavLink } from "react-router-dom";
+import { Formik} from "formik";
 import Icon from "../asset/image/icon.png";
-import { Row, Col} from 'antd'
-
-// import * as firebase from "firebase";
-
+import { Row} from 'antd'
 import firebaseFunction from '../firebase'
 import axios from "axios";
-
-
-// import { Formik } from 'formik';
 
 const Login = () => {
   let [email, setEmail] = useState('');
