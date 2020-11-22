@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Formik, Field, Form, FieldArray } from "formik";
 import { Link } from "react-router-dom";
@@ -75,8 +75,8 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[0].options.length; index++) {
       const response = await axios.put(
-        "http://localhost:3000/admin/updateChoice/" +
-          content[0].options[index].choice_id,
+        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        content[0].options[index].choice_id,
         {
           isRightChoice: content[0].options[index].isRightChoice,
           choice: content[0].options[index].optionText,
@@ -89,8 +89,8 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[1].options.length; index++) {
       const response = await axios.put(
-        "http://localhost:3000/admin/updateChoice/" +
-          content[1].options[index].choice_id,
+        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        content[1].options[index].choice_id,
         {
           isRightChoice: content[1].options[index].isRightChoice,
           choice: content[1].options[index].optionText,
@@ -103,8 +103,8 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[2].options.length; index++) {
       const response = await axios.put(
-        "http://localhost:3000/admin/updateChoice/" +
-          content[2].options[index].choice_id,
+        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        content[2].options[index].choice_id,
         {
           isRightChoice: content[2].options[index].isRightChoice,
           choice: content[2].options[index].optionText,
@@ -116,31 +116,91 @@ const AddPostTest = () => {
     }
   }
 
-  async function postQuiz(
-    question,
-    typeOfSuggestion_id,
-    isRightChoice,
-    choice
-  ) {
-    const response = await axios.post("http://localhost:3000/quizs", {
-      question: question,
-      typeOfSuggestion_id: typeOfSuggestion_id,
-      reading_id: readingId,
-    });
-    console.log("quiz", response.data);
-    console.log("quizId", response.data.quiz);
-    await postChoice(isRightChoice, choice, response.data.quiz);
+  // const [arrayQuiz, setarrayQuiz] = ([])
+
+  async function postQuiz(content) {
+    var quizIdArray = [];
+    try {
+      for (let index = 0; index < 3; index++) {
+        const response = await axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizs",
+          {
+            question: content[index].questionText,
+            typeOfSuggestion_id: content[index].typeOfSuggestionID,
+            reading_id: match.params.readingId2,
+            typeOfQuestion: "chal",
+          }
+        );
+        console.log("quiz", response.data);
+        console.log("quiz", response.data);
+        console.log("quizId", response.data.quiz);
+        // setarrayQuiz(response.data.quiz);
+        quizIdArray.push(response.data.quiz);
+        console.log("array")
+        console.log(quizIdArray)
+      }
+    } catch (error) {
+    } finally{
+      postChoice(quizIdArray,content);
+    }
+   
+
+    // const response = await axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizs", {
+    //   question: question,
+    //   typeOfSuggestion_id: typeOfSuggestion_id,
+    //   reading_id: match.params.readingId2,
+    // });
+    // console.log("quiz", response.data);
+    // console.log("quizId", response.data.quiz);
+    // await postChoice(isRightChoice, choice, response.data.quiz);
   }
-  async function postChoice(isRightChoice, choice, question_id) {
-    const response = await axios.post("http://localhost:3000/choice", {
-      isRightChoice: isRightChoice,
-      choice: choice,
-      optionText: choice,
-      value: choice,
-      question_id: question_id,
-    });
-    console.log("choice", response.data);
+  async function postChoice(quizID,content) {
+    console.log("content in postchoice")
+    console.log(content)
+    console.log("array quiz in post choice")
+    console.log(quizID[0])
+    console.log(quizID[1])
+    console.log(quizID[2])
+    for (let index = 0; index < content[0].options.length; index++) {
+    const response = await axios.post(
+      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice",
+      {
+        isRightChoice: content[0].options[index].isRightChoice,
+        choice: content[0].options[index].optionText,
+        question_id: quizID[0],
+        optionText: content[0].options[index].optionText,
+        value: content[0].options[index].optionText,
+      }
+    );
   }
+
+  for (let index = 0; index < content[1].options.length; index++) {
+    const response = await axios.post(
+      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice" ,
+      {
+        isRightChoice: content[1].options[index].isRightChoice,
+        choice: content[1].options[index].optionText,
+        question_id: quizID[1],
+        optionText: content[1].options[index].optionText,
+        value: content[1].options[index].optionText,
+      }
+    );
+  }
+
+  for (let index = 0; index < content[2].options.length; index++) {
+    const response = await axios.post(
+      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice",
+      {
+        isRightChoice: content[2].options[index].isRightChoice,
+        choice: content[2].options[index].optionText,
+        question_id: quizID[2],
+        optionText: content[2].options[index].optionText,
+        value: content[2].options[index].optionText,
+      }
+    );
+  }
+  }
+
+
 
   const options = [
     {
@@ -166,285 +226,287 @@ const AddPostTest = () => {
       {email === null ? (
         <Container>
           <CenterArea>
-          <span>Please Login First</span>
-          <Link to="/">
-            <button>Login</button>
-          </Link>
+            <span>Please Login First</span>
+            <Link to="/">
+              <button>Login</button>
+            </Link>
           </CenterArea>
         </Container>
       ) : (
-      <Container>
-        <AreaTopic>
-          <TopicAdd>Add PostTest</TopicAdd>
-        </AreaTopic>
-        <RowArea>
-          <WhiteArea>
-            <div>
-              <Formik
-                initialValues={{
-                  content: [
-                    {
-                      questionText: "",
-                      typeOfSuggestionID: "",
-                      options: options,
-                    },
-                    {
-                      questionText: "",
-                      typeOfSuggestionID: "",
-                      options: options,
-                    },
-                    {
-                      questionText: "",
-                      typeOfSuggestionID: "",
-                      options: options,
-                    },
-                  ],
-                }}
-                onSubmit={(values) => {
-                  console.log(values);
-                  // postQuiz(
-                  //   values.content.question,
-                  //   values.content.typeOfSuggestion_id,
-                  //   values.content.isRightChoice,
-                  //   values.content.choice
-                  // );
-                  console.log("value");
-                  console.log(values.content[0].questionText);
-                  // putPostTest(values.content);
+          <Container>
+            <AreaTopic>
+              <TopicAdd>Add PostTest</TopicAdd>
+            </AreaTopic>
+            <RowArea>
+              <WhiteArea>
+                <div>
+                  <Formik
+                    initialValues={{
+                      content: [
+                        {
+                          questionText: "",
+                          typeOfSuggestionID: "",
+                          options: options,
+                        },
+                        {
+                          questionText: "",
+                          typeOfSuggestionID: "",
+                          options: options,
+                        },
+                        {
+                          questionText: "",
+                          typeOfSuggestionID: "",
+                          options: options,
+                        },
+                      ],
+                    }}
+                    onSubmit={(values) => {
+                      console.log(values);
+                      // postQuiz(
+                      //   values.content.question,
+                      //   values.content.typeOfSuggestion_id,
+                      //   values.content.isRightChoice,
+                      //   values.content.choice
+                      // );
+                      console.log("value");
+                      console.log(values.content[0].questionText);
+                      // putPostTest(values.content);
 
-                  console.log(values.content[0].options.length);
-                  console.log("Q1");
-                  var countQ1 = 0;
-                  for (
-                    let index = 0;
-                    index < values.content[0].options.length;
-                    index++
-                  ) {
-                    console.log(values.content[0].options[index].isRightChoice);
-                    if (values.content[0].options[index].isRightChoice == "1") {
-                      countQ1++;
-                      console.log("count in if");
-                      console.log(countQ1);
-                    }
-                  }
-                  console.log("Q2");
-                  var countQ2 = 0;
-                  for (
-                    let index = 0;
-                    index < values.content[1].options.length;
-                    index++
-                  ) {
-                    console.log(values.content[1].options[index].isRightChoice);
-                    if (values.content[1].options[index].isRightChoice == "1") {
-                      countQ2++;
-                      console.log("count in if");
-                      console.log(countQ2);
-                    }
-                  }
-                  console.log("Q3");
-                  var countQ3 = 0;
-                  for (
-                    let index = 0;
-                    index < values.content[2].options.length;
-                    index++
-                  ) {
-                    console.log(values.content[2].options[index].isRightChoice);
-                    if (values.content[2].options[index].isRightChoice == "1") {
-                      countQ3++;
-                      console.log("count in if");
+                      console.log(values.content[0].options.length);
+                      console.log("Q1");
+                      var countQ1 = 0;
+                      for (
+                        let index = 0;
+                        index < values.content[0].options.length;
+                        index++
+                      ) {
+                        console.log(values.content[0].options[index].isRightChoice);
+                        if (values.content[0].options[index].isRightChoice == "1") {
+                          countQ1++;
+                          console.log("count in if");
+                          console.log(countQ1);
+                        }
+                      }
+                      console.log("Q2");
+                      var countQ2 = 0;
+                      for (
+                        let index = 0;
+                        index < values.content[1].options.length;
+                        index++
+                      ) {
+                        console.log(values.content[1].options[index].isRightChoice);
+                        if (values.content[1].options[index].isRightChoice == "1") {
+                          countQ2++;
+                          console.log("count in if");
+                          console.log(countQ2);
+                        }
+                      }
+                      console.log("Q3");
+                      var countQ3 = 0;
+                      for (
+                        let index = 0;
+                        index < values.content[2].options.length;
+                        index++
+                      ) {
+                        console.log(values.content[2].options[index].isRightChoice);
+                        if (values.content[2].options[index].isRightChoice == "1") {
+                          countQ3++;
+                          console.log("count in if");
+                          console.log(countQ3);
+                        }
+                      }
+                      console.log("countQ3");
                       console.log(countQ3);
-                    }
-                  }
-                  console.log("countQ3");
-                  console.log(countQ3);
-                  if (
-                    countQ1 == 1 &&
-                    countQ2 == 1 &&
-                    countQ3 == 1 &&
-                    values.content[0].typeOfSuggestionID &&
-                    values.content[1].typeOfSuggestionID &&
-                    values.content[2].typeOfSuggestionID
-                  ) {
-                    console.log("Post in this condition");
-                    putPostTest(values.content);
-                    putPostTestAnswer(values.content);
-                    alert("Add Successful");
-                  } else {
-                    console.log("not success");
-                    alert("Form is not Complete");
-                  }
-                }}
-              >
-                {({ values }) => (
-                  <Form>
-                    <FieldArray name="content">
-                      {({ insert, remove, push }) => (
-                        <div>
-                          {values.content.length > 0 &&
-                            values.content.map((content, index) => (
-                              <Col key={index}>
-                                <center>
-                                  <h2>Question no.{index + 1}</h2>
-                                </center>
-                                <div>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Question</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <FieldTextArea
-                                        name={`content.${index}.questionText`}
-                                        component="textarea"
-                                      />
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice A</TextForm>
-                                    </Col>
-                                    <Col span="6">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${0}.optionText`}
-                                      />
-                                      </Col>
-                                      <Col span="10">
-                                        <Field
-                                          type="radio"
-                                          name={`content.${index}.options.${0}.isRightChoice`}
-                                          value="1"
-                                        />{" "}
+                      if (
+                        countQ1 == 1 &&
+                        countQ2 == 1 &&
+                        countQ3 == 1 &&
+                        values.content[0].typeOfSuggestionID &&
+                        values.content[1].typeOfSuggestionID &&
+                        values.content[2].typeOfSuggestionID
+                      ) {
+                        console.log("Post in this condition");
+                        console.log(values.content)
+                        postQuiz(values.content)
+                        // putPostTest(values.content);
+                        // putPostTestAnswer(values.content);
+                        alert("Add Successful");
+                      } else {
+                        console.log("not success");
+                        alert("Form is not Complete");
+                      }
+                    }}
+                  >
+                    {({ values }) => (
+                      <Form>
+                        <FieldArray name="content">
+                          {({ insert, remove, push }) => (
+                            <div>
+                              {values.content.length > 0 &&
+                                values.content.map((content, index) => (
+                                  <Col key={index}>
+                                    <center>
+                                      <h2>Question no.{index + 1}</h2>
+                                    </center>
+                                    <div>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Question</TextForm>
+                                        </Col>
+                                        <Col span="14">
+                                          <FieldTextArea
+                                            name={`content.${index}.questionText`}
+                                            component="textarea"
+                                          />
+                                        </Col>
+                                      </RowStyled>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Choice A</TextForm>
+                                        </Col>
+                                        <Col span="6">
+                                          <FieldStyled
+                                            name={`content.${index}.options.${0}.optionText`}
+                                          />
+                                        </Col>
+                                        <Col span="10">
+                                          <Field
+                                            type="radio"
+                                            name={`content.${index}.options.${0}.isRightChoice`}
+                                            value="1"
+                                          />{" "}
                                         Correct
                                         <FieldRadio
-                                          type="radio"
-                                          name={`content.${index}.options.${0}.isRightChoice`}
-                                          value="0"
-                                        />{" "}
+                                            type="radio"
+                                            name={`content.${index}.options.${0}.isRightChoice`}
+                                            value="0"
+                                          />{" "}
                                         Wrong
                                         {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
-                                      
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice B</TextForm>
-                                    </Col>
-                                    <Col span="6">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${1}.optionText`}
-                                      />
-                                    </Col>
-                                    <Col span="10">
-                                      <Field
-                                        type="radio"
-                                        name={`content.${index}.options.${1}.isRightChoice`}
-                                        value="1"
-                                      />{" "}
+
+                                        </Col>
+                                      </RowStyled>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Choice B</TextForm>
+                                        </Col>
+                                        <Col span="6">
+                                          <FieldStyled
+                                            name={`content.${index}.options.${1}.optionText`}
+                                          />
+                                        </Col>
+                                        <Col span="10">
+                                          <Field
+                                            type="radio"
+                                            name={`content.${index}.options.${1}.isRightChoice`}
+                                            value="1"
+                                          />{" "}
                                       Correct
                                       <FieldRadio
-                                        type="radio"
-                                        name={`content.${index}.options.${1}.isRightChoice`}
-                                        value="0"
-                                      />{" "}
+                                            type="radio"
+                                            name={`content.${index}.options.${1}.isRightChoice`}
+                                            value="0"
+                                          />{" "}
                                       Wrong
                                       {/* ทำฟังก์ชั่น fi ถ้า 1T ให้เพิ่มข้อมูลว่า 1T 0F */}
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice C</TextForm>
-                                    </Col>
-                                    <Col span="6">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${2}.optionText`}
-                                      />
-                                      </Col>
-                                      <Col span="10">
-                                        <Field
-                                          type="radio"
-                                          name={`content.${index}.options.${2}.isRightChoice`}
-                                          value="1"
-                                        />{" "}
+                                        </Col>
+                                      </RowStyled>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Choice C</TextForm>
+                                        </Col>
+                                        <Col span="6">
+                                          <FieldStyled
+                                            name={`content.${index}.options.${2}.optionText`}
+                                          />
+                                        </Col>
+                                        <Col span="10">
+                                          <Field
+                                            type="radio"
+                                            name={`content.${index}.options.${2}.isRightChoice`}
+                                            value="1"
+                                          />{" "}
                                         Correct
                                         <FieldRadio
-                                          type="radio"
-                                          name={`content.${index}.options.${2}.isRightChoice`}
-                                          value="0"
-                                        />{" "}
+                                            type="radio"
+                                            name={`content.${index}.options.${2}.isRightChoice`}
+                                            value="0"
+                                          />{" "}
                                         Wrong
                                     </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Choice D</TextForm>
-                                    </Col>
-                                    <Col span="6">
-                                      <FieldStyled
-                                        name={`content.${index}.options.${3}.optionText`}
-                                      />
-                                      </Col>
-                                      <Col span="8">
-                                        <Field
-                                          type="radio"
-                                          name={`content.${index}.options.${3}.isRightChoice`}
-                                          value="1"
-                                        />{" "}
+                                      </RowStyled>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Choice D</TextForm>
+                                        </Col>
+                                        <Col span="6">
+                                          <FieldStyled
+                                            name={`content.${index}.options.${3}.optionText`}
+                                          />
+                                        </Col>
+                                        <Col span="8">
+                                          <Field
+                                            type="radio"
+                                            name={`content.${index}.options.${3}.isRightChoice`}
+                                            value="1"
+                                          />{" "}
                                         Correct
                                         <FieldRadio
-                                          type="radio"
-                                          name={`content.${index}.options.${3}.isRightChoice`}
-                                          value="0"
-                                        />{" "}
+                                            type="radio"
+                                            name={`content.${index}.options.${3}.isRightChoice`}
+                                            value="0"
+                                          />{" "}
                                         Wrong
-                                      
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled>
-                                    <Col span="8">
-                                      <TextForm>Type of Suggestion</TextForm>
-                                    </Col>
-                                    <Col span="14">
-                                      <Field
-                                        as="select"
-                                        name={`content.${index}.typeOfSuggestionID`}
-                                      >
-                                        <option value="0">Select</option>
-                                        <option value="1">Verb</option>
-                                        <option value="2">Noun</option>
-                                        <option value="3">Adverb</option>
-                                      </Field>
-                                    </Col>
-                                  </RowStyled>
-                                  <RowStyled
-                                    style={{ justifyContent: "center" }}
-                                  >
-                                    <Line
-                                      style={{
-                                        marginTop: "15px",
-                                        marginBottom: "50px",
-                                      }}
-                                    ></Line>
-                                  </RowStyled>
-                                </div>
-                              </Col>
-                            ))}
-                        </div>
-                      )}
-                    </FieldArray>
 
-                    <AreaSubmit>
-                      <button type="submit">Save</button>
-                      <Link to="/console">
-                        <button style={{marginLeft: "10px"}}>Back to Console</button>
-                      </Link>
-                    </AreaSubmit>
-                  </Form>
-                )}
-              </Formik>
-            </div>
-          </WhiteArea>
-        </RowArea>
-      </Container>
-      )}
+                                    </Col>
+                                      </RowStyled>
+                                      <RowStyled>
+                                        <Col span="8">
+                                          <TextForm>Type of Suggestion</TextForm>
+                                        </Col>
+                                        <Col span="14">
+                                          <Field
+                                            as="select"
+                                            name={`content.${index}.typeOfSuggestionID`}
+                                          >
+                                            <option value="0">Select</option>
+                                            <option value="1">Verb</option>
+                                            <option value="2">Noun</option>
+                                            <option value="3">Adverb</option>
+                                          </Field>
+                                        </Col>
+                                      </RowStyled>
+                                      <RowStyled
+                                        style={{ justifyContent: "center" }}
+                                      >
+                                        <Line
+                                          style={{
+                                            marginTop: "15px",
+                                            marginBottom: "50px",
+                                          }}
+                                        ></Line>
+                                      </RowStyled>
+                                    </div>
+                                  </Col>
+                                ))}
+                            </div>
+                          )}
+                        </FieldArray>
+
+                        <AreaSubmit>
+                          <button type="submit">Save</button>
+                          <Link to="/console">
+                            <button style={{ marginLeft: "10px" }}>Back to Console</button>
+                          </Link>
+                        </AreaSubmit>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              </WhiteArea>
+            </RowArea>
+          </Container>
+        )}
     </Background>
   );
 };

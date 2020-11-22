@@ -70,7 +70,7 @@ const EditArticle = () => {
   async function editContent() {
     console.log("reading ID in editContent")
     console.log(match.params.readingId)
-    const result = await axios("http://localhost:3000/reading/readingId/" + match.params.readingId);
+    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/readingId/" + match.params.readingId);
     console.log("result")
     console.log(result.data.reading[0]) 
     setTitle(result.data.reading[0].title)
@@ -88,7 +88,7 @@ const EditArticle = () => {
     category_id,
     level_reading
   ) {
-    const response = await axios.put("http://localhost:3000/reading/" + match.params.readingId, {
+    const response = await axios.put("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/" + match.params.readingId, {
       title: title,
       content: content,
       image: image,

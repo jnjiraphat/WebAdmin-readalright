@@ -65,7 +65,7 @@ const EditVocabBox = () => {
   async function editVocabBox() {
     console.log("vocab box ID in editVocabBox")
     console.log(match.params.vocabBox_id)
-    const result = await axios.get("http://localhost:3000/vocabBox/id/" + match.params.vocabBox_id);
+    const result = await axios.get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox/id/" + match.params.vocabBox_id);
     console.log("result")
     console.log(result.data.reading[0])
     console.log(result.data.reading.length)
@@ -82,7 +82,7 @@ const EditVocabBox = () => {
 
   async function deleteWord(index) {
     console.log(index)
-    const result = await axios.delete("http://localhost:3000/admin/deleteVocabCard/" + vocabId[index]);
+    const result = await axios.delete("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/deleteVocabCard/" + vocabId[index]);
     console.log("delete vocab")
     console.log(result.statusText)
 
@@ -99,7 +99,7 @@ const EditVocabBox = () => {
     category_id,
     image
   ) {
-    const response = await axios.put("http://localhost:3000/vocabBox/" + match.params.vocabBox_id, {
+    const response = await axios.put("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox/" + match.params.vocabBox_id, {
       boxEngName: title,
       boxThaiName: title_meaning,
       category_id: category_id,
@@ -120,7 +120,7 @@ const EditVocabBox = () => {
 
     console.log(friends.length);
     for (let index = 0; index < friends.length; index++) {
-      const response = await axios.put("http://localhost:3000/vocabCard/" + vocabId[index], {
+      const response = await axios.put("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabCard/" + vocabId[index], {
         engWord: friends[index]["engWord"],
         thaiWord: friends[index]["thaiWord"],
         vocabBox_id: vocabBox_id,
@@ -140,7 +140,7 @@ const EditVocabBox = () => {
 
   async function getVocabbox() {
     console.log(match.params)
-    const response = await axios.get(`http://localhost:3000/vocabCard/${match.params.vocabBox_id}`)
+    const response = await axios.get(`http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabCard/${match.params.vocabBox_id}`)
     console.log(response.data.reading)
     let data = [];
     response.data.reading.map(item => {
