@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css';
 import MenuSite from './page/menu-site'
 import Login from './page/login'
 import Index from './page/index'
