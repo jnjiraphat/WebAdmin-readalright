@@ -42,16 +42,17 @@ const VocabCard = (props) => {
   }
 
 
+  async function fetch() {
+    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBoxAndCate");
 
-  useEffect(() => {
-    async function fetch() {
-      const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBoxAndCate");
+    setVocabBox(result.data);
+    console.log("this is all vocabBox")
+    console.log(vocabBox[0])
+  }
   
-      setVocabBox(result.data);
-      console.log("this is all vocabBox")
-      console.log(vocabBox[0])
-    }
+  useEffect(() => {
     fetch();
+    // eslint-disable-next-line
   }, []);
 
   const { editButton} = props

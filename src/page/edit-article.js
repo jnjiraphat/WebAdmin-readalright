@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import {
-  BrowserRouter as useRouteMatch,
+  useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
 import firebaseMethod from '../firebase';
@@ -20,7 +20,7 @@ const EditArticle = () => {
   console.log(match.params.readingId)
 
   const [readingIdD, setReadingIdD] = useState("");
-
+console.log(readingIdD)
   //content for edit
   // const [oldTitle, setOldTitle] = useState("");
   // const [oldContent, setOldContent] = useState("");
@@ -66,7 +66,19 @@ const EditArticle = () => {
 
   
 
-  
+  async function editContent() {
+    console.log("reading ID in editContent")
+    console.log(match.params.readingId)
+    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/readingId/" + match.params.readingId);
+    console.log("result")
+    console.log(result.data.reading[0]) 
+    setTitle(result.data.reading[0].title)
+    setContent(result.data.reading[0].content)
+    setImage(result.data.reading[0].image)
+    setCategoryId(result.data.reading[0].category_id)
+    setLevelReading(result.data.reading[0].level_reading)
+    console.log(result.data.reading[0].image)
+  }
 
   async function postReading(
     title,
@@ -90,28 +102,13 @@ const EditArticle = () => {
     // readingId = response.data.quiz;
     // setReadingId(response.data.quiz)
     // if (readingId != "") {
-      //   console.log(readingId)
-      // }
-    }
+    //   console.log(readingId)
+    // }
+  }
 
-    console.log(readingIdD)
-    
-    useEffect(() => {
-      async function editContent() {
-        console.log("reading ID in editContent")
-        console.log(match.params.readingId)
-        const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/readingId/" + match.params.readingId);
-        console.log("result")
-        console.log(result.data.reading[0]) 
-        setTitle(result.data.reading[0].title)
-        setContent(result.data.reading[0].content)
-        setImage(result.data.reading[0].image)
-        setCategoryId(result.data.reading[0].category_id)
-        setLevelReading(result.data.reading[0].level_reading)
-        console.log(result.data.reading[0].image)
-      }
+  useEffect(() => {
     editContent();
-    // fetch();
+    // eslint-disable-next-line
   }, []);
 
   return (

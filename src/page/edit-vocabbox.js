@@ -108,39 +108,40 @@ const EditVocabBox = () => {
 
   }
 
+  async function editVocabBox() {
+    console.log("vocab box ID in editVocabBox")
+    console.log(match.params.vocabBox_id)
+    const result = await axios.get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox/id/" + match.params.vocabBox_id);
+    console.log("result")
+    console.log(result.data.reading[0])
+    console.log(result.data.reading.length)
+    for (let index = 0; index < result.data.reading.length; index++) {
+      vocabId.push(result.data.reading[index].vocabCard_id)
+      console.log(vocabId[index])
+    }
+    setTitle(result.data.reading[0].boxEngName)
+    setTitleMeaning(result.data.reading[0].boxThaiName)
+    setCategoryId(result.data.reading[0].category_id)
+    setImage(result.data.reading[0].image)
+    setVocabCardID(result.data.reading[0].vocabCard_id)
+  }  
+  async function getVocabbox() {
+    console.log(match.params)
+    const response = await axios.get(`http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabCard/${match.params.vocabBox_id}`)
+    console.log(response.data.reading)
+    let data = [];
+    response.data.reading.map(item => {
+      data.push({ engWord: item.engWord, thaiWord: item.thaiWord })
+    })
+    console.log(data)
+    setWord(data)
+  }
 
   useEffect(() => {
-    async function editVocabBox() {
-      console.log("vocab box ID in editVocabBox")
-      console.log(match.params.vocabBox_id)
-      const result = await axios.get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox/id/" + match.params.vocabBox_id);
-      console.log("result")
-      console.log(result.data.reading[0])
-      console.log(result.data.reading.length)
-      for (let index = 0; index < result.data.reading.length; index++) {
-        vocabId.push(result.data.reading[index].vocabCard_id)
-        console.log(vocabId[index])
-      }
-      setTitle(result.data.reading[0].boxEngName)
-      setTitleMeaning(result.data.reading[0].boxThaiName)
-      setCategoryId(result.data.reading[0].category_id)
-      setImage(result.data.reading[0].image)
-      setVocabCardID(result.data.reading[0].vocabCard_id)
-    }  
-    async function getVocabbox() {
-      console.log(match.params)
-      const response = await axios.get(`http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabCard/${match.params.vocabBox_id}`)
-      console.log(response.data.reading)
-      let data = [];
-      response.data.reading.map(item => {
-        data.push({ engWord: item.engWord, thaiWord: item.thaiWord })
-      })
-      console.log(data)
-      setWord(data)
-    }
-  
     editVocabBox();
+    // eslint-disable-next-line
     getVocabbox()
+    // eslint-disable-next-line
   }, []);
 
  

@@ -31,7 +31,7 @@ const EditPostTest = () => {
     console.log(dataArrayQuizChallenge[0][0].question_id);
     for (let index = 0; index < 3; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateQuiz/" +
+        "http://localhost:3000/admin/updateQuiz/" +
           dataArrayQuizChallenge[0][index].question_id,
         {
           question: content[index].questionText,
@@ -85,7 +85,7 @@ const EditPostTest = () => {
           value: content[0].options[index].optionText,
         }
       );
-      console.log(response)
+        console.log(response)
     }
 
     for (let index = 0; index < content[1].options.length; index++) {
@@ -162,33 +162,34 @@ const EditPostTest = () => {
     setQuiz(data);
   };
 
-  
+  const fetchApiChallenge = async () => {
+    var temp = [];
+
+    if (match.params.reading_id != null) {
+      await axios
+        .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizInContent/" + match.params.reading_id)
+        .then(
+          (response) => {
+            console.log("fetch api challenge");
+            console.log(response.data.quiz);
+            temp.push(response.data.quiz);
+            console.log(temp.length);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      setdataArrayQuizChallenge(temp);
+      console.log("data array quiz chal");
+      console.log(dataArrayQuizChallenge);
+      fetchAPI(temp);
+    } else {
+    }
+  };
+
   useEffect(() => {
-    const fetchApiChallenge = async () => {
-      var temp = [];
-  
-      if (match.params.reading_id != null) {
-        await axios
-          .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizInContent/" + match.params.reading_id)
-          .then(
-            (response) => {
-              console.log("fetch api challenge");
-              console.log(response.data.quiz);
-              temp.push(response.data.quiz);
-              console.log(temp.length);
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        setdataArrayQuizChallenge(temp);
-        console.log("data array quiz chal");
-        console.log(dataArrayQuizChallenge);
-        fetchAPI(temp);
-      } else {
-      }
-    };
     fetchApiChallenge();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -573,12 +574,14 @@ const FieldTextArea = styled(Field)`
   height: 100px;
 `;
 
+ 
 const AreaSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2%;
   margin-right: 10%;
 `;
+
 const FieldRadio = styled(Field)`
   margin-left: 2%;
 `;
