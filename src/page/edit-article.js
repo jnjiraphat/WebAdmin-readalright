@@ -66,19 +66,7 @@ const EditArticle = () => {
 
   
 
-  async function editContent() {
-    console.log("reading ID in editContent")
-    console.log(match.params.readingId)
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/readingId/" + match.params.readingId);
-    console.log("result")
-    console.log(result.data.reading[0]) 
-    setTitle(result.data.reading[0].title)
-    setContent(result.data.reading[0].content)
-    setImage(result.data.reading[0].image)
-    setCategoryId(result.data.reading[0].category_id)
-    setLevelReading(result.data.reading[0].level_reading)
-    console.log(result.data.reading[0].image)
-  }
+  
 
   async function postReading(
     title,
@@ -109,6 +97,19 @@ const EditArticle = () => {
     console.log(readingIdD)
     
     useEffect(() => {
+      async function editContent() {
+        console.log("reading ID in editContent")
+        console.log(match.params.readingId)
+        const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/readingId/" + match.params.readingId);
+        console.log("result")
+        console.log(result.data.reading[0]) 
+        setTitle(result.data.reading[0].title)
+        setContent(result.data.reading[0].content)
+        setImage(result.data.reading[0].image)
+        setCategoryId(result.data.reading[0].category_id)
+        setLevelReading(result.data.reading[0].level_reading)
+        console.log(result.data.reading[0].image)
+      }
     editContent();
     // fetch();
   }, []);

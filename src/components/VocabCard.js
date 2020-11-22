@@ -8,14 +8,6 @@ import axios from "axios";
 const VocabCard = (props) => {
   const [vocabBox, setVocabBox] = useState([]);
 
-  async function fetch() {
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBoxAndCate");
-
-    setVocabBox(result.data);
-    console.log("this is all vocabBox")
-    console.log(vocabBox[0])
-  }
-
   async function deleteVocabCard(vocabBox_id) {
     console.log("vocabBox_id eng")
     console.log(vocabBox_id)
@@ -52,6 +44,13 @@ const VocabCard = (props) => {
 
 
   useEffect(() => {
+    async function fetch() {
+      const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBoxAndCate");
+  
+      setVocabBox(result.data);
+      console.log("this is all vocabBox")
+      console.log(vocabBox[0])
+    }
     fetch();
   }, []);
 

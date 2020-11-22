@@ -162,32 +162,32 @@ const EditPostTest = () => {
     setQuiz(data);
   };
 
-  const fetchApiChallenge = async () => {
-    var temp = [];
-
-    if (match.params.reading_id != null) {
-      await axios
-        .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizInContent/" + match.params.reading_id)
-        .then(
-          (response) => {
-            console.log("fetch api challenge");
-            console.log(response.data.quiz);
-            temp.push(response.data.quiz);
-            console.log(temp.length);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      setdataArrayQuizChallenge(temp);
-      console.log("data array quiz chal");
-      console.log(dataArrayQuizChallenge);
-      fetchAPI(temp);
-    } else {
-    }
-  };
-
+  
   useEffect(() => {
+    const fetchApiChallenge = async () => {
+      var temp = [];
+  
+      if (match.params.reading_id != null) {
+        await axios
+          .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizInContent/" + match.params.reading_id)
+          .then(
+            (response) => {
+              console.log("fetch api challenge");
+              console.log(response.data.quiz);
+              temp.push(response.data.quiz);
+              console.log(temp.length);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        setdataArrayQuizChallenge(temp);
+        console.log("data array quiz chal");
+        console.log(dataArrayQuizChallenge);
+        fetchAPI(temp);
+      } else {
+      }
+    };
     fetchApiChallenge();
   }, []);
 

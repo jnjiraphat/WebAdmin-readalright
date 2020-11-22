@@ -6,16 +6,9 @@ import axios from "axios";
 import { Spin } from "antd";
 
 const ArticleCard = () => {
-  const [article, setArticle] = useState([]);
+  
 
-  async function fetch() {
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading");
-
-    setArticle(result.data);
-    console.log("this is all article");
-    console.log(article[0]);
-  }
-
+  
   async function deleteArticle(reading_id) {
     console.log("reading_id in delete article");
     console.log(reading_id);
@@ -32,8 +25,14 @@ const ArticleCard = () => {
       );
   }
 
+  const [article, setArticle] = useState([]);
   useEffect(() => {
-    fetch();
+    async function fetch() {
+      const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading");
+      
+      setArticle(result.data);
+      console.log("this is all article");    }  
+      fetch();
   }, []);
 
   return (
