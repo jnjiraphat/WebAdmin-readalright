@@ -8,7 +8,7 @@ const IndexVocabBox = () => {
     return(
         <Div>
             <Link to="/add-vocabBox">
-                <ButtonStyled type="primary" danger >+ New</ButtonStyled>
+                <ButtonStyled type="primary" danger >+ Add</ButtonStyled>
             </Link>
             <RowStyled>
                 <HeadCol span="8">Vocab Box English Name</HeadCol>
@@ -59,9 +59,6 @@ const SubCol = styled(ColStyled)`
 
 const SubColCate = styled(SubCol)`
     margin-left: 4px;
-`
-const SubColLevel = styled(SubCol)`
-    margin-left: -10px;
 `
 
 const TailCol = styled(ColStyled)`

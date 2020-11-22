@@ -4,9 +4,7 @@ import { Row, Col, Button } from "antd";
 import axios from "axios";
 import styled from "styled-components";
 import {
-  BrowserRouter as Router,
-  Link,
-  useRouteMatch,
+  BrowserRouter as Link, useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
 import firebaseMethod from '../firebase';
@@ -88,10 +86,6 @@ const EditVocabBox = () => {
 
   }
 
-  const [putVB, settPutVB] = useState("");
-
-
-
 
   async function putVocabBox(
     title,
@@ -105,7 +99,7 @@ const EditVocabBox = () => {
       category_id: category_id,
       image: image,
     });
-
+    console.log(response)
   }
 
   async function putVocabCard(
@@ -131,7 +125,6 @@ const EditVocabBox = () => {
 
   }
 
-  const [vocabBoxIdD, setvocabBoxIdD] = useState("");
 
   useEffect(() => {
     editVocabBox();
@@ -278,7 +271,7 @@ const EditVocabBox = () => {
                           <TextForm>Vocab Box Picture</TextForm>
                         </Col>
                         <Col span="12">
-                          {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                          {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="header" width={300} height={300} />}
                           <input
                             type="file"
                             name="file"
@@ -471,9 +464,6 @@ const FieldStyled = styled(Field)`
 `;
 const FieldStyledMini = styled(Field)`
   width: 200px;
-`;
-const FieldContent = styled(FieldStyled)`
-  height: 150px;
 `;
 
 const ColSubmit = styled(Col)`

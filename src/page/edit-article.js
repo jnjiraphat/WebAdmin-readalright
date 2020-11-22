@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import {
-  BrowserRouter as Router,
-  useRouteMatch,
+  BrowserRouter as useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
 import firebaseMethod from '../firebase';
@@ -103,11 +102,13 @@ const EditArticle = () => {
     // readingId = response.data.quiz;
     // setReadingId(response.data.quiz)
     // if (readingId != "") {
-    //   console.log(readingId)
-    // }
-  }
+      //   console.log(readingId)
+      // }
+    }
 
-  useEffect(() => {
+    console.log(readingIdD)
+    
+    useEffect(() => {
     editContent();
     // fetch();
   }, []);
@@ -199,7 +200,7 @@ const EditArticle = () => {
                         <TextForm>Image</TextForm>
                       </Col>
                       <Col span="12">
-                      {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                      {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="header" width={300} height={300} />}
                           <input
                             type="file"
                             name="file"

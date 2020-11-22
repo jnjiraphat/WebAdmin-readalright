@@ -23,6 +23,7 @@ const VocabCard = (props) => {
       .then(
         (response) => {
           console.log("delete vocab card success!!!");
+          console.log(response)
         },
         (error) => {
           console.log(error);
@@ -40,6 +41,7 @@ const VocabCard = (props) => {
       .then(
         (response) => {
           console.log("delete vocabBox success!!!");
+          console.log(response)
         },
         (error) => {
           console.log(error);
@@ -53,7 +55,7 @@ const VocabCard = (props) => {
     fetch();
   }, []);
 
-  const { boxEngName, boxThaiName, editButton, removeButton } = props
+  const { editButton} = props
   return (
     <>
       {vocabBox.map((items) =>

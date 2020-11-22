@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Formik, Field, Form, FieldArray } from "formik";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
-import { Button } from "antd";
-import { BrowserRouter as Router, useRouteMatch } from "react-router-dom";
+import { BrowserRouter as useRouteMatch } from "react-router-dom";
 
 // const readingId = "";
 const AddPostTest = () => {
@@ -17,106 +16,9 @@ const AddPostTest = () => {
 
   console.log(email);
 
-  const [readingId, setReadingIdD] = useState("");
-
-  const [questionBox, setQuestionBox] = useState([]);
-
   const match = useRouteMatch("/add-postTest/:readingId2");
   console.log("reading id in add post test");
   console.log(match.params.readingId2);
-
-  async function putPostTest(content) {
-    console.log("content in put post tes");
-    // console.log(dataArrayQuizChallenge)
-    console.log(content);
-    console.log(content[0].questionText);
-    console.log(content[1].questionText);
-    console.log(content[2].questionText);
-    // console.log(dataArrayQuizChallenge[0][0].question_id)
-    for (let index = 0; index < 3; index++) {
-      // const response = await axios.put("http://localhost:3000/admin/updateQuiz/" + dataArrayQuizChallenge[0][index].question_id, {
-      //   question: content[index].questionText,
-      //   typeOfSuggestion_id: 1,
-      //   reading_id: match.params.reading_id,
-      //   typeOfQuestion: "chal"
-      // });
-      // console.log("quiz", response.data);
-    }
-  }
-
-  async function putPostTestAnswer(content) {
-    console.log("choice in put post test lenghtttt");
-    console.log(content[0].options.length);
-    console.log("choice in put post test");
-    console.log(content[0].options[0].choice_id);
-
-    console.log(content[0].options[0].choice_id);
-    console.log(content[0].options[0].choice);
-    console.log(content[0].options[0].isRightChoice);
-    console.log(content[0].options[0].optionText);
-    console.log(content[0].options[1].choice_id);
-    console.log(content[0].options[1].choice);
-    console.log(content[0].options[2].choice_id);
-    console.log(content[0].options[2].choice);
-    console.log(content[0].options[3].choice_id);
-    console.log(content[0].options[3].choice);
-    console.log(content[0].options[3].isRightChoice);
-    // console.log(content[0].options[4].choice_id)
-    // console.log(content[0].options[4].choice)
-    console.log(content[1].options[0].choice_id);
-    console.log(content[1].options[0].choice);
-
-    console.log(content[1].options[1].choice_id);
-    console.log(content[1].options[1].choice);
-    console.log(content[1].options[2].choice_id);
-    console.log(content[1].options[2].choice);
-    console.log(content[1].options[3].choice_id);
-    console.log(content[1].options[3].choice);
-
-    for (let index = 0; index < content[0].options.length; index++) {
-      const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
-        content[0].options[index].choice_id,
-        {
-          isRightChoice: content[0].options[index].isRightChoice,
-          choice: content[0].options[index].optionText,
-          question_id: content[0].options[index].question_id,
-          optionText: content[0].options[index].optionText,
-          value: content[0].options[index].optionText,
-        }
-      );
-    }
-
-    for (let index = 0; index < content[1].options.length; index++) {
-      const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
-        content[1].options[index].choice_id,
-        {
-          isRightChoice: content[1].options[index].isRightChoice,
-          choice: content[1].options[index].optionText,
-          question_id: content[1].options[index].question_id,
-          optionText: content[1].options[index].optionText,
-          value: content[1].options[index].optionText,
-        }
-      );
-    }
-
-    for (let index = 0; index < content[2].options.length; index++) {
-      const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
-        content[2].options[index].choice_id,
-        {
-          isRightChoice: content[2].options[index].isRightChoice,
-          choice: content[2].options[index].optionText,
-          question_id: content[2].options[index].question_id,
-          optionText: content[2].options[index].optionText,
-          value: content[2].options[index].optionText,
-        }
-      );
-    }
-  }
-
-  // const [arrayQuiz, setarrayQuiz] = ([])
 
   async function postQuiz(content) {
     var quizIdArray = [];
@@ -171,6 +73,7 @@ const AddPostTest = () => {
         value: content[0].options[index].optionText,
       }
     );
+    console.log(response)
   }
 
   for (let index = 0; index < content[1].options.length; index++) {
@@ -184,6 +87,7 @@ const AddPostTest = () => {
         value: content[1].options[index].optionText,
       }
     );
+    console.log(response)
   }
 
   for (let index = 0; index < content[2].options.length; index++) {
@@ -197,6 +101,7 @@ const AddPostTest = () => {
         value: content[2].options[index].optionText,
       }
     );
+    console.log(response)
   }
   }
 
@@ -281,7 +186,7 @@ const AddPostTest = () => {
                         index++
                       ) {
                         console.log(values.content[0].options[index].isRightChoice);
-                        if (values.content[0].options[index].isRightChoice == "1") {
+                        if (values.content[0].options[index].isRightChoice === "1") {
                           countQ1++;
                           console.log("count in if");
                           console.log(countQ1);
@@ -295,7 +200,7 @@ const AddPostTest = () => {
                         index++
                       ) {
                         console.log(values.content[1].options[index].isRightChoice);
-                        if (values.content[1].options[index].isRightChoice == "1") {
+                        if (values.content[1].options[index].isRightChoice === "1") {
                           countQ2++;
                           console.log("count in if");
                           console.log(countQ2);
@@ -309,7 +214,7 @@ const AddPostTest = () => {
                         index++
                       ) {
                         console.log(values.content[2].options[index].isRightChoice);
-                        if (values.content[2].options[index].isRightChoice == "1") {
+                        if (values.content[2].options[index].isRightChoice === "1") {
                           countQ3++;
                           console.log("count in if");
                           console.log(countQ3);
@@ -318,9 +223,9 @@ const AddPostTest = () => {
                       console.log("countQ3");
                       console.log(countQ3);
                       if (
-                        countQ1 == 1 &&
-                        countQ2 == 1 &&
-                        countQ3 == 1 &&
+                        countQ1 === 1 &&
+                        countQ2 === 1 &&
+                        countQ3 === 1 &&
                         values.content[0].typeOfSuggestionID &&
                         values.content[1].typeOfSuggestionID &&
                         values.content[2].typeOfSuggestionID
@@ -577,11 +482,6 @@ const TextForm = styled.span`
   font-size: 14px;
   margin-left: 30%;
 `;
-const TextFormLebel = styled.label`
-  font-weight: bold;
-  font-size: 14px;
-  margin-left: 30%;
-`;
 
 const RowStyled = styled(Row)`
   margin-bottom: 2%;
@@ -596,29 +496,13 @@ const FieldTextArea = styled(Field)`
   height: 100px;
 `;
 
-
-const ColSubmit = styled(Col)`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const ButtonStyled = styled(Button)`
-  height: 27.6px;
-`;
 const AreaSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2%;
   margin-right: 10%;
 `;
-const AreaMoreWord = styled(AreaSubmit)`
-  margin-top: 5%;
-`;
 
-const FormStyled = styled(Form)`
-  margin-top: 22px;
-`;
 
 const FieldRadio = styled(Field)`
   margin-left: 2%;

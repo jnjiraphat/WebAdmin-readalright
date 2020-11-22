@@ -5,8 +5,7 @@ import { Card, Row, Button, Col } from "antd";
 import axios from "axios";
 import { Spin } from "antd";
 
-const ArticleCard = (props) => {
-  const { title, catergory, level, editButton, removeButton } = props;
+const ArticleCard = () => {
   const [article, setArticle] = useState([]);
 
   async function fetch() {
@@ -25,6 +24,7 @@ const ArticleCard = (props) => {
       .then(
         (response) => {
           console.log("delete article success!!!");
+          console.log(response);
         },
         (error) => {
           console.log(error);

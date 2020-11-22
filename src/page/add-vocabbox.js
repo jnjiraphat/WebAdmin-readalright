@@ -20,9 +20,7 @@ const AddVocabBox = () => {
   var email = window.localStorage.getItem("email");
   console.log("get email");
   console.log(email);
-  const [vocabBoxIdD, setvocabBoxIdD] = useState("");
   const [url, setUrl] = useState("");
-  const [image, setImage] = useState("");
   
   const handleUpload = (imageTemp) => {
     const uploadTask = firebaseMethod.storage.ref(`images/file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fdemo-5bd35bcc-f83b-4f82-8303-9d91b7712057/ImagePicker/${imageTemp.name}`).put(imageTemp);
@@ -68,7 +66,7 @@ const AddVocabBox = () => {
     // console.log(friends)
     // console.log(friends.length);
     // setvocabBoxIdD(vocabBoxId);
-    if (friends.length!=0) {
+    if (friends.length!==0) {
       // `theHref` is truthy and has truthy property _length_
       await postVocabCard(vocabBoxId, friends);
     } else {
@@ -99,6 +97,7 @@ const AddVocabBox = () => {
         thaiWord: friends[index].engWord,
         vocabBox_id: vocabBox_id,
       });
+      console.log(response)
     }
   }
 
@@ -373,9 +372,6 @@ const FieldStyled = styled(Field)`
 `;
 const FieldStyledMini = styled(Field)`
   width: 200px;
-`;
-const FieldContent = styled(FieldStyled)`
-  height: 150px;
 `;
 
 const ColSubmit = styled(Col)`

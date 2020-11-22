@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
-import Icon from "../asset/image/icon.png";
+import { Link } from "react-router-dom";
 import { Row, Col, Button } from "antd";
 import ContentCard from './ArticleCard'
 
@@ -9,7 +8,7 @@ const IndexArticle = () => {
     return(
         <Div>
             <Link to="/add-article">
-                <ButtonStyled type="primary" danger>+ New</ButtonStyled>
+                <ButtonStyled type="primary" danger>+ Add</ButtonStyled>
             </Link>
             <RowStyled>
                 <HeadCol span="8">Tilte</HeadCol>

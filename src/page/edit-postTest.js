@@ -4,8 +4,7 @@ import { Formik, Field, Form, FieldArray } from "formik";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
-import { Button } from "antd";
-import { BrowserRouter as Router, useRouteMatch } from "react-router-dom";
+import { BrowserRouter as useRouteMatch } from "react-router-dom";
 import { Spin } from "antd";
 
 // const readingId = "";
@@ -86,6 +85,7 @@ const EditPostTest = () => {
           value: content[0].options[index].optionText,
         }
       );
+      console.log(response)
     }
 
     for (let index = 0; index < content[1].options.length; index++) {
@@ -100,6 +100,7 @@ const EditPostTest = () => {
           value: content[1].options[index].optionText,
         }
       );
+      console.log(response)
     }
 
     for (let index = 0; index < content[2].options.length; index++) {
@@ -114,6 +115,7 @@ const EditPostTest = () => {
           value: content[2].options[index].optionText,
         }
       );
+      console.log(response)
     }
   }
 
@@ -235,7 +237,7 @@ const EditPostTest = () => {
                         values.content[0].options[index].isRightChoice
                       );
                       if (
-                        values.content[0].options[index].isRightChoice == "1"
+                        values.content[0].options[index].isRightChoice === "1"
                       ) {
                         countQ1++;
                         console.log("count in if");
@@ -253,7 +255,7 @@ const EditPostTest = () => {
                         values.content[1].options[index].isRightChoice
                       );
                       if (
-                        values.content[1].options[index].isRightChoice == "1"
+                        values.content[1].options[index].isRightChoice === "1"
                       ) {
                         countQ2++;
                         console.log("count in if");
@@ -271,7 +273,7 @@ const EditPostTest = () => {
                         values.content[2].options[index].isRightChoice
                       );
                       if (
-                        values.content[2].options[index].isRightChoice == "1"
+                        values.content[2].options[index].isRightChoice === "1"
                       ) {
                         countQ3++;
                         console.log("count in if");
@@ -280,7 +282,7 @@ const EditPostTest = () => {
                     }
                     console.log("countQ3");
                     console.log(countQ3);
-                    if (countQ1 == 1 && countQ2 == 1 && countQ3 == 1) {
+                    if (countQ1 === 1 && countQ2 === 1 && countQ3 === 1) {
                       console.log("Post in this condition");
                       putPostTest(values.content);
                       putPostTestAnswer(values.content);
@@ -557,11 +559,6 @@ const TextForm = styled.span`
   font-size: 14px;
   margin-left: 30%;
 `;
-const TextFormLebel = styled.label`
-  font-weight: bold;
-  font-size: 14px;
-  margin-left: 30%;
-`;
 
 const RowStyled = styled(Row)`
   margin-bottom: 2%;
@@ -576,36 +573,12 @@ const FieldTextArea = styled(Field)`
   height: 100px;
 `;
 
-const FieldStyledMini = styled(Field)`
-  width: 200px;
-`;
-const FieldContent = styled(FieldStyled)`
-  height: 150px;
-`;
-
-const ColSubmit = styled(Col)`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const ButtonStyled = styled(Button)`
-  height: 27.6px;
-`;
 const AreaSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2%;
   margin-right: 10%;
 `;
-const AreaMoreWord = styled(AreaSubmit)`
-  margin-top: 5%;
-`;
-
-const FormStyled = styled(Form)`
-  margin-top: 22px;
-`;
-
 const FieldRadio = styled(Field)`
   margin-left: 2%;
 `;
