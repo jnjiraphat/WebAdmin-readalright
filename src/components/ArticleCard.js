@@ -7,7 +7,7 @@ import { Spin } from "antd";
 
 const ArticleCard = (props) => {
   const { title, catergory, level, editButton, removeButton } = props;
-  const [article, setArticle] = useState([]);
+  // const [article, setArticle] = useState([]);
 
   async function fetch() {
     const result = await axios("https://readalright-backend.khanysorn.me/reading");
