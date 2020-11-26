@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 import axios from "axios";
 import {
-  BrowserRouter as Router,
   useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
@@ -21,7 +20,7 @@ const EditArticle = () => {
   console.log(match.params.readingId)
 
   const [readingIdD, setReadingIdD] = useState("");
-
+console.log(readingIdD)
   //content for edit
   // const [oldTitle, setOldTitle] = useState("");
   // const [oldContent, setOldContent] = useState("");
@@ -109,7 +108,7 @@ const EditArticle = () => {
 
   useEffect(() => {
     editContent();
-    // fetch();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -199,7 +198,7 @@ const EditArticle = () => {
                         <TextForm>Image</TextForm>
                       </Col>
                       <Col span="12">
-                      {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                      {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="header" width={300} height={300} />}
                           <input
                             type="file"
                             name="file"

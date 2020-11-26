@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Row, Tabs, Button } from "antd";
+import { Row, Tabs } from "antd";
 import Article from "./IndexArticle";
 import VocabBox from './IndexVocabBox'
 

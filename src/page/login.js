@@ -65,7 +65,7 @@ const Login = () => {
     <Container>
       <CenterArea>
 
-      <img src={Icon} width={80} height={80} />
+      <img src={Icon} width={80} height={80} alt="icon" />
       <h1>Login</h1>
       <Formik
         initialValues={{ email: '', password: '' }}

@@ -17,6 +17,7 @@ const ArticleCard = (props) => {
     console.log(article[0]);
   }
 
+  
   async function deleteArticle(reading_id) {
     console.log("reading_id in delete article");
     console.log(reading_id);
@@ -25,6 +26,7 @@ const ArticleCard = (props) => {
       .then(
         (response) => {
           console.log("delete article success!!!");
+          console.log(response);
         },
         (error) => {
           console.log(error);
@@ -32,8 +34,14 @@ const ArticleCard = (props) => {
       );
   }
 
+  const [article, setArticle] = useState([]);
   useEffect(() => {
-    fetch();
+    async function fetch() {
+      const result = await axios("https://readalright-backend.khanysorn.me/reading");
+      
+      setArticle(result.data);
+      console.log("this is all article");    }  
+      fetch();
   }, []);
 
   return (

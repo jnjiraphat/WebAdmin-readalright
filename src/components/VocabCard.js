@@ -23,6 +23,7 @@ const VocabCard = (props) => {
       .then(
         (response) => {
           console.log("delete vocab card success!!!");
+          console.log(response)
         },
         (error) => {
           console.log(error);
@@ -40,6 +41,7 @@ const VocabCard = (props) => {
       .then(
         (response) => {
           console.log("delete vocabBox success!!!");
+          console.log(response)
         },
         (error) => {
           console.log(error);
@@ -48,12 +50,20 @@ const VocabCard = (props) => {
   }
 
 
+  async function fetch() {
+    const result = await axios("https://readalright-backend.khanysorn.me/vocabBoxAndCate");
 
+    setVocabBox(result.data);
+    console.log("this is all vocabBox")
+    console.log(vocabBox[0])
+  }
+  
   useEffect(() => {
     fetch();
+    // eslint-disable-next-line
   }, []);
 
-  const { boxEngName, boxThaiName, editButton, removeButton } = props
+  const { editButton} = props
   return (
     <>
       {vocabBox.map((items) =>

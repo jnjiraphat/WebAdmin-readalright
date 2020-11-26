@@ -4,9 +4,7 @@ import { Row, Col, Button } from "antd";
 import axios from "axios";
 import styled from "styled-components";
 import {
-  BrowserRouter as Router,
-  Link,
-  useRouteMatch,
+  BrowserRouter as Link, useRouteMatch,
 } from 'react-router-dom';
 import { Spin } from 'antd';
 import firebaseMethod from '../firebase';
@@ -88,10 +86,6 @@ const EditVocabBox = () => {
 
   }
 
-  const [putVB, settPutVB] = useState("");
-
-
-
 
   async function putVocabBox(
     title,
@@ -105,7 +99,7 @@ const EditVocabBox = () => {
       category_id: category_id,
       image: image,
     });
-
+    console.log(response)
   }
 
   async function putVocabCard(
@@ -131,13 +125,23 @@ const EditVocabBox = () => {
 
   }
 
-  const [vocabBoxIdD, setvocabBoxIdD] = useState("");
-
-  useEffect(() => {
-    editVocabBox();
-    getVocabbox()
-  }, []);
-
+  async function editVocabBox() {
+    console.log("vocab box ID in editVocabBox")
+    console.log(match.params.vocabBox_id)
+    const result = await axios.get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox/id/" + match.params.vocabBox_id);
+    console.log("result")
+    console.log(result.data.reading[0])
+    console.log(result.data.reading.length)
+    for (let index = 0; index < result.data.reading.length; index++) {
+      vocabId.push(result.data.reading[index].vocabCard_id)
+      console.log(vocabId[index])
+    }
+    setTitle(result.data.reading[0].boxEngName)
+    setTitleMeaning(result.data.reading[0].boxThaiName)
+    setCategoryId(result.data.reading[0].category_id)
+    setImage(result.data.reading[0].image)
+    setVocabCardID(result.data.reading[0].vocabCard_id)
+  }  
   async function getVocabbox() {
     console.log(match.params)
     const response = await axios.get(`https://readalright-backend.khanysorn.me/vocabCard/${match.params.vocabBox_id}`)
@@ -150,6 +154,14 @@ const EditVocabBox = () => {
     setWord(data)
   }
 
+  useEffect(() => {
+    editVocabBox();
+    // eslint-disable-next-line
+    getVocabbox()
+    // eslint-disable-next-line
+  }, []);
+
+ 
   const changeCard = (value, type, index) => {
     console.log(value, type, index)
     let data = [...word];
@@ -278,7 +290,7 @@ const EditVocabBox = () => {
                           <TextForm>Vocab Box Picture</TextForm>
                         </Col>
                         <Col span="12">
-                          {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="image" width={300} height={300} />}
+                          {loadImage ? <Spin /> : <img src={selectImg ? selectImg : image} alt="header" width={300} height={300} />}
                           <input
                             type="file"
                             name="file"
@@ -471,9 +483,6 @@ const FieldStyled = styled(Field)`
 `;
 const FieldStyledMini = styled(Field)`
   width: 200px;
-`;
-const FieldContent = styled(FieldStyled)`
-  height: 150px;
 `;
 
 const ColSubmit = styled(Col)`

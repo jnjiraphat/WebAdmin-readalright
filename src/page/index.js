@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Icon from "../asset/image/icon.png";
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import IndexArea from "../components/IndexArea";
 import firebaseFunction from '../firebase'
 
@@ -43,7 +43,7 @@ const MenuSite = () => {
         <Container>
           <Row>
             <Col span="4" style={{ display: "flex", justifyContent: "center" }}>
-              <img src={Icon} width={80} height={80} />
+              <img src={Icon} width={80} height={80} alt="icon" />
             </Col>
             <Col span="10" style={{ display: "flex", alignItems: "center" }}>
               <Topic>Admin</Topic>

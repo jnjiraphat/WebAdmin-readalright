@@ -15,7 +15,6 @@ const AddArticle = () => {
 
   const [readingIdD, setReadingIdD] = useState("");
   const [url, setUrl] = useState("");
-  const [image, setImage] = useState("");
   const [readingId2, setReadingId2] = useState(0);
   
   // const [categoryId, setCategoryId] = useState(1);
@@ -96,13 +95,14 @@ const AddArticle = () => {
     // readingId = response.data.quiz;
     // setReadingId(response.data.quiz)
     // if (readingId != "") {
-    //   console.log(readingId)
-    // }
-  }
-
+      //   console.log(readingId)
+      // }
+    }
+    console.log(readingIdD)
+    
   return (
     <Background>
-       {email === null ? (
+       {email == null ? (
         <Container>
           <CenterArea>
           <span>Please Login First</span>
