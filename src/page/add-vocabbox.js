@@ -54,7 +54,7 @@ const AddVocabBox = () => {
     category_id,
     friends
   ) {
-    const response = await axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBox", {
+    const response = await axios.post("https://readalright-backend.khanysorn.me/vocabBox", {
       boxEngName: boxEngName,
       boxThaiName: boxThaiName,
       category_id: category_id,
@@ -94,7 +94,7 @@ const AddVocabBox = () => {
     // console.log(friends[2].thaiWord)
 
     for (let index = 0; index < friends.length; index++) {
-        const response = axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabCard", {
+        const response = axios.post("https://readalright-backend.khanysorn.me/vocabCard", {
         engWord: friends[index].engWord,
         thaiWord: friends[index].engWord,
         vocabBox_id: vocabBox_id,

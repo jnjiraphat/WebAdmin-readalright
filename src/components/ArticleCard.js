@@ -10,7 +10,7 @@ const ArticleCard = (props) => {
   const [article, setArticle] = useState([]);
 
   async function fetch() {
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading");
+    const result = await axios("https://readalright-backend.khanysorn.me/reading");
 
     setArticle(result.data);
     console.log("this is all article");
@@ -21,7 +21,7 @@ const ArticleCard = (props) => {
     console.log("reading_id in delete article");
     console.log(reading_id);
     await axios
-      .delete("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/deleteReading/" + reading_id)
+      .delete("https://readalright-backend.khanysorn.me/admin/deleteReading/" + reading_id)
       .then(
         (response) => {
           console.log("delete article success!!!");

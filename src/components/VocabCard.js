@@ -9,7 +9,7 @@ const VocabCard = (props) => {
   const [vocabBox, setVocabBox] = useState([]);
 
   async function fetch() {
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/vocabBoxAndCate");
+    const result = await axios("https://readalright-backend.khanysorn.me/vocabBoxAndCate");
 
     setVocabBox(result.data);
     console.log("this is all vocabBox")
@@ -19,7 +19,7 @@ const VocabCard = (props) => {
   async function deleteVocabCard(vocabBox_id) {
     console.log("vocabBox_id eng")
     console.log(vocabBox_id)
-    await axios.delete("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/deleteVocabCard/" + vocabBox_id)
+    await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabCard/" + vocabBox_id)
       .then(
         (response) => {
           console.log("delete vocab card success!!!");
@@ -36,7 +36,7 @@ const VocabCard = (props) => {
   async function deleteVocabBox(vocabBox_id) {
     console.log("vocabBox_id in delete vocabbox")
     console.log(vocabBox_id)
-    await axios.delete("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/deleteVocabBox/" + vocabBox_id)
+    await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabBox/" + vocabBox_id)
       .then(
         (response) => {
           console.log("delete vocabBox success!!!");

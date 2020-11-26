@@ -22,7 +22,7 @@ const Login = () => {
         // console.log(result.user.uid)
         console.log('success!');
         axios
-          .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/user/admin/" + uid)
+          .get("https://readalright-backend.khanysorn.me/user/admin/" + uid)
           .then(
             (response) => {
 

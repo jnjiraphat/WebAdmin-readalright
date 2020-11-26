@@ -24,7 +24,7 @@ const AddArticle = () => {
   
 
   async function fetch() {
-    const result = await axios("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading/last");
+    const result = await axios("https://readalright-backend.khanysorn.me/reading/last");
 
     // setReadingIdD(result.data.reading[0].reading_id);
     console.log(result.data.reading[0].reading_id)
@@ -81,7 +81,7 @@ const AddArticle = () => {
     category_id,
     level_reading
   ) {
-    const response = await axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/reading", {
+    const response = await axios.post("https://readalright-backend.khanysorn.me/reading", {
       title: title,
       content: content,
       image: url,

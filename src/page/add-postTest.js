@@ -75,7 +75,7 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[0].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
         content[0].options[index].choice_id,
         {
           isRightChoice: content[0].options[index].isRightChoice,
@@ -89,7 +89,7 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[1].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
         content[1].options[index].choice_id,
         {
           isRightChoice: content[1].options[index].isRightChoice,
@@ -103,7 +103,7 @@ const AddPostTest = () => {
 
     for (let index = 0; index < content[2].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
         content[2].options[index].choice_id,
         {
           isRightChoice: content[2].options[index].isRightChoice,
@@ -122,7 +122,7 @@ const AddPostTest = () => {
     var quizIdArray = [];
     try {
       for (let index = 0; index < 3; index++) {
-        const response = await axios.post("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizs",
+        const response = await axios.post("https://readalright-backend.khanysorn.me/quizs",
           {
             question: content[index].questionText,
             typeOfSuggestion_id: content[index].typeOfSuggestionID,
@@ -162,7 +162,7 @@ const AddPostTest = () => {
     console.log(quizID[2])
     for (let index = 0; index < content[0].options.length; index++) {
     const response = await axios.post(
-      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice",
+      "https://readalright-backend.khanysorn.me/QChoice",
       {
         isRightChoice: content[0].options[index].isRightChoice,
         choice: content[0].options[index].optionText,
@@ -175,7 +175,7 @@ const AddPostTest = () => {
 
   for (let index = 0; index < content[1].options.length; index++) {
     const response = await axios.post(
-      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice" ,
+      "https://readalright-backend.khanysorn.me/QChoice" ,
       {
         isRightChoice: content[1].options[index].isRightChoice,
         choice: content[1].options[index].optionText,
@@ -188,7 +188,7 @@ const AddPostTest = () => {
 
   for (let index = 0; index < content[2].options.length; index++) {
     const response = await axios.post(
-      "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/QChoice",
+      "https://readalright-backend.khanysorn.me/QChoice",
       {
         isRightChoice: content[2].options[index].isRightChoice,
         choice: content[2].options[index].optionText,

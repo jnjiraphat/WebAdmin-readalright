@@ -32,7 +32,7 @@ const EditPostTest = () => {
     console.log(dataArrayQuizChallenge[0][0].question_id);
     for (let index = 0; index < 3; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateQuiz/" +
+        "https://readalright-backend.khanysorn.me/admin/updateQuiz/" +
           dataArrayQuizChallenge[0][index].question_id,
         {
           question: content[index].questionText,
@@ -76,7 +76,7 @@ const EditPostTest = () => {
 
     for (let index = 0; index < content[0].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
           content[0].options[index].choice_id,
         {
           isRightChoice: content[0].options[index].isRightChoice,
@@ -90,7 +90,7 @@ const EditPostTest = () => {
 
     for (let index = 0; index < content[1].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
           content[1].options[index].choice_id,
         {
           isRightChoice: content[1].options[index].isRightChoice,
@@ -104,7 +104,7 @@ const EditPostTest = () => {
 
     for (let index = 0; index < content[2].options.length; index++) {
       const response = await axios.put(
-        "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/admin/updateChoice/" +
+        "https://readalright-backend.khanysorn.me/admin/updateChoice/" +
           content[2].options[index].choice_id,
         {
           isRightChoice: content[2].options[index].isRightChoice,
@@ -122,7 +122,7 @@ const EditPostTest = () => {
     for (let index = 0; index < dataArrayQuizChallenge[0].length; index++) {
       await axios
         .get(
-          "http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quiz/" +
+          "https://readalright-backend.khanysorn.me/quiz/" +
             dataArrayQuizChallenge[0][index].question_id
         )
         .then(
@@ -165,7 +165,7 @@ const EditPostTest = () => {
 
     if (match.params.reading_id != null) {
       await axios
-        .get("http://ec2-3-90-114-38.compute-1.amazonaws.com:3000/quizInContent/" + match.params.reading_id)
+        .get("https://readalright-backend.khanysorn.me/quizInContent/" + match.params.reading_id)
         .then(
           (response) => {
             console.log("fetch api challenge");
