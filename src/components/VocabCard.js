@@ -8,18 +8,18 @@ import axios from "axios";
 const VocabCard = (props) => {
   const [vocabBox, setVocabBox] = useState([]);
 
-  async function fetch() {
-    const result = await axios("https://readalright-backend.khanysorn.me/vocabBoxAndCate");
+  // async function fetch() {
+  //   const result = await axios("https://readalright-backend.khanysorn.me/vocabBoxAndCate");
 
-    setVocabBox(result.data);
-    console.log("this is all vocabBox")
-    console.log(vocabBox[0])
-  }
+  //   setVocabBox(result.data);
+  //   console.log("this is all vocabBox")
+  //   console.log(vocabBox[0])
+  // }
 
-  async function deleteVocabCard(vocabBox_id) {
+  async function deleteVocabCard(vocabBox_id,vocabCard_id) {
     console.log("vocabBox_id eng")
     console.log(vocabBox_id)
-    await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabCard/" + vocabBox_id)
+    await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabCard/" + vocabCard_id)
       .then(
         (response) => {
           alert("delete vocab card success!");
@@ -87,7 +87,7 @@ const VocabCard = (props) => {
               <EditButton type="primary" danger onClick={editButton}>
                 <Link to={`/edit-vocabbox/${items.vocabBox_id}`}>Edit</Link>
               </EditButton>
-              <RemoveButton type="primary" danger onClick={() => deleteVocabCard(items.vocabBox_id)}>
+              <RemoveButton type="primary" danger onClick={() => deleteVocabCard(items.vocabBox_id,items.vocabCard_id)}>
                 Remove
           </RemoveButton>
             </TailCol>
