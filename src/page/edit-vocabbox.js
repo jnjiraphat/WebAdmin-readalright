@@ -3,11 +3,10 @@ import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { Row, Col, Button } from "antd";
 import axios from "axios";
 import styled from "styled-components";
-import {
-  BrowserRouter as Link, useRouteMatch,
-} from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Spin } from 'antd';
 import firebaseMethod from '../firebase';
+
 
 
 
