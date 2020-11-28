@@ -22,7 +22,7 @@ const VocabCard = (props) => {
     await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabCard/" + vocabBox_id)
       .then(
         (response) => {
-          console.log("delete vocab card success!!!");
+          alert("delete vocab card success!");
           console.log(response)
         },
         (error) => {

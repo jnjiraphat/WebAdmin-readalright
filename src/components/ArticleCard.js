@@ -19,13 +19,13 @@ const ArticleCard = (props) => {
 
   
   async function deleteArticle(reading_id) {
-    console.log("reading_id in delete article");
+    console.log("reading_id in delete article!");
     console.log(reading_id);
     await axios
       .delete("https://readalright-backend.khanysorn.me/admin/deleteReading/" + reading_id)
       .then(
         (response) => {
-          console.log("delete article success!!!");
+          alert("delete article success");
           console.log(response);
         },
         (error) => {
