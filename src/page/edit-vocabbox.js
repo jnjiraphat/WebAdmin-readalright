@@ -80,7 +80,7 @@ const EditVocabBox = () => {
   async function deleteWord(index) {
     console.log(index)
     const result = await axios.delete("https://readalright-backend.khanysorn.me/admin/deleteVocabCard/" + vocabId[index]);
-    console.log("delete vocab")
+    alert("This word is deleted.")
     console.log(result.statusText)
 
   }
@@ -310,7 +310,7 @@ const EditVocabBox = () => {
                         </Col>
                         <Col span="6"></Col>
                       </RowStyled>
-                      <FieldArray name="friends">
+                      <FieldArray name="word">
                         {({ insert, remove, push }) => (
                           <div>
                             {word.length > 0 &&
