@@ -449,9 +449,7 @@ const EditPostTest = () => {
                                       <Col span="14">
                                         <FieldStyled
                                           as="select"
-                                          name={`content.${index}.typeOfSuggestionID`}
-                                          value="3"
-                                        >
+                                          name={`content.${index}.typeOfSuggestionID`}>
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>
                                           <option value="3">Adverb</option>
