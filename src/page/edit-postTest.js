@@ -451,6 +451,7 @@ const EditPostTest = () => {
                                           as="select"
                                           name={`content.${index}.typeOfSuggestionID`}
                                           value={content.typeOfSuggestionID}
+                                          onChange={(e) => content.typeOfSuggestionID = e.target.value}
                                         > 
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>
