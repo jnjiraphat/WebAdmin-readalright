@@ -19,7 +19,7 @@ const EditPostTest = () => {
   // console.log("reading id in edit post test");
   // console.log(match.params.reading_id);
 
-
+  
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
 
@@ -224,7 +224,7 @@ const EditPostTest = () => {
                     // console.log(values);
                     console.log("value");
                     console.log(values.content[0]);
-                    console.log(values.content[0].questionText);
+                    console.log(values.content[0].typeOfSuggestionID);
                     console.log("value choice");
                     console.log(values.content[0].options[0].choice_id);
 
@@ -450,8 +450,8 @@ const EditPostTest = () => {
                                         <FieldStyled
                                           as="select"
                                           name={`content.${index}.typeOfSuggestionID`}
-                                          value="3"
-                                        >
+                                          value={content.typeOfSuggestionID}
+                                        > 
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>
                                           <option value="3">Adverb</option>
