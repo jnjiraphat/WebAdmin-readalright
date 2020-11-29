@@ -37,7 +37,7 @@ const EditPostTest = () => {
           dataArrayQuizChallenge[0][index].question_id,
         {
           question: content[index].questionText,
-          typeOfSuggestion_id: 1,
+          typeOfSuggestion_id: content[index].typeOfSuggestionID,
           reading_id: match.params.reading_id,
           typeOfQuestion: "chal",
         }
