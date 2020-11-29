@@ -221,83 +221,83 @@ const EditPostTest = () => {
                   }}
                   onSubmit={(values) => {
                     console.log(values);
-                    // console.log(values);
-                    console.log("value");
-                    console.log(values.content[0]);
-                    console.log(values.content[0].questionText);
-                    console.log("value choice");
-                    console.log(values.content[0].options[0].choice_id);
+                    // // console.log(values);
+                    // console.log("value");
+                    // console.log(values.content[0]);
+                    // console.log(values.content[0].questionText);
+                    // console.log("value choice");
+                    // console.log(values.content[0].options[0].choice_id);
 
-                    console.log(values.content[0].options.length);
-                    console.log("Q1");
-                    var countQ1 = 0;
-                    for (
-                      let index = 0;
-                      index < values.content[0].options.length;
-                      index++
-                    ) {
-                      console.log(
-                        values.content[0].options[index].isRightChoice
-                      );
-                      if (
-                        values.content[0].options[index].isRightChoice === "1"
-                      ) {
-                        countQ1++;
-                        console.log("count in if");
-                        console.log(countQ1);
-                      }
-                    }
-                    console.log("Q2");
-                    var countQ2 = 0;
-                    for (
-                      let index = 0;
-                      index < values.content[1].options.length;
-                      index++
-                    ) {
-                      console.log(
-                        values.content[1].options[index].isRightChoice
-                      );
-                      if (
-                        values.content[1].options[index].isRightChoice === "1"
-                      ) {
-                        countQ2++;
-                        console.log("count in if");
-                        console.log(countQ2);
-                      }
-                    }
-                    console.log("Q3");
-                    var countQ3 = 0;
-                    for (
-                      let index = 0;
-                      index < values.content[2].options.length;
-                      index++
-                    ) {
-                      console.log(
-                        values.content[2].options[index].isRightChoice
-                      );
-                      if (
-                        values.content[2].options[index].isRightChoice === "1"
-                      ) {
-                        countQ3++;
-                        console.log("count in if");
-                        console.log(countQ3);
-                      }
-                    }
-                    console.log("countQ3");
-                    console.log(countQ3);
-                    if (countQ1 === 1 && countQ2 === 1 && countQ3 === 1) {
-                      console.log("Post in this condition");
-                      putPostTest(values.content);
-                      putPostTestAnswer(values.content);
-                      alert(JSON.stringify("Edit Successful"));
-                    } else {
-                      console.log("not success");
-                      alert(
-                        JSON.stringify(
-                          "Please edit Question1 correct choice just 1"
-                        )
-                      );
-                    }
+                    // console.log(values.content[0].options.length);
+                    // console.log("Q1");
+                    // var countQ1 = 0;
+                    // for (
+                    //   let index = 0;
+                    //   index < values.content[0].options.length;
+                    //   index++
+                    // ) {
+                    //   console.log(
+                    //     values.content[0].options[index].isRightChoice
+                    //   );
+                    //   if (
+                    //     values.content[0].options[index].isRightChoice === "1"
+                    //   ) {
+                    //     countQ1++;
+                    //     console.log("count in if");
+                    //     console.log(countQ1);
+                    //   }
+                    // }
+                    // console.log("Q2");
+                    // var countQ2 = 0;
+                    // for (
+                    //   let index = 0;
+                    //   index < values.content[1].options.length;
+                    //   index++
+                    // ) {
+                    //   console.log(
+                    //     values.content[1].options[index].isRightChoice
+                    //   );
+                    //   if (
+                    //     values.content[1].options[index].isRightChoice === "1"
+                    //   ) {
+                    //     countQ2++;
+                    //     console.log("count in if");
+                    //     console.log(countQ2);
+                    //   }
+                    // }
+                    // console.log("Q3");
+                    // var countQ3 = 0;
+                    // for (
+                    //   let index = 0;
+                    //   index < values.content[2].options.length;
+                    //   index++
+                    // ) {
+                    //   console.log(
+                    //     values.content[2].options[index].isRightChoice
+                    //   );
+                    //   if (
+                    //     values.content[2].options[index].isRightChoice === "1"
+                    //   ) {
+                    //     countQ3++;
+                    //     console.log("count in if");
+                    //     console.log(countQ3);
+                    //   }
+                    // }
+                    // console.log("countQ3");
+                    // console.log(countQ3);
+                    // if (countQ1 === 1 && countQ2 === 1 && countQ3 === 1) {
+                    //   console.log("Post in this condition");
+                    //   putPostTest(values.content);
+                    //   putPostTestAnswer(values.content);
+                    //   alert(JSON.stringify("Edit Successful"));
+                    // } else {
+                    //   console.log("not success");
+                    //   alert(
+                    //     JSON.stringify(
+                    //       "Please edit Question1 correct choice just 1"
+                    //     )
+                    //   );
+                    // }
                   }}
                 >
                   {({ values }) => (
