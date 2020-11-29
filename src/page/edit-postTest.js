@@ -450,6 +450,7 @@ const EditPostTest = () => {
                                         <FieldStyled
                                           as="select"
                                           name={`content.${index}.typeOfSuggestionID`}
+                                          value="3"
                                         >
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>
@@ -474,7 +475,7 @@ const EditPostTest = () => {
                         )}
                       </FieldArray>
                       <AreaSubmit>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Save</button>
                         <Link to="/console">
                           <button style={{marginLeft: "10px"}}>Back to Console</button>
                         </Link>
