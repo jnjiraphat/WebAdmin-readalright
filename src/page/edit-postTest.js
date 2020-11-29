@@ -27,9 +27,9 @@ const EditPostTest = () => {
     console.log("content in put post tes");
     console.log(dataArrayQuizChallenge);
     console.log(content);
-    console.log(content[0].questionText);
-    console.log(content[1].questionText);
-    console.log(content[2].questionText);
+    console.log(content[0].typeOfSuggestionID);
+    console.log(content[1].typeOfSuggestionID);
+    console.log(content[2].typeOfSuggestionID);
     console.log(dataArrayQuizChallenge[0][0].question_id);
     for (let index = 0; index < 3; index++) {
       const response = await axios.put(
@@ -450,7 +450,6 @@ const EditPostTest = () => {
                                         <FieldStyled
                                           as="select"
                                           name={`content.${index}.typeOfSuggestionID`}
-                                          value={quizData.typeOfSuggestionID}
                                         >
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>
