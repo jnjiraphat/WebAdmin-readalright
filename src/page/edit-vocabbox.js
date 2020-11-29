@@ -310,7 +310,7 @@ const EditVocabBox = () => {
                         </Col>
                         <Col span="6"></Col>
                       </RowStyled>
-                      <FieldArray name="word">
+                      <FieldArray name="friends">
                         {({ insert, remove, push }) => (
                           <div>
                             {word.length > 0 &&
