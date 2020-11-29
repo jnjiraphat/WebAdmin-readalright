@@ -23,7 +23,8 @@ const VocabCard = (props) => {
       .then(
         (response) => {
           alert("delete vocab card success!");
-          console.log(response)
+          console.log(response);
+          window.location.reload();
         },
         (error) => {
           console.log(error);

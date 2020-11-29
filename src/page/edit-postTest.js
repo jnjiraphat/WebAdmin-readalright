@@ -22,7 +22,6 @@ const EditPostTest = () => {
   
   const [quizData, setQuizData] = useState([]);
   const [quiz, setQuiz] = useState([]);
-  const [typeQuestion, setTypeQuestion] = useState("");
 
 
   async function putPostTest(content) {
@@ -449,12 +448,10 @@ const EditPostTest = () => {
                                         <TextForm>Type Of Suggestion</TextForm>
                                       </Col>
                                       <Col span="14">
-                                        {setTypeQuestion(content.typeOfSuggestionID)}
                                         <FieldStyled
                                           as="select"
                                           name={`content.${index}.typeOfSuggestionID`}
-                                          value={typeQuestion}
-                                          onChange={(e) => setTypeQuestion(e.target.value)}
+                                          value={content.typeOfSuggestionID}
                                         > 
                                           <option value="1">Verb</option>
                                           <option value="2">Noun</option>

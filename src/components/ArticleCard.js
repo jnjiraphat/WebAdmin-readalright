@@ -27,6 +27,7 @@ const ArticleCard = (props) => {
         (response) => {
           alert("delete article success");
           console.log(response);
+          window.location.reload();
         },
         (error) => {
           console.log(error);
