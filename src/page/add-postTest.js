@@ -333,7 +333,7 @@ const AddPostTest = () => {
                         alert("Add Successful");
                       } else {
                         console.log("not success");
-                        alert("Form is not Complete");
+                        alert("Form is not Completed");
                       }
                     }}
                   >

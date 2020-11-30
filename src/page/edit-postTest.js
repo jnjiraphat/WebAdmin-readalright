@@ -295,7 +295,7 @@ const EditPostTest = () => {
                       console.log("not success");
                       alert(
                         JSON.stringify(
-                          "Please edit Question1 correct choice just 1"
+                          "Please edit Question correct choice just 1 choice"
                         )
                       );
                     }
